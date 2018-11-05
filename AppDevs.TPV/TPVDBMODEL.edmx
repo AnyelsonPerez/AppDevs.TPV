@@ -1,0 +1,2188 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="TPVDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Areas">
+          <Key>
+            <PropertyRef Name="Codigo_Area" />
+          </Key>
+          <Property Name="Codigo_Area" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Area" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Color_Area" Type="varchar" MaxLength="50" />
+          <Property Name="Orden" Type="int" Nullable="false" />
+          <Property Name="Activo" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CategoriasProductos">
+          <Key>
+            <PropertyRef Name="Codigo_Categoria_Producto" />
+          </Key>
+          <Property Name="Codigo_Categoria_Producto" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Codigo_Categoria_Padre_Producto" Type="int" />
+          <Property Name="Categoria_Producto" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Orden" Type="int" Nullable="false" />
+          <Property Name="Activo" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="EstadosOrden">
+          <Key>
+            <PropertyRef Name="Codigo_Estado_Orden" />
+          </Key>
+          <Property Name="Codigo_Estado_Orden" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Estado_Orden" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Activo" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="EstadosOrdenDetalle">
+          <Key>
+            <PropertyRef Name="Codigo_Estado_Orden_Detalle" />
+          </Key>
+          <Property Name="Codigo_Estado_Orden_Detalle" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Estado_Orden_Detalle" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Activo" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="InformacionEmpresa">
+          <Key>
+            <PropertyRef Name="IdInformacionEmpresa" />
+          </Key>
+          <Property Name="IdInformacionEmpresa" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NombreEmpresa" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Direccion" Type="varchar" MaxLength="250" />
+          <Property Name="CodigoPostal" Type="varchar" MaxLength="10" />
+          <Property Name="Provincia" Type="varchar" MaxLength="50" />
+          <Property Name="Ciudad" Type="varchar" MaxLength="50" />
+          <Property Name="Pais" Type="varchar" MaxLength="50" />
+          <Property Name="CIF" Type="varchar" MaxLength="20" />
+          <Property Name="NIF" Type="varchar" MaxLength="20" />
+          <Property Name="Telefono" Type="varchar" MaxLength="20" />
+          <Property Name="Movil" Type="varchar" MaxLength="20" />
+          <Property Name="Facebook" Type="varchar" MaxLength="100" />
+          <Property Name="NombreImpresoraBarra" Type="varchar" MaxLength="100" />
+          <Property Name="NombreImpresoraCocina" Type="varchar" MaxLength="100" />
+          <Property Name="PorcientoIVA" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="TipoLetraBarra" Type="varchar" MaxLength="50" />
+          <Property Name="TipoLetraCocina" Type="varchar" MaxLength="50" />
+          <Property Name="TamanoLetraBarra" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="TamanoLetraCocina" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="PlantillaPedidoBarra" Type="varchar" MaxLength="1000" />
+          <Property Name="PlantillaPedidoCocina" Type="varchar" MaxLength="1000" />
+          <Property Name="PlantillaAnulacionBarra" Type="varchar" MaxLength="1000" />
+          <Property Name="PlantillaCuenta" Type="varchar" MaxLength="2000" />
+        </EntityType>
+        <EntityType Name="Mesas">
+          <Key>
+            <PropertyRef Name="Codigo_Mesa" />
+          </Key>
+          <Property Name="Codigo_Mesa" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Mesa" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Codigo_Area" Type="int" Nullable="false" />
+          <Property Name="Color_Mesa" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="PosicionX" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="PosicionY" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="Base" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="Altura" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="Activo" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Metodos_Pago">
+          <Key>
+            <PropertyRef Name="Codigo_Metodo_Pago" />
+          </Key>
+          <Property Name="Codigo_Metodo_Pago" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Metodo_Pago" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Activo" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Ordenes">
+          <Key>
+            <PropertyRef Name="Codigo_Orden" />
+          </Key>
+          <Property Name="Codigo_Orden" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Codigo_Mesa" Type="int" Nullable="false" />
+          <Property Name="Comensales" Type="int" Nullable="false" />
+          <Property Name="Hora_Orden" Type="datetime" Nullable="false" />
+          <Property Name="Codigo_Estado_Orden" Type="int" Nullable="false" />
+          <Property Name="Codigo_Metodo_Pago" Type="int" />
+          <Property Name="Hora_Pago" Type="datetime" />
+          <Property Name="Activo" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="OrdenesDetalles">
+          <Key>
+            <PropertyRef Name="Codigo_Orden_Detalle" />
+          </Key>
+          <Property Name="Codigo_Orden_Detalle" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Codigo_Orden" Type="int" Nullable="false" />
+          <Property Name="Codigo_Producto" Type="int" Nullable="false" />
+          <Property Name="Codigo_Producto_Unidad_Medida" Type="int" />
+          <Property Name="Cantidad_Producto" Type="int" Nullable="false" />
+          <Property Name="Codigo_Producto_Extra" Type="int" />
+          <Property Name="Sub_Total_Precio_Producto" Type="money" Nullable="false" />
+          <Property Name="Cantidad_Personas" Type="int" />
+          <Property Name="Nota_Producto" Type="varchar" MaxLength="50" />
+          <Property Name="Hora_Orden_Detalle" Type="datetime" Nullable="false" />
+          <Property Name="Codigo_Estado_Orden_Detalle" Type="int" Nullable="false" />
+          <Property Name="Codigo_Usuario" Type="int" Nullable="false" />
+          <Property Name="Activo" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Perfiles">
+          <Key>
+            <PropertyRef Name="Codigo_Perfil" />
+          </Key>
+          <Property Name="Codigo_Perfil" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Perfil" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Activo" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Permisos">
+          <Key>
+            <PropertyRef Name="Codigo_Permiso" />
+          </Key>
+          <Property Name="Codigo_Permiso" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Permiso" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Activo" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PermisosPerfiles">
+          <Key>
+            <PropertyRef Name="Codigo_Perfil_Permiso" />
+          </Key>
+          <Property Name="Codigo_Perfil_Permiso" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Codigo_Perfil" Type="int" Nullable="false" />
+          <Property Name="Codigo_Permiso" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Productos">
+          <Key>
+            <PropertyRef Name="Codigo_Producto" />
+          </Key>
+          <Property Name="Codigo_Producto" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Codigo_Categoria_Producto" Type="int" Nullable="false" />
+          <Property Name="NombreProducto" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ImagenProducto" Type="image" />
+          <Property Name="PrecioVenta" Type="money" Nullable="false" />
+          <Property Name="OrdenProducto" Type="int" Nullable="false" />
+          <Property Name="Codigo_Tipo_Producto" Type="int" Nullable="false" />
+          <Property Name="PrecioComoExtra" Type="money" />
+          <Property Name="AceptaExtra" Type="bit" Nullable="false" />
+          <Property Name="Impresora" Type="bit" Nullable="false" />
+          <Property Name="Activo" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ProductosUnidadesMedidas">
+          <Key>
+            <PropertyRef Name="Codigo_Producto_Unidad_Medida" />
+          </Key>
+          <Property Name="Codigo_Producto_Unidad_Medida" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Codigo_Producto" Type="int" Nullable="false" />
+          <Property Name="Codigo_Unidad_Medida" Type="int" Nullable="false" />
+          <Property Name="Precio_Venta" Type="money" Nullable="false" />
+          <Property Name="Activo" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TiposProductos">
+          <Key>
+            <PropertyRef Name="Codigo_Tipo_Producto" />
+          </Key>
+          <Property Name="Codigo_Tipo_Producto" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Tipo_Producto" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Activo" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UnidadesMedidas">
+          <Key>
+            <PropertyRef Name="Codigo_Unidad_Medida" />
+          </Key>
+          <Property Name="Codigo_Unidad_Medida" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Unidad_Medida" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="Abreviatura" Type="varchar" MaxLength="10" />
+          <Property Name="Activo" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Usuarios">
+          <Key>
+            <PropertyRef Name="Codigo_Usuario" />
+          </Key>
+          <Property Name="Codigo_Usuario" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Codigo_Perfil" Type="int" Nullable="false" />
+          <Property Name="Usuario" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Clave" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Nombre_Usuario" Type="varchar" MaxLength="50" />
+          <Property Name="Apellido_Usuario" Type="varchar" MaxLength="50" />
+          <Property Name="Activo" Type="bit" Nullable="false" />
+        </EntityType>
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'TPV.dbo.VW_NUMEROFACTURAANUAL' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="VW_NUMEROFACTURAANUAL">
+          <Key>
+            <PropertyRef Name="Codigo_Orden" />
+          </Key>
+          <Property Name="Codigo_Orden" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NumeroFactura" Type="bigint" />
+        </EntityType>
+        <Association Name="FK_CategoriasProductos_CategoriasProductos">
+          <End Role="CategoriasProductos" Type="Self.CategoriasProductos" Multiplicity="0..1" />
+          <End Role="CategoriasProductos1" Type="Self.CategoriasProductos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CategoriasProductos">
+              <PropertyRef Name="Codigo_Categoria_Producto" />
+            </Principal>
+            <Dependent Role="CategoriasProductos1">
+              <PropertyRef Name="Codigo_Categoria_Padre_Producto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Mesas_Areas">
+          <End Role="Areas" Type="Self.Areas" Multiplicity="1" />
+          <End Role="Mesas" Type="Self.Mesas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Areas">
+              <PropertyRef Name="Codigo_Area" />
+            </Principal>
+            <Dependent Role="Mesas">
+              <PropertyRef Name="Codigo_Area" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Ordenes_EstadosOrden">
+          <End Role="EstadosOrden" Type="Self.EstadosOrden" Multiplicity="1" />
+          <End Role="Ordenes" Type="Self.Ordenes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EstadosOrden">
+              <PropertyRef Name="Codigo_Estado_Orden" />
+            </Principal>
+            <Dependent Role="Ordenes">
+              <PropertyRef Name="Codigo_Estado_Orden" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Ordenes_Mesas">
+          <End Role="Mesas" Type="Self.Mesas" Multiplicity="1" />
+          <End Role="Ordenes" Type="Self.Ordenes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Mesas">
+              <PropertyRef Name="Codigo_Mesa" />
+            </Principal>
+            <Dependent Role="Ordenes">
+              <PropertyRef Name="Codigo_Mesa" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Ordenes_Metodos_Pago">
+          <End Role="Metodos_Pago" Type="Self.Metodos_Pago" Multiplicity="0..1" />
+          <End Role="Ordenes" Type="Self.Ordenes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Metodos_Pago">
+              <PropertyRef Name="Codigo_Metodo_Pago" />
+            </Principal>
+            <Dependent Role="Ordenes">
+              <PropertyRef Name="Codigo_Metodo_Pago" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrdenesDetalles_EstadosOrdenDetalle">
+          <End Role="EstadosOrdenDetalle" Type="Self.EstadosOrdenDetalle" Multiplicity="1" />
+          <End Role="OrdenesDetalles" Type="Self.OrdenesDetalles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EstadosOrdenDetalle">
+              <PropertyRef Name="Codigo_Estado_Orden_Detalle" />
+            </Principal>
+            <Dependent Role="OrdenesDetalles">
+              <PropertyRef Name="Codigo_Estado_Orden_Detalle" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrdenesDetalles_Ordenes">
+          <End Role="Ordenes" Type="Self.Ordenes" Multiplicity="1" />
+          <End Role="OrdenesDetalles" Type="Self.OrdenesDetalles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ordenes">
+              <PropertyRef Name="Codigo_Orden" />
+            </Principal>
+            <Dependent Role="OrdenesDetalles">
+              <PropertyRef Name="Codigo_Orden" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrdenesDetalles_Productos">
+          <End Role="Productos" Type="Self.Productos" Multiplicity="1" />
+          <End Role="OrdenesDetalles" Type="Self.OrdenesDetalles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Productos">
+              <PropertyRef Name="Codigo_Producto" />
+            </Principal>
+            <Dependent Role="OrdenesDetalles">
+              <PropertyRef Name="Codigo_Producto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrdenesDetalles_Productos_Extra">
+          <End Role="Productos" Type="Self.Productos" Multiplicity="0..1" />
+          <End Role="OrdenesDetalles" Type="Self.OrdenesDetalles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Productos">
+              <PropertyRef Name="Codigo_Producto" />
+            </Principal>
+            <Dependent Role="OrdenesDetalles">
+              <PropertyRef Name="Codigo_Producto_Extra" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrdenesDetalles_ProductosUnidadesMedidas">
+          <End Role="ProductosUnidadesMedidas" Type="Self.ProductosUnidadesMedidas" Multiplicity="0..1" />
+          <End Role="OrdenesDetalles" Type="Self.OrdenesDetalles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductosUnidadesMedidas">
+              <PropertyRef Name="Codigo_Producto_Unidad_Medida" />
+            </Principal>
+            <Dependent Role="OrdenesDetalles">
+              <PropertyRef Name="Codigo_Producto_Unidad_Medida" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrdenesDetalles_Usuarios">
+          <End Role="Usuarios" Type="Self.Usuarios" Multiplicity="1" />
+          <End Role="OrdenesDetalles" Type="Self.OrdenesDetalles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuarios">
+              <PropertyRef Name="Codigo_Usuario" />
+            </Principal>
+            <Dependent Role="OrdenesDetalles">
+              <PropertyRef Name="Codigo_Usuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PermisosPerfiles_Perfiles">
+          <End Role="Perfiles" Type="Self.Perfiles" Multiplicity="1" />
+          <End Role="PermisosPerfiles" Type="Self.PermisosPerfiles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Perfiles">
+              <PropertyRef Name="Codigo_Perfil" />
+            </Principal>
+            <Dependent Role="PermisosPerfiles">
+              <PropertyRef Name="Codigo_Perfil" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PermisosPerfiles_Permisos">
+          <End Role="Permisos" Type="Self.Permisos" Multiplicity="1" />
+          <End Role="PermisosPerfiles" Type="Self.PermisosPerfiles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Permisos">
+              <PropertyRef Name="Codigo_Permiso" />
+            </Principal>
+            <Dependent Role="PermisosPerfiles">
+              <PropertyRef Name="Codigo_Permiso" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Producto_Unidad_Medida_Producto_Unidad_Medida">
+          <End Role="Productos" Type="Self.Productos" Multiplicity="1" />
+          <End Role="ProductosUnidadesMedidas" Type="Self.ProductosUnidadesMedidas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Productos">
+              <PropertyRef Name="Codigo_Producto" />
+            </Principal>
+            <Dependent Role="ProductosUnidadesMedidas">
+              <PropertyRef Name="Codigo_Producto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Producto_Unidad_Medida_UnidadesMedidas">
+          <End Role="UnidadesMedidas" Type="Self.UnidadesMedidas" Multiplicity="1" />
+          <End Role="ProductosUnidadesMedidas" Type="Self.ProductosUnidadesMedidas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UnidadesMedidas">
+              <PropertyRef Name="Codigo_Unidad_Medida" />
+            </Principal>
+            <Dependent Role="ProductosUnidadesMedidas">
+              <PropertyRef Name="Codigo_Unidad_Medida" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Productos_CategoriasProductos">
+          <End Role="CategoriasProductos" Type="Self.CategoriasProductos" Multiplicity="1" />
+          <End Role="Productos" Type="Self.Productos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CategoriasProductos">
+              <PropertyRef Name="Codigo_Categoria_Producto" />
+            </Principal>
+            <Dependent Role="Productos">
+              <PropertyRef Name="Codigo_Categoria_Producto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Productos_TiposProductos">
+          <End Role="TiposProductos" Type="Self.TiposProductos" Multiplicity="1" />
+          <End Role="Productos" Type="Self.Productos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TiposProductos">
+              <PropertyRef Name="Codigo_Tipo_Producto" />
+            </Principal>
+            <Dependent Role="Productos">
+              <PropertyRef Name="Codigo_Tipo_Producto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Usuarios_Perfiles">
+          <End Role="Perfiles" Type="Self.Perfiles" Multiplicity="1" />
+          <End Role="Usuarios" Type="Self.Usuarios" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Perfiles">
+              <PropertyRef Name="Codigo_Perfil" />
+            </Principal>
+            <Dependent Role="Usuarios">
+              <PropertyRef Name="Codigo_Perfil" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="SPC_GET_AREA" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Codigo_Area" Type="int" Mode="In" />
+          <Parameter Name="Area" Type="varchar" Mode="In" />
+          <Parameter Name="Color_Area" Type="varchar" Mode="In" />
+          <Parameter Name="Activo" Type="bit" Mode="In" />
+        </Function>
+        <Function Name="SPC_GET_CATEGORIA" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Codigo_Categoria_Producto" Type="int" Mode="In" />
+          <Parameter Name="Codigo_Categoria_Padre_Producto" Type="int" Mode="In" />
+          <Parameter Name="Categoria_Producto" Type="varchar" Mode="In" />
+          <Parameter Name="Activo" Type="bit" Mode="In" />
+        </Function>
+        <Function Name="SPC_GET_DATOSCONSULTA" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Desde" Type="datetime" Mode="In" />
+          <Parameter Name="Hasta" Type="datetime" Mode="In" />
+        </Function>
+        <Function Name="SPC_GET_INFORMACIONEMPRESA" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="SPC_GET_MESA" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Codigo_Mesa" Type="int" Mode="In" />
+          <Parameter Name="Mesa" Type="varchar" Mode="In" />
+          <Parameter Name="Codigo_Area" Type="int" Mode="In" />
+          <Parameter Name="Color_Mesa" Type="varchar" Mode="In" />
+          <Parameter Name="PosicionX" Type="varchar" Mode="In" />
+          <Parameter Name="PosicionY" Type="varchar" Mode="In" />
+          <Parameter Name="Base" Type="varchar" Mode="In" />
+          <Parameter Name="Altura" Type="varchar" Mode="In" />
+          <Parameter Name="Activo" Type="bit" Mode="In" />
+        </Function>
+        <Function Name="SPC_GET_ORDENDETALLE" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Codigo_Orden" Type="int" Mode="In" />
+          <Parameter Name="Codigo_Mesa" Type="int" Mode="In" />
+          <Parameter Name="Codigo_Estado_Orden" Type="int" Mode="In" />
+          <Parameter Name="Codigo_Orden_Detalle" Type="int" Mode="In" />
+          <Parameter Name="Codigo_Producto" Type="int" Mode="In" />
+          <Parameter Name="Codigo_Producto_Unidad_Medida" Type="int" Mode="In" />
+          <Parameter Name="Codigo_Estado_Orden_Detalle" Type="int" Mode="In" />
+          <Parameter Name="Codigo_Usuario" Type="int" Mode="In" />
+          <Parameter Name="Activo" Type="bit" Mode="In" />
+        </Function>
+        <Function Name="SPC_GET_PERFIL" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Codigo_Perfil" Type="int" Mode="In" />
+          <Parameter Name="Perfil" Type="varchar" Mode="In" />
+          <Parameter Name="Activo" Type="bit" Mode="In" />
+        </Function>
+        <Function Name="SPC_GET_PERMISO" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Codigo_Permiso" Type="int" Mode="In" />
+          <Parameter Name="Permiso" Type="varchar" Mode="In" />
+          <Parameter Name="Activo" Type="bit" Mode="In" />
+        </Function>
+        <Function Name="SPC_GET_PERMISOSPERFILES" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Codigo_Perfil_Permiso" Type="int" Mode="In" />
+          <Parameter Name="Codigo_Perfil" Type="int" Mode="In" />
+          <Parameter Name="Codigo_Permiso" Type="int" Mode="In" />
+        </Function>
+        <Function Name="SPC_GET_PRODUCTO" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Codigo_Producto" Type="int" Mode="In" />
+          <Parameter Name="Codigo_Categoria_Producto" Type="int" Mode="In" />
+          <Parameter Name="Producto" Type="varchar" Mode="In" />
+          <Parameter Name="Codigo_Tipo_Producto" Type="int" Mode="In" />
+          <Parameter Name="AceptaExtra" Type="bit" Mode="In" />
+          <Parameter Name="Activo" Type="bit" Mode="In" />
+        </Function>
+        <Function Name="SPC_GET_PRODUCTOSUNIDADESMEDIDAS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Codigo_Producto_Unidad_Medida" Type="int" Mode="In" />
+          <Parameter Name="Codigo_Producto" Type="int" Mode="In" />
+          <Parameter Name="Nombre_Producto" Type="varchar" Mode="In" />
+          <Parameter Name="Codigo_Unidad_Medida" Type="int" Mode="In" />
+          <Parameter Name="Precio_Venta" Type="money" Mode="In" />
+          <Parameter Name="Activo" Type="bit" Mode="In" />
+        </Function>
+        <Function Name="SPC_GET_TIPOPRODUCTO" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Codigo_Tipo_Producto" Type="int" Mode="In" />
+          <Parameter Name="Tipo_Producto" Type="varchar" Mode="In" />
+          <Parameter Name="Activo" Type="bit" Mode="In" />
+        </Function>
+        <Function Name="SPC_GET_TOPVENTAS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ExcluirCategorias" Type="varchar" Mode="In" />
+          <Parameter Name="Cocina" Type="bit" Mode="In" />
+          <Parameter Name="Desde" Type="datetime" Mode="In" />
+          <Parameter Name="Hasta" Type="datetime" Mode="In" />
+        </Function>
+        <Function Name="SPC_GET_UNIDADESMEDIDAS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Codigo_Unidad_Medida" Type="int" Mode="In" />
+          <Parameter Name="Unidad_Medida" Type="varchar" Mode="In" />
+          <Parameter Name="Abreviatura" Type="varchar" Mode="In" />
+          <Parameter Name="Activo" Type="bit" Mode="In" />
+        </Function>
+        <Function Name="SPC_GET_USUARIO" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Codigo_Usuario" Type="int" Mode="In" />
+          <Parameter Name="Codigo_Perfil" Type="int" Mode="In" />
+          <Parameter Name="Usuario" Type="varchar" Mode="In" />
+          <Parameter Name="Clave" Type="varchar" Mode="In" />
+          <Parameter Name="Nombre_Usuario" Type="varchar" Mode="In" />
+          <Parameter Name="Apellido_Usuario" Type="varchar" Mode="In" />
+          <Parameter Name="Activo" Type="bit" Mode="In" />
+        </Function>
+        <Function Name="SPC_SET_AREA" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Codigo_Area" Type="int" Mode="In" />
+          <Parameter Name="Area" Type="varchar" Mode="In" />
+          <Parameter Name="Color_Area" Type="varchar" Mode="In" />
+          <Parameter Name="Orden" Type="int" Mode="In" />
+          <Parameter Name="Activo" Type="bit" Mode="In" />
+        </Function>
+        <Function Name="SPC_SET_CATEGORIA" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Codigo_Categoria_Producto" Type="int" Mode="In" />
+          <Parameter Name="Codigo_Categoria_Padre_Producto" Type="int" Mode="In" />
+          <Parameter Name="Categoria_Producto" Type="varchar" Mode="In" />
+          <Parameter Name="Orden" Type="int" Mode="In" />
+          <Parameter Name="Activo" Type="bit" Mode="In" />
+        </Function>
+        <Function Name="SPC_SET_INFORMACIONEMPRESA" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="NombreEmpresa" Type="varchar" Mode="In" />
+          <Parameter Name="Direccion" Type="varchar" Mode="In" />
+          <Parameter Name="CodigoPostal" Type="varchar" Mode="In" />
+          <Parameter Name="Provincia" Type="varchar" Mode="In" />
+          <Parameter Name="Ciudad" Type="varchar" Mode="In" />
+          <Parameter Name="Pais" Type="varchar" Mode="In" />
+          <Parameter Name="CIF" Type="varchar" Mode="In" />
+          <Parameter Name="NIF" Type="varchar" Mode="In" />
+          <Parameter Name="Telefono" Type="varchar" Mode="In" />
+          <Parameter Name="Movil" Type="varchar" Mode="In" />
+          <Parameter Name="Facebook" Type="varchar" Mode="In" />
+          <Parameter Name="NombreImpresoraBarra" Type="varchar" Mode="In" />
+          <Parameter Name="NombreImpresoraCocina" Type="varchar" Mode="In" />
+          <Parameter Name="PorcientoIVA" Type="decimal" Mode="In" />
+          <Parameter Name="TipoLetraBarra" Type="varchar" Mode="In" />
+          <Parameter Name="TipoLetraCocina" Type="varchar" Mode="In" />
+          <Parameter Name="TamanoLetraBarra" Type="decimal" Mode="In" />
+          <Parameter Name="TamanoLetraCocina" Type="decimal" Mode="In" />
+          <Parameter Name="PlantillaPedidoBarra" Type="varchar" Mode="In" />
+          <Parameter Name="PlantillaPedidoCocina" Type="varchar" Mode="In" />
+          <Parameter Name="PlantillaAnulacionBarra" Type="varchar" Mode="In" />
+          <Parameter Name="PlantillaCuenta" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="SPC_SET_MESA" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Codigo_Mesa" Type="int" Mode="In" />
+          <Parameter Name="Mesa" Type="varchar" Mode="In" />
+          <Parameter Name="Codigo_Area" Type="int" Mode="In" />
+          <Parameter Name="Color_Mesa" Type="varchar" Mode="In" />
+          <Parameter Name="PosicionX" Type="varchar" Mode="In" />
+          <Parameter Name="PosicionY" Type="varchar" Mode="In" />
+          <Parameter Name="Base" Type="varchar" Mode="In" />
+          <Parameter Name="Altura" Type="varchar" Mode="In" />
+          <Parameter Name="Activo" Type="bit" Mode="In" />
+        </Function>
+        <Function Name="SPC_SET_ORDEN" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Codigo_Orden" Type="int" Mode="InOut" />
+          <Parameter Name="Codigo_Mesa" Type="int" Mode="In" />
+          <Parameter Name="Comensales" Type="int" Mode="In" />
+          <Parameter Name="Hora_Orden" Type="datetime" Mode="In" />
+          <Parameter Name="Codigo_Estado_Orden" Type="int" Mode="In" />
+          <Parameter Name="Activo" Type="bit" Mode="In" />
+        </Function>
+        <Function Name="SPC_SET_ORDENDETALLE" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Codigo_Orden_Detalle" Type="int" Mode="In" />
+          <Parameter Name="Codigo_Orden" Type="int" Mode="In" />
+          <Parameter Name="Codigo_Producto" Type="int" Mode="In" />
+          <Parameter Name="Codigo_Producto_Unidad_Medida" Type="int" Mode="In" />
+          <Parameter Name="Cantidad_Producto" Type="int" Mode="In" />
+          <Parameter Name="Codigo_Producto_Extra" Type="int" Mode="In" />
+          <Parameter Name="Sub_Total_Precio_Producto" Type="money" Mode="In" />
+          <Parameter Name="Cantidad_Personas" Type="int" Mode="In" />
+          <Parameter Name="Nota_Producto" Type="varchar" Mode="In" />
+          <Parameter Name="Hora_Orden_Detalle" Type="datetime" Mode="In" />
+          <Parameter Name="Codigo_Estado_Orden_Detalle" Type="int" Mode="In" />
+          <Parameter Name="Codigo_Usuario" Type="int" Mode="In" />
+          <Parameter Name="Activo" Type="bit" Mode="In" />
+        </Function>
+        <Function Name="SPC_SET_PERFIL" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Codigo_Perfil" Type="int" Mode="In" />
+          <Parameter Name="Perfil" Type="varchar" Mode="In" />
+          <Parameter Name="Activo" Type="bit" Mode="In" />
+        </Function>
+        <Function Name="SPC_SET_PERMISOSPERFILES" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Codigo_Perfil_Permiso" Type="int" Mode="In" />
+          <Parameter Name="Codigo_Perfil" Type="int" Mode="In" />
+          <Parameter Name="Codigo_Permiso" Type="int" Mode="In" />
+          <Parameter Name="Activo" Type="bit" Mode="In" />
+        </Function>
+        <Function Name="SPC_SET_PRODUCTO" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Codigo_Producto" Type="int" Mode="In" />
+          <Parameter Name="Codigo_Categoria_Producto" Type="int" Mode="In" />
+          <Parameter Name="Producto" Type="varchar" Mode="In" />
+          <Parameter Name="ImagenProducto" Type="image" Mode="In" />
+          <Parameter Name="PrecioVenta" Type="money" Mode="In" />
+          <Parameter Name="OrdenProducto" Type="int" Mode="In" />
+          <Parameter Name="Codigo_Tipo_Producto" Type="int" Mode="In" />
+          <Parameter Name="PrecioComoExtra" Type="money" Mode="In" />
+          <Parameter Name="AceptaExtra" Type="bit" Mode="In" />
+          <Parameter Name="Impresora" Type="bit" Mode="In" />
+          <Parameter Name="Activo" Type="bit" Mode="In" />
+        </Function>
+        <Function Name="SPC_SET_PRODUCTOSUNIDADESMEDIDAS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Codigo_Producto_Unidad_Medida" Type="int" Mode="In" />
+          <Parameter Name="Codigo_Producto" Type="int" Mode="In" />
+          <Parameter Name="Codigo_Unidad_Medida" Type="int" Mode="In" />
+          <Parameter Name="Precio_Venta" Type="money" Mode="In" />
+          <Parameter Name="Activo" Type="bit" Mode="In" />
+        </Function>
+        <Function Name="SPC_SET_UNIDADESMEDIDAS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Codigo_Unidad_Medida" Type="int" Mode="In" />
+          <Parameter Name="Unidad_Medida" Type="varchar" Mode="In" />
+          <Parameter Name="Abreviatura" Type="varchar" Mode="In" />
+          <Parameter Name="Activo" Type="bit" Mode="In" />
+        </Function>
+        <Function Name="SPC_SET_USUARIO" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Codigo_Usuario" Type="int" Mode="In" />
+          <Parameter Name="Codigo_Perfil" Type="int" Mode="In" />
+          <Parameter Name="Usuario" Type="varchar" Mode="In" />
+          <Parameter Name="Clave" Type="varchar" Mode="In" />
+          <Parameter Name="Nombre_Usuario" Type="varchar" Mode="In" />
+          <Parameter Name="Apellido_Usuario" Type="varchar" Mode="In" />
+          <Parameter Name="Activo" Type="bit" Mode="In" />
+        </Function>
+        <EntityContainer Name="TPVDBModelStoreContainer">
+          <EntitySet Name="Areas" EntityType="Self.Areas" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CategoriasProductos" EntityType="Self.CategoriasProductos" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EstadosOrden" EntityType="Self.EstadosOrden" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EstadosOrdenDetalle" EntityType="Self.EstadosOrdenDetalle" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="InformacionEmpresa" EntityType="Self.InformacionEmpresa" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Mesas" EntityType="Self.Mesas" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Metodos_Pago" EntityType="Self.Metodos_Pago" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Ordenes" EntityType="Self.Ordenes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OrdenesDetalles" EntityType="Self.OrdenesDetalles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Perfiles" EntityType="Self.Perfiles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Permisos" EntityType="Self.Permisos" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PermisosPerfiles" EntityType="Self.PermisosPerfiles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Productos" EntityType="Self.Productos" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProductosUnidadesMedidas" EntityType="Self.ProductosUnidadesMedidas" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TiposProductos" EntityType="Self.TiposProductos" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UnidadesMedidas" EntityType="Self.UnidadesMedidas" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Usuarios" EntityType="Self.Usuarios" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="VW_NUMEROFACTURAANUAL" EntityType="Self.VW_NUMEROFACTURAANUAL" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [VW_NUMEROFACTURAANUAL].[Codigo_Orden] AS [Codigo_Orden], 
+    [VW_NUMEROFACTURAANUAL].[NumeroFactura] AS [NumeroFactura]
+    FROM [dbo].[VW_NUMEROFACTURAANUAL] AS [VW_NUMEROFACTURAANUAL]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_CategoriasProductos_CategoriasProductos" Association="Self.FK_CategoriasProductos_CategoriasProductos">
+            <End Role="CategoriasProductos" EntitySet="CategoriasProductos" />
+            <End Role="CategoriasProductos1" EntitySet="CategoriasProductos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Mesas_Areas" Association="Self.FK_Mesas_Areas">
+            <End Role="Areas" EntitySet="Areas" />
+            <End Role="Mesas" EntitySet="Mesas" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Ordenes_EstadosOrden" Association="Self.FK_Ordenes_EstadosOrden">
+            <End Role="EstadosOrden" EntitySet="EstadosOrden" />
+            <End Role="Ordenes" EntitySet="Ordenes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Ordenes_Mesas" Association="Self.FK_Ordenes_Mesas">
+            <End Role="Mesas" EntitySet="Mesas" />
+            <End Role="Ordenes" EntitySet="Ordenes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Ordenes_Metodos_Pago" Association="Self.FK_Ordenes_Metodos_Pago">
+            <End Role="Metodos_Pago" EntitySet="Metodos_Pago" />
+            <End Role="Ordenes" EntitySet="Ordenes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrdenesDetalles_EstadosOrdenDetalle" Association="Self.FK_OrdenesDetalles_EstadosOrdenDetalle">
+            <End Role="EstadosOrdenDetalle" EntitySet="EstadosOrdenDetalle" />
+            <End Role="OrdenesDetalles" EntitySet="OrdenesDetalles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrdenesDetalles_Ordenes" Association="Self.FK_OrdenesDetalles_Ordenes">
+            <End Role="Ordenes" EntitySet="Ordenes" />
+            <End Role="OrdenesDetalles" EntitySet="OrdenesDetalles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrdenesDetalles_Productos" Association="Self.FK_OrdenesDetalles_Productos">
+            <End Role="Productos" EntitySet="Productos" />
+            <End Role="OrdenesDetalles" EntitySet="OrdenesDetalles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrdenesDetalles_Productos_Extra" Association="Self.FK_OrdenesDetalles_Productos_Extra">
+            <End Role="Productos" EntitySet="Productos" />
+            <End Role="OrdenesDetalles" EntitySet="OrdenesDetalles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrdenesDetalles_ProductosUnidadesMedidas" Association="Self.FK_OrdenesDetalles_ProductosUnidadesMedidas">
+            <End Role="ProductosUnidadesMedidas" EntitySet="ProductosUnidadesMedidas" />
+            <End Role="OrdenesDetalles" EntitySet="OrdenesDetalles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrdenesDetalles_Usuarios" Association="Self.FK_OrdenesDetalles_Usuarios">
+            <End Role="Usuarios" EntitySet="Usuarios" />
+            <End Role="OrdenesDetalles" EntitySet="OrdenesDetalles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PermisosPerfiles_Perfiles" Association="Self.FK_PermisosPerfiles_Perfiles">
+            <End Role="Perfiles" EntitySet="Perfiles" />
+            <End Role="PermisosPerfiles" EntitySet="PermisosPerfiles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PermisosPerfiles_Permisos" Association="Self.FK_PermisosPerfiles_Permisos">
+            <End Role="Permisos" EntitySet="Permisos" />
+            <End Role="PermisosPerfiles" EntitySet="PermisosPerfiles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Producto_Unidad_Medida_Producto_Unidad_Medida" Association="Self.FK_Producto_Unidad_Medida_Producto_Unidad_Medida">
+            <End Role="Productos" EntitySet="Productos" />
+            <End Role="ProductosUnidadesMedidas" EntitySet="ProductosUnidadesMedidas" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Producto_Unidad_Medida_UnidadesMedidas" Association="Self.FK_Producto_Unidad_Medida_UnidadesMedidas">
+            <End Role="UnidadesMedidas" EntitySet="UnidadesMedidas" />
+            <End Role="ProductosUnidadesMedidas" EntitySet="ProductosUnidadesMedidas" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Productos_CategoriasProductos" Association="Self.FK_Productos_CategoriasProductos">
+            <End Role="CategoriasProductos" EntitySet="CategoriasProductos" />
+            <End Role="Productos" EntitySet="Productos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Productos_TiposProductos" Association="Self.FK_Productos_TiposProductos">
+            <End Role="TiposProductos" EntitySet="TiposProductos" />
+            <End Role="Productos" EntitySet="Productos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Usuarios_Perfiles" Association="Self.FK_Usuarios_Perfiles">
+            <End Role="Perfiles" EntitySet="Perfiles" />
+            <End Role="Usuarios" EntitySet="Usuarios" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="TPVDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="TPVDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Areas" EntityType="TPVDBModel.Areas" />
+          <EntitySet Name="CategoriasProductos" EntityType="TPVDBModel.CategoriasProductos" />
+          <EntitySet Name="EstadosOrden" EntityType="TPVDBModel.EstadosOrden" />
+          <EntitySet Name="EstadosOrdenDetalle" EntityType="TPVDBModel.EstadosOrdenDetalle" />
+          <EntitySet Name="InformacionEmpresa" EntityType="TPVDBModel.InformacionEmpresa" />
+          <EntitySet Name="Mesas" EntityType="TPVDBModel.Mesas" />
+          <EntitySet Name="Metodos_Pago" EntityType="TPVDBModel.Metodos_Pago" />
+          <EntitySet Name="Ordenes" EntityType="TPVDBModel.Ordenes" />
+          <EntitySet Name="OrdenesDetalles" EntityType="TPVDBModel.OrdenesDetalles" />
+          <EntitySet Name="Perfiles" EntityType="TPVDBModel.Perfiles" />
+          <EntitySet Name="Permisos" EntityType="TPVDBModel.Permisos" />
+          <EntitySet Name="PermisosPerfiles" EntityType="TPVDBModel.PermisosPerfiles" />
+          <EntitySet Name="Productos" EntityType="TPVDBModel.Productos" />
+          <EntitySet Name="ProductosUnidadesMedidas" EntityType="TPVDBModel.ProductosUnidadesMedidas" />
+          <EntitySet Name="TiposProductos" EntityType="TPVDBModel.TiposProductos" />
+          <EntitySet Name="UnidadesMedidas" EntityType="TPVDBModel.UnidadesMedidas" />
+          <EntitySet Name="Usuarios" EntityType="TPVDBModel.Usuarios" />
+          <EntitySet Name="VW_NUMEROFACTURAANUAL" EntityType="TPVDBModel.VW_NUMEROFACTURAANUAL" />
+          <AssociationSet Name="FK_Mesas_Areas" Association="TPVDBModel.FK_Mesas_Areas">
+            <End Role="Areas" EntitySet="Areas" />
+            <End Role="Mesas" EntitySet="Mesas" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CategoriasProductos_CategoriasProductos" Association="TPVDBModel.FK_CategoriasProductos_CategoriasProductos">
+            <End Role="CategoriasProductos" EntitySet="CategoriasProductos" />
+            <End Role="CategoriasProductos1" EntitySet="CategoriasProductos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Productos_CategoriasProductos" Association="TPVDBModel.FK_Productos_CategoriasProductos">
+            <End Role="CategoriasProductos" EntitySet="CategoriasProductos" />
+            <End Role="Productos" EntitySet="Productos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Ordenes_EstadosOrden" Association="TPVDBModel.FK_Ordenes_EstadosOrden">
+            <End Role="EstadosOrden" EntitySet="EstadosOrden" />
+            <End Role="Ordenes" EntitySet="Ordenes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrdenesDetalles_EstadosOrdenDetalle" Association="TPVDBModel.FK_OrdenesDetalles_EstadosOrdenDetalle">
+            <End Role="EstadosOrdenDetalle" EntitySet="EstadosOrdenDetalle" />
+            <End Role="OrdenesDetalles" EntitySet="OrdenesDetalles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Ordenes_Mesas" Association="TPVDBModel.FK_Ordenes_Mesas">
+            <End Role="Mesas" EntitySet="Mesas" />
+            <End Role="Ordenes" EntitySet="Ordenes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Ordenes_Metodos_Pago" Association="TPVDBModel.FK_Ordenes_Metodos_Pago">
+            <End Role="Metodos_Pago" EntitySet="Metodos_Pago" />
+            <End Role="Ordenes" EntitySet="Ordenes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrdenesDetalles_Ordenes" Association="TPVDBModel.FK_OrdenesDetalles_Ordenes">
+            <End Role="Ordenes" EntitySet="Ordenes" />
+            <End Role="OrdenesDetalles" EntitySet="OrdenesDetalles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrdenesDetalles_Productos" Association="TPVDBModel.FK_OrdenesDetalles_Productos">
+            <End Role="Productos" EntitySet="Productos" />
+            <End Role="OrdenesDetalles" EntitySet="OrdenesDetalles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrdenesDetalles_Productos_Extra" Association="TPVDBModel.FK_OrdenesDetalles_Productos_Extra">
+            <End Role="Productos" EntitySet="Productos" />
+            <End Role="OrdenesDetalles" EntitySet="OrdenesDetalles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrdenesDetalles_ProductosUnidadesMedidas" Association="TPVDBModel.FK_OrdenesDetalles_ProductosUnidadesMedidas">
+            <End Role="ProductosUnidadesMedidas" EntitySet="ProductosUnidadesMedidas" />
+            <End Role="OrdenesDetalles" EntitySet="OrdenesDetalles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrdenesDetalles_Usuarios" Association="TPVDBModel.FK_OrdenesDetalles_Usuarios">
+            <End Role="Usuarios" EntitySet="Usuarios" />
+            <End Role="OrdenesDetalles" EntitySet="OrdenesDetalles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PermisosPerfiles_Perfiles" Association="TPVDBModel.FK_PermisosPerfiles_Perfiles">
+            <End Role="Perfiles" EntitySet="Perfiles" />
+            <End Role="PermisosPerfiles" EntitySet="PermisosPerfiles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Usuarios_Perfiles" Association="TPVDBModel.FK_Usuarios_Perfiles">
+            <End Role="Perfiles" EntitySet="Perfiles" />
+            <End Role="Usuarios" EntitySet="Usuarios" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PermisosPerfiles_Permisos" Association="TPVDBModel.FK_PermisosPerfiles_Permisos">
+            <End Role="Permisos" EntitySet="Permisos" />
+            <End Role="PermisosPerfiles" EntitySet="PermisosPerfiles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Producto_Unidad_Medida_Producto_Unidad_Medida" Association="TPVDBModel.FK_Producto_Unidad_Medida_Producto_Unidad_Medida">
+            <End Role="Productos" EntitySet="Productos" />
+            <End Role="ProductosUnidadesMedidas" EntitySet="ProductosUnidadesMedidas" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Productos_TiposProductos" Association="TPVDBModel.FK_Productos_TiposProductos">
+            <End Role="TiposProductos" EntitySet="TiposProductos" />
+            <End Role="Productos" EntitySet="Productos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Producto_Unidad_Medida_UnidadesMedidas" Association="TPVDBModel.FK_Producto_Unidad_Medida_UnidadesMedidas">
+            <End Role="UnidadesMedidas" EntitySet="UnidadesMedidas" />
+            <End Role="ProductosUnidadesMedidas" EntitySet="ProductosUnidadesMedidas" />
+          </AssociationSet>
+          <FunctionImport Name="SPC_GET_AREA" ReturnType="Collection(TPVDBModel.SPC_GET_AREA_Result)">
+            <Parameter Name="Codigo_Area" Mode="In" Type="Int32" />
+            <Parameter Name="Area" Mode="In" Type="String" />
+            <Parameter Name="Color_Area" Mode="In" Type="String" />
+            <Parameter Name="Activo" Mode="In" Type="Boolean" />
+          </FunctionImport>
+          <FunctionImport Name="SPC_GET_CATEGORIA" ReturnType="Collection(TPVDBModel.SPC_GET_CATEGORIA_Result)">
+            <Parameter Name="Codigo_Categoria_Producto" Mode="In" Type="Int32" />
+            <Parameter Name="Codigo_Categoria_Padre_Producto" Mode="In" Type="Int32" />
+            <Parameter Name="Categoria_Producto" Mode="In" Type="String" />
+            <Parameter Name="Activo" Mode="In" Type="Boolean" />
+          </FunctionImport>
+          <FunctionImport Name="SPC_GET_DATOSCONSULTA" ReturnType="Collection(TPVDBModel.SPC_GET_DATOSCONSULTA_Result)">
+            <Parameter Name="Desde" Mode="In" Type="DateTime" />
+            <Parameter Name="Hasta" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="SPC_GET_MESA" ReturnType="Collection(TPVDBModel.SPC_GET_MESA_Result)">
+            <Parameter Name="Codigo_Mesa" Mode="In" Type="Int32" />
+            <Parameter Name="Mesa" Mode="In" Type="String" />
+            <Parameter Name="Codigo_Area" Mode="In" Type="Int32" />
+            <Parameter Name="Color_Mesa" Mode="In" Type="String" />
+            <Parameter Name="PosicionX" Mode="In" Type="String" />
+            <Parameter Name="PosicionY" Mode="In" Type="String" />
+            <Parameter Name="Base" Mode="In" Type="String" />
+            <Parameter Name="Altura" Mode="In" Type="String" />
+            <Parameter Name="Activo" Mode="In" Type="Boolean" />
+          </FunctionImport>
+          <FunctionImport Name="SPC_GET_ORDENDETALLE" ReturnType="Collection(TPVDBModel.SPC_GET_ORDENDETALLE_Result)">
+            <Parameter Name="Codigo_Orden" Mode="In" Type="Int32" />
+            <Parameter Name="Codigo_Mesa" Mode="In" Type="Int32" />
+            <Parameter Name="Codigo_Estado_Orden" Mode="In" Type="Int32" />
+            <Parameter Name="Codigo_Orden_Detalle" Mode="In" Type="Int32" />
+            <Parameter Name="Codigo_Producto" Mode="In" Type="Int32" />
+            <Parameter Name="Codigo_Producto_Unidad_Medida" Mode="In" Type="Int32" />
+            <Parameter Name="Codigo_Estado_Orden_Detalle" Mode="In" Type="Int32" />
+            <Parameter Name="Codigo_Usuario" Mode="In" Type="Int32" />
+            <Parameter Name="Activo" Mode="In" Type="Boolean" />
+          </FunctionImport>
+          <FunctionImport Name="SPC_GET_PERFIL" ReturnType="Collection(TPVDBModel.SPC_GET_PERFIL_Result)">
+            <Parameter Name="Codigo_Perfil" Mode="In" Type="Int32" />
+            <Parameter Name="Perfil" Mode="In" Type="String" />
+            <Parameter Name="Activo" Mode="In" Type="Boolean" />
+          </FunctionImport>
+          <FunctionImport Name="SPC_GET_PERMISO" ReturnType="Collection(TPVDBModel.SPC_GET_PERMISO_Result)">
+            <Parameter Name="Codigo_Permiso" Mode="In" Type="Int32" />
+            <Parameter Name="Permiso" Mode="In" Type="String" />
+            <Parameter Name="Activo" Mode="In" Type="Boolean" />
+          </FunctionImport>
+          <FunctionImport Name="SPC_GET_PERMISOSPERFILES" ReturnType="Collection(TPVDBModel.SPC_GET_PERMISOSPERFILES_Result)">
+            <Parameter Name="Codigo_Perfil_Permiso" Mode="In" Type="Int32" />
+            <Parameter Name="Codigo_Perfil" Mode="In" Type="Int32" />
+            <Parameter Name="Codigo_Permiso" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SPC_GET_PRODUCTO" ReturnType="Collection(TPVDBModel.SPC_GET_PRODUCTO_Result)">
+            <Parameter Name="Codigo_Producto" Mode="In" Type="Int32" />
+            <Parameter Name="Codigo_Categoria_Producto" Mode="In" Type="Int32" />
+            <Parameter Name="Producto" Mode="In" Type="String" />
+            <Parameter Name="Codigo_Tipo_Producto" Mode="In" Type="Int32" />
+            <Parameter Name="AceptaExtra" Mode="In" Type="Boolean" />
+            <Parameter Name="Activo" Mode="In" Type="Boolean" />
+          </FunctionImport>
+          <FunctionImport Name="SPC_GET_PRODUCTOSUNIDADESMEDIDAS" ReturnType="Collection(TPVDBModel.SPC_GET_PRODUCTOSUNIDADESMEDIDAS_Result)">
+            <Parameter Name="Codigo_Producto_Unidad_Medida" Mode="In" Type="Int32" />
+            <Parameter Name="Codigo_Producto" Mode="In" Type="Int32" />
+            <Parameter Name="Nombre_Producto" Mode="In" Type="String" />
+            <Parameter Name="Codigo_Unidad_Medida" Mode="In" Type="Int32" />
+            <Parameter Name="Precio_Venta" Mode="In" Type="Decimal" />
+            <Parameter Name="Activo" Mode="In" Type="Boolean" />
+          </FunctionImport>
+          <FunctionImport Name="SPC_GET_TIPOPRODUCTO" ReturnType="Collection(TPVDBModel.SPC_GET_TIPOPRODUCTO_Result)">
+            <Parameter Name="Codigo_Tipo_Producto" Mode="In" Type="Int32" />
+            <Parameter Name="Tipo_Producto" Mode="In" Type="String" />
+            <Parameter Name="Activo" Mode="In" Type="Boolean" />
+          </FunctionImport>
+          <FunctionImport Name="SPC_GET_TOPVENTAS" ReturnType="Collection(TPVDBModel.SPC_GET_TOPVENTAS_Result)">
+            <Parameter Name="ExcluirCategorias" Mode="In" Type="String" />
+            <Parameter Name="Cocina" Mode="In" Type="Boolean" />
+            <Parameter Name="Desde" Mode="In" Type="DateTime" />
+            <Parameter Name="Hasta" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="SPC_GET_UNIDADESMEDIDAS" ReturnType="Collection(TPVDBModel.SPC_GET_UNIDADESMEDIDAS_Result)">
+            <Parameter Name="Codigo_Unidad_Medida" Mode="In" Type="Int32" />
+            <Parameter Name="Unidad_Medida" Mode="In" Type="String" />
+            <Parameter Name="Abreviatura" Mode="In" Type="String" />
+            <Parameter Name="Activo" Mode="In" Type="Boolean" />
+          </FunctionImport>
+          <FunctionImport Name="SPC_GET_USUARIO" ReturnType="Collection(TPVDBModel.SPC_GET_USUARIO_Result)">
+            <Parameter Name="Codigo_Usuario" Mode="In" Type="Int32" />
+            <Parameter Name="Codigo_Perfil" Mode="In" Type="Int32" />
+            <Parameter Name="Usuario" Mode="In" Type="String" />
+            <Parameter Name="Clave" Mode="In" Type="String" />
+            <Parameter Name="Nombre_Usuario" Mode="In" Type="String" />
+            <Parameter Name="Apellido_Usuario" Mode="In" Type="String" />
+            <Parameter Name="Activo" Mode="In" Type="Boolean" />
+          </FunctionImport>
+          <FunctionImport Name="SPC_SET_AREA">
+            <Parameter Name="Codigo_Area" Mode="In" Type="Int32" />
+            <Parameter Name="Area" Mode="In" Type="String" />
+            <Parameter Name="Color_Area" Mode="In" Type="String" />
+            <Parameter Name="Orden" Mode="In" Type="Int32" />
+            <Parameter Name="Activo" Mode="In" Type="Boolean" />
+          </FunctionImport>
+          <FunctionImport Name="SPC_SET_CATEGORIA">
+            <Parameter Name="Codigo_Categoria_Producto" Mode="In" Type="Int32" />
+            <Parameter Name="Codigo_Categoria_Padre_Producto" Mode="In" Type="Int32" />
+            <Parameter Name="Categoria_Producto" Mode="In" Type="String" />
+            <Parameter Name="Orden" Mode="In" Type="Int32" />
+            <Parameter Name="Activo" Mode="In" Type="Boolean" />
+          </FunctionImport>
+          <FunctionImport Name="SPC_SET_MESA">
+            <Parameter Name="Codigo_Mesa" Mode="In" Type="Int32" />
+            <Parameter Name="Mesa" Mode="In" Type="String" />
+            <Parameter Name="Codigo_Area" Mode="In" Type="Int32" />
+            <Parameter Name="Color_Mesa" Mode="In" Type="String" />
+            <Parameter Name="PosicionX" Mode="In" Type="String" />
+            <Parameter Name="PosicionY" Mode="In" Type="String" />
+            <Parameter Name="Base" Mode="In" Type="String" />
+            <Parameter Name="Altura" Mode="In" Type="String" />
+            <Parameter Name="Activo" Mode="In" Type="Boolean" />
+          </FunctionImport>
+          <FunctionImport Name="SPC_SET_ORDEN">
+            <Parameter Name="Codigo_Orden" Mode="InOut" Type="Int32" />
+            <Parameter Name="Codigo_Mesa" Mode="In" Type="Int32" />
+            <Parameter Name="Comensales" Mode="In" Type="Int32" />
+            <Parameter Name="Hora_Orden" Mode="In" Type="DateTime" />
+            <Parameter Name="Codigo_Estado_Orden" Mode="In" Type="Int32" />
+            <Parameter Name="Activo" Mode="In" Type="Boolean" />
+          </FunctionImport>
+          <FunctionImport Name="SPC_SET_ORDENDETALLE" ReturnType="Collection(TPVDBModel.SPC_SET_ORDENDETALLE_Result)">
+            <Parameter Name="Codigo_Orden_Detalle" Mode="In" Type="Int32" />
+            <Parameter Name="Codigo_Orden" Mode="In" Type="Int32" />
+            <Parameter Name="Codigo_Producto" Mode="In" Type="Int32" />
+            <Parameter Name="Codigo_Producto_Unidad_Medida" Mode="In" Type="Int32" />
+            <Parameter Name="Cantidad_Producto" Mode="In" Type="Int32" />
+            <Parameter Name="Codigo_Producto_Extra" Mode="In" Type="Int32" />
+            <Parameter Name="Sub_Total_Precio_Producto" Mode="In" Type="Decimal" />
+            <Parameter Name="Cantidad_Personas" Mode="In" Type="Int32" />
+            <Parameter Name="Nota_Producto" Mode="In" Type="String" />
+            <Parameter Name="Hora_Orden_Detalle" Mode="In" Type="DateTime" />
+            <Parameter Name="Codigo_Estado_Orden_Detalle" Mode="In" Type="Int32" />
+            <Parameter Name="Codigo_Usuario" Mode="In" Type="Int32" />
+            <Parameter Name="Activo" Mode="In" Type="Boolean" />
+          </FunctionImport>
+          <FunctionImport Name="SPC_SET_PERFIL">
+            <Parameter Name="Codigo_Perfil" Mode="In" Type="Int32" />
+            <Parameter Name="Perfil" Mode="In" Type="String" />
+            <Parameter Name="Activo" Mode="In" Type="Boolean" />
+          </FunctionImport>
+          <FunctionImport Name="SPC_SET_PERMISOSPERFILES">
+            <Parameter Name="Codigo_Perfil_Permiso" Mode="In" Type="Int32" />
+            <Parameter Name="Codigo_Perfil" Mode="In" Type="Int32" />
+            <Parameter Name="Codigo_Permiso" Mode="In" Type="Int32" />
+            <Parameter Name="Activo" Mode="In" Type="Boolean" />
+          </FunctionImport>
+          <FunctionImport Name="SPC_SET_PRODUCTO">
+            <Parameter Name="Codigo_Producto" Mode="In" Type="Int32" />
+            <Parameter Name="Codigo_Categoria_Producto" Mode="In" Type="Int32" />
+            <Parameter Name="Producto" Mode="In" Type="String" />
+            <Parameter Name="ImagenProducto" Mode="In" Type="Binary" />
+            <Parameter Name="PrecioVenta" Mode="In" Type="Decimal" />
+            <Parameter Name="OrdenProducto" Mode="In" Type="Int32" />
+            <Parameter Name="Codigo_Tipo_Producto" Mode="In" Type="Int32" />
+            <Parameter Name="PrecioComoExtra" Mode="In" Type="Decimal" />
+            <Parameter Name="AceptaExtra" Mode="In" Type="Boolean" />
+            <Parameter Name="Impresora" Mode="In" Type="Boolean" />
+            <Parameter Name="Activo" Mode="In" Type="Boolean" />
+          </FunctionImport>
+          <FunctionImport Name="SPC_SET_PRODUCTOSUNIDADESMEDIDAS">
+            <Parameter Name="Codigo_Producto_Unidad_Medida" Mode="In" Type="Int32" />
+            <Parameter Name="Codigo_Producto" Mode="In" Type="Int32" />
+            <Parameter Name="Codigo_Unidad_Medida" Mode="In" Type="Int32" />
+            <Parameter Name="Precio_Venta" Mode="In" Type="Decimal" />
+            <Parameter Name="Activo" Mode="In" Type="Boolean" />
+          </FunctionImport>
+          <FunctionImport Name="SPC_SET_UNIDADESMEDIDAS">
+            <Parameter Name="Codigo_Unidad_Medida" Mode="In" Type="Int32" />
+            <Parameter Name="Unidad_Medida" Mode="In" Type="String" />
+            <Parameter Name="Abreviatura" Mode="In" Type="String" />
+            <Parameter Name="Activo" Mode="In" Type="Boolean" />
+          </FunctionImport>
+          <FunctionImport Name="SPC_SET_USUARIO">
+            <Parameter Name="Codigo_Usuario" Mode="In" Type="Int32" />
+            <Parameter Name="Codigo_Perfil" Mode="In" Type="Int32" />
+            <Parameter Name="Usuario" Mode="In" Type="String" />
+            <Parameter Name="Clave" Mode="In" Type="String" />
+            <Parameter Name="Nombre_Usuario" Mode="In" Type="String" />
+            <Parameter Name="Apellido_Usuario" Mode="In" Type="String" />
+            <Parameter Name="Activo" Mode="In" Type="Boolean" />
+          </FunctionImport>
+          <FunctionImport Name="SPC_SET_INFORMACIONEMPRESA">
+            <Parameter Name="NombreEmpresa" Mode="In" Type="String" />
+            <Parameter Name="Direccion" Mode="In" Type="String" />
+            <Parameter Name="CodigoPostal" Mode="In" Type="String" />
+            <Parameter Name="Provincia" Mode="In" Type="String" />
+            <Parameter Name="Ciudad" Mode="In" Type="String" />
+            <Parameter Name="Pais" Mode="In" Type="String" />
+            <Parameter Name="CIF" Mode="In" Type="String" />
+            <Parameter Name="NIF" Mode="In" Type="String" />
+            <Parameter Name="Telefono" Mode="In" Type="String" />
+            <Parameter Name="Movil" Mode="In" Type="String" />
+            <Parameter Name="Facebook" Mode="In" Type="String" />
+            <Parameter Name="NombreImpresoraBarra" Mode="In" Type="String" />
+            <Parameter Name="NombreImpresoraCocina" Mode="In" Type="String" />
+            <Parameter Name="PorcientoIVA" Mode="In" Type="Decimal" />
+            <Parameter Name="TipoLetraBarra" Mode="In" Type="String" />
+            <Parameter Name="TipoLetraCocina" Mode="In" Type="String" />
+            <Parameter Name="TamanoLetraBarra" Mode="In" Type="Decimal" />
+            <Parameter Name="TamanoLetraCocina" Mode="In" Type="Decimal" />
+            <Parameter Name="PlantillaPedidoBarra" Mode="In" Type="String" />
+            <Parameter Name="PlantillaPedidoCocina" Mode="In" Type="String" />
+            <Parameter Name="PlantillaAnulacionBarra" Mode="In" Type="String" />
+            <Parameter Name="PlantillaCuenta" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SPC_GET_INFORMACIONEMPRESA" ReturnType="Collection(TPVDBModel.SPC_GET_INFORMACIONEMPRESA_Result)" />
+        </EntityContainer>
+        <EntityType Name="Areas">
+          <Key>
+            <PropertyRef Name="Codigo_Area" />
+          </Key>
+          <Property Name="Codigo_Area" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Area" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Color_Area" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Orden" Type="Int32" Nullable="false" />
+          <Property Name="Activo" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Mesas" Relationship="TPVDBModel.FK_Mesas_Areas" FromRole="Areas" ToRole="Mesas" />
+        </EntityType>
+        <EntityType Name="CategoriasProductos">
+          <Key>
+            <PropertyRef Name="Codigo_Categoria_Producto" />
+          </Key>
+          <Property Name="Codigo_Categoria_Producto" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Codigo_Categoria_Padre_Producto" Type="Int32" />
+          <Property Name="Categoria_Producto" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Orden" Type="Int32" Nullable="false" />
+          <Property Name="Activo" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="CategoriasProductos1" Relationship="TPVDBModel.FK_CategoriasProductos_CategoriasProductos" FromRole="CategoriasProductos" ToRole="CategoriasProductos1" />
+          <NavigationProperty Name="CategoriasProductos2" Relationship="TPVDBModel.FK_CategoriasProductos_CategoriasProductos" FromRole="CategoriasProductos1" ToRole="CategoriasProductos" />
+          <NavigationProperty Name="Productos" Relationship="TPVDBModel.FK_Productos_CategoriasProductos" FromRole="CategoriasProductos" ToRole="Productos" />
+        </EntityType>
+        <EntityType Name="EstadosOrden">
+          <Key>
+            <PropertyRef Name="Codigo_Estado_Orden" />
+          </Key>
+          <Property Name="Codigo_Estado_Orden" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Estado_Orden" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Activo" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Ordenes" Relationship="TPVDBModel.FK_Ordenes_EstadosOrden" FromRole="EstadosOrden" ToRole="Ordenes" />
+        </EntityType>
+        <EntityType Name="EstadosOrdenDetalle">
+          <Key>
+            <PropertyRef Name="Codigo_Estado_Orden_Detalle" />
+          </Key>
+          <Property Name="Codigo_Estado_Orden_Detalle" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Estado_Orden_Detalle" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Activo" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="OrdenesDetalles" Relationship="TPVDBModel.FK_OrdenesDetalles_EstadosOrdenDetalle" FromRole="EstadosOrdenDetalle" ToRole="OrdenesDetalles" />
+        </EntityType>
+        <EntityType Name="InformacionEmpresa">
+          <Key>
+            <PropertyRef Name="IdInformacionEmpresa" />
+          </Key>
+          <Property Name="IdInformacionEmpresa" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NombreEmpresa" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Direccion" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="CodigoPostal" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Provincia" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Ciudad" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Pais" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CIF" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="NIF" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Telefono" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Movil" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Facebook" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="NombreImpresoraBarra" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="NombreImpresoraCocina" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="PorcientoIVA" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="TipoLetraBarra" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="TipoLetraCocina" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="TamanoLetraBarra" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="TamanoLetraCocina" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="PlantillaPedidoBarra" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="PlantillaPedidoCocina" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="PlantillaAnulacionBarra" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="PlantillaCuenta" Type="String" MaxLength="2000" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Mesas">
+          <Key>
+            <PropertyRef Name="Codigo_Mesa" />
+          </Key>
+          <Property Name="Codigo_Mesa" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Mesa" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Codigo_Area" Type="Int32" Nullable="false" />
+          <Property Name="Color_Mesa" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="PosicionX" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="PosicionY" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Base" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Altura" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Activo" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Areas" Relationship="TPVDBModel.FK_Mesas_Areas" FromRole="Mesas" ToRole="Areas" />
+          <NavigationProperty Name="Ordenes" Relationship="TPVDBModel.FK_Ordenes_Mesas" FromRole="Mesas" ToRole="Ordenes" />
+        </EntityType>
+        <EntityType Name="Metodos_Pago">
+          <Key>
+            <PropertyRef Name="Codigo_Metodo_Pago" />
+          </Key>
+          <Property Name="Codigo_Metodo_Pago" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Metodo_Pago" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Activo" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Ordenes" Relationship="TPVDBModel.FK_Ordenes_Metodos_Pago" FromRole="Metodos_Pago" ToRole="Ordenes" />
+        </EntityType>
+        <EntityType Name="Ordenes">
+          <Key>
+            <PropertyRef Name="Codigo_Orden" />
+          </Key>
+          <Property Name="Codigo_Orden" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Codigo_Mesa" Type="Int32" Nullable="false" />
+          <Property Name="Comensales" Type="Int32" Nullable="false" />
+          <Property Name="Hora_Orden" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Codigo_Estado_Orden" Type="Int32" Nullable="false" />
+          <Property Name="Codigo_Metodo_Pago" Type="Int32" />
+          <Property Name="Hora_Pago" Type="DateTime" Precision="3" />
+          <Property Name="Activo" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="EstadosOrden" Relationship="TPVDBModel.FK_Ordenes_EstadosOrden" FromRole="Ordenes" ToRole="EstadosOrden" />
+          <NavigationProperty Name="Mesas" Relationship="TPVDBModel.FK_Ordenes_Mesas" FromRole="Ordenes" ToRole="Mesas" />
+          <NavigationProperty Name="Metodos_Pago" Relationship="TPVDBModel.FK_Ordenes_Metodos_Pago" FromRole="Ordenes" ToRole="Metodos_Pago" />
+          <NavigationProperty Name="OrdenesDetalles" Relationship="TPVDBModel.FK_OrdenesDetalles_Ordenes" FromRole="Ordenes" ToRole="OrdenesDetalles" />
+        </EntityType>
+        <EntityType Name="OrdenesDetalles">
+          <Key>
+            <PropertyRef Name="Codigo_Orden_Detalle" />
+          </Key>
+          <Property Name="Codigo_Orden_Detalle" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Codigo_Orden" Type="Int32" Nullable="false" />
+          <Property Name="Codigo_Producto" Type="Int32" Nullable="false" />
+          <Property Name="Codigo_Producto_Unidad_Medida" Type="Int32" />
+          <Property Name="Cantidad_Producto" Type="Int32" Nullable="false" />
+          <Property Name="Codigo_Producto_Extra" Type="Int32" />
+          <Property Name="Sub_Total_Precio_Producto" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="Cantidad_Personas" Type="Int32" />
+          <Property Name="Nota_Producto" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Hora_Orden_Detalle" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Codigo_Estado_Orden_Detalle" Type="Int32" Nullable="false" />
+          <Property Name="Codigo_Usuario" Type="Int32" Nullable="false" />
+          <Property Name="Activo" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="EstadosOrdenDetalle" Relationship="TPVDBModel.FK_OrdenesDetalles_EstadosOrdenDetalle" FromRole="OrdenesDetalles" ToRole="EstadosOrdenDetalle" />
+          <NavigationProperty Name="Ordenes" Relationship="TPVDBModel.FK_OrdenesDetalles_Ordenes" FromRole="OrdenesDetalles" ToRole="Ordenes" />
+          <NavigationProperty Name="Productos" Relationship="TPVDBModel.FK_OrdenesDetalles_Productos" FromRole="OrdenesDetalles" ToRole="Productos" />
+          <NavigationProperty Name="Productos1" Relationship="TPVDBModel.FK_OrdenesDetalles_Productos_Extra" FromRole="OrdenesDetalles" ToRole="Productos" />
+          <NavigationProperty Name="ProductosUnidadesMedidas" Relationship="TPVDBModel.FK_OrdenesDetalles_ProductosUnidadesMedidas" FromRole="OrdenesDetalles" ToRole="ProductosUnidadesMedidas" />
+          <NavigationProperty Name="Usuarios" Relationship="TPVDBModel.FK_OrdenesDetalles_Usuarios" FromRole="OrdenesDetalles" ToRole="Usuarios" />
+        </EntityType>
+        <EntityType Name="Perfiles">
+          <Key>
+            <PropertyRef Name="Codigo_Perfil" />
+          </Key>
+          <Property Name="Codigo_Perfil" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Perfil" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Activo" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="PermisosPerfiles" Relationship="TPVDBModel.FK_PermisosPerfiles_Perfiles" FromRole="Perfiles" ToRole="PermisosPerfiles" />
+          <NavigationProperty Name="Usuarios" Relationship="TPVDBModel.FK_Usuarios_Perfiles" FromRole="Perfiles" ToRole="Usuarios" />
+        </EntityType>
+        <EntityType Name="Permisos">
+          <Key>
+            <PropertyRef Name="Codigo_Permiso" />
+          </Key>
+          <Property Name="Codigo_Permiso" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Permiso" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Activo" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="PermisosPerfiles" Relationship="TPVDBModel.FK_PermisosPerfiles_Permisos" FromRole="Permisos" ToRole="PermisosPerfiles" />
+        </EntityType>
+        <EntityType Name="PermisosPerfiles">
+          <Key>
+            <PropertyRef Name="Codigo_Perfil_Permiso" />
+          </Key>
+          <Property Name="Codigo_Perfil_Permiso" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Codigo_Perfil" Type="Int32" Nullable="false" />
+          <Property Name="Codigo_Permiso" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Perfiles" Relationship="TPVDBModel.FK_PermisosPerfiles_Perfiles" FromRole="PermisosPerfiles" ToRole="Perfiles" />
+          <NavigationProperty Name="Permisos" Relationship="TPVDBModel.FK_PermisosPerfiles_Permisos" FromRole="PermisosPerfiles" ToRole="Permisos" />
+        </EntityType>
+        <EntityType Name="Productos">
+          <Key>
+            <PropertyRef Name="Codigo_Producto" />
+          </Key>
+          <Property Name="Codigo_Producto" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Codigo_Categoria_Producto" Type="Int32" Nullable="false" />
+          <Property Name="NombreProducto" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ImagenProducto" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="PrecioVenta" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="OrdenProducto" Type="Int32" Nullable="false" />
+          <Property Name="Codigo_Tipo_Producto" Type="Int32" Nullable="false" />
+          <Property Name="PrecioComoExtra" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="AceptaExtra" Type="Boolean" Nullable="false" />
+          <Property Name="Impresora" Type="Boolean" Nullable="false" />
+          <Property Name="Activo" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="CategoriasProductos" Relationship="TPVDBModel.FK_Productos_CategoriasProductos" FromRole="Productos" ToRole="CategoriasProductos" />
+          <NavigationProperty Name="OrdenesDetalles" Relationship="TPVDBModel.FK_OrdenesDetalles_Productos" FromRole="Productos" ToRole="OrdenesDetalles" />
+          <NavigationProperty Name="OrdenesDetalles1" Relationship="TPVDBModel.FK_OrdenesDetalles_Productos_Extra" FromRole="Productos" ToRole="OrdenesDetalles" />
+          <NavigationProperty Name="ProductosUnidadesMedidas" Relationship="TPVDBModel.FK_Producto_Unidad_Medida_Producto_Unidad_Medida" FromRole="Productos" ToRole="ProductosUnidadesMedidas" />
+          <NavigationProperty Name="TiposProductos" Relationship="TPVDBModel.FK_Productos_TiposProductos" FromRole="Productos" ToRole="TiposProductos" />
+        </EntityType>
+        <EntityType Name="ProductosUnidadesMedidas">
+          <Key>
+            <PropertyRef Name="Codigo_Producto_Unidad_Medida" />
+          </Key>
+          <Property Name="Codigo_Producto_Unidad_Medida" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Codigo_Producto" Type="Int32" Nullable="false" />
+          <Property Name="Codigo_Unidad_Medida" Type="Int32" Nullable="false" />
+          <Property Name="Precio_Venta" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="Activo" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="OrdenesDetalles" Relationship="TPVDBModel.FK_OrdenesDetalles_ProductosUnidadesMedidas" FromRole="ProductosUnidadesMedidas" ToRole="OrdenesDetalles" />
+          <NavigationProperty Name="Productos" Relationship="TPVDBModel.FK_Producto_Unidad_Medida_Producto_Unidad_Medida" FromRole="ProductosUnidadesMedidas" ToRole="Productos" />
+          <NavigationProperty Name="UnidadesMedidas" Relationship="TPVDBModel.FK_Producto_Unidad_Medida_UnidadesMedidas" FromRole="ProductosUnidadesMedidas" ToRole="UnidadesMedidas" />
+        </EntityType>
+        <EntityType Name="TiposProductos">
+          <Key>
+            <PropertyRef Name="Codigo_Tipo_Producto" />
+          </Key>
+          <Property Name="Codigo_Tipo_Producto" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Tipo_Producto" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Activo" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Productos" Relationship="TPVDBModel.FK_Productos_TiposProductos" FromRole="TiposProductos" ToRole="Productos" />
+        </EntityType>
+        <EntityType Name="UnidadesMedidas">
+          <Key>
+            <PropertyRef Name="Codigo_Unidad_Medida" />
+          </Key>
+          <Property Name="Codigo_Unidad_Medida" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Unidad_Medida" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="Abreviatura" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Activo" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="ProductosUnidadesMedidas" Relationship="TPVDBModel.FK_Producto_Unidad_Medida_UnidadesMedidas" FromRole="UnidadesMedidas" ToRole="ProductosUnidadesMedidas" />
+        </EntityType>
+        <EntityType Name="Usuarios">
+          <Key>
+            <PropertyRef Name="Codigo_Usuario" />
+          </Key>
+          <Property Name="Codigo_Usuario" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Codigo_Perfil" Type="Int32" Nullable="false" />
+          <Property Name="Usuario" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Clave" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Nombre_Usuario" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Apellido_Usuario" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Activo" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="OrdenesDetalles" Relationship="TPVDBModel.FK_OrdenesDetalles_Usuarios" FromRole="Usuarios" ToRole="OrdenesDetalles" />
+          <NavigationProperty Name="Perfiles" Relationship="TPVDBModel.FK_Usuarios_Perfiles" FromRole="Usuarios" ToRole="Perfiles" />
+        </EntityType>
+        <EntityType Name="VW_NUMEROFACTURAANUAL">
+          <Key>
+            <PropertyRef Name="Codigo_Orden" />
+          </Key>
+          <Property Name="Codigo_Orden" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NumeroFactura" Type="Int64" />
+        </EntityType>
+        <Association Name="FK_Mesas_Areas">
+          <End Type="TPVDBModel.Areas" Role="Areas" Multiplicity="1" />
+          <End Type="TPVDBModel.Mesas" Role="Mesas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Areas">
+              <PropertyRef Name="Codigo_Area" />
+            </Principal>
+            <Dependent Role="Mesas">
+              <PropertyRef Name="Codigo_Area" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CategoriasProductos_CategoriasProductos">
+          <End Type="TPVDBModel.CategoriasProductos" Role="CategoriasProductos" Multiplicity="0..1" />
+          <End Type="TPVDBModel.CategoriasProductos" Role="CategoriasProductos1" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CategoriasProductos">
+              <PropertyRef Name="Codigo_Categoria_Producto" />
+            </Principal>
+            <Dependent Role="CategoriasProductos1">
+              <PropertyRef Name="Codigo_Categoria_Padre_Producto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Productos_CategoriasProductos">
+          <End Type="TPVDBModel.CategoriasProductos" Role="CategoriasProductos" Multiplicity="1" />
+          <End Type="TPVDBModel.Productos" Role="Productos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CategoriasProductos">
+              <PropertyRef Name="Codigo_Categoria_Producto" />
+            </Principal>
+            <Dependent Role="Productos">
+              <PropertyRef Name="Codigo_Categoria_Producto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Ordenes_EstadosOrden">
+          <End Type="TPVDBModel.EstadosOrden" Role="EstadosOrden" Multiplicity="1" />
+          <End Type="TPVDBModel.Ordenes" Role="Ordenes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EstadosOrden">
+              <PropertyRef Name="Codigo_Estado_Orden" />
+            </Principal>
+            <Dependent Role="Ordenes">
+              <PropertyRef Name="Codigo_Estado_Orden" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrdenesDetalles_EstadosOrdenDetalle">
+          <End Type="TPVDBModel.EstadosOrdenDetalle" Role="EstadosOrdenDetalle" Multiplicity="1" />
+          <End Type="TPVDBModel.OrdenesDetalles" Role="OrdenesDetalles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EstadosOrdenDetalle">
+              <PropertyRef Name="Codigo_Estado_Orden_Detalle" />
+            </Principal>
+            <Dependent Role="OrdenesDetalles">
+              <PropertyRef Name="Codigo_Estado_Orden_Detalle" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Ordenes_Mesas">
+          <End Type="TPVDBModel.Mesas" Role="Mesas" Multiplicity="1" />
+          <End Type="TPVDBModel.Ordenes" Role="Ordenes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Mesas">
+              <PropertyRef Name="Codigo_Mesa" />
+            </Principal>
+            <Dependent Role="Ordenes">
+              <PropertyRef Name="Codigo_Mesa" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Ordenes_Metodos_Pago">
+          <End Type="TPVDBModel.Metodos_Pago" Role="Metodos_Pago" Multiplicity="0..1" />
+          <End Type="TPVDBModel.Ordenes" Role="Ordenes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Metodos_Pago">
+              <PropertyRef Name="Codigo_Metodo_Pago" />
+            </Principal>
+            <Dependent Role="Ordenes">
+              <PropertyRef Name="Codigo_Metodo_Pago" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrdenesDetalles_Ordenes">
+          <End Type="TPVDBModel.Ordenes" Role="Ordenes" Multiplicity="1" />
+          <End Type="TPVDBModel.OrdenesDetalles" Role="OrdenesDetalles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ordenes">
+              <PropertyRef Name="Codigo_Orden" />
+            </Principal>
+            <Dependent Role="OrdenesDetalles">
+              <PropertyRef Name="Codigo_Orden" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrdenesDetalles_Productos">
+          <End Type="TPVDBModel.Productos" Role="Productos" Multiplicity="1" />
+          <End Type="TPVDBModel.OrdenesDetalles" Role="OrdenesDetalles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Productos">
+              <PropertyRef Name="Codigo_Producto" />
+            </Principal>
+            <Dependent Role="OrdenesDetalles">
+              <PropertyRef Name="Codigo_Producto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrdenesDetalles_Productos_Extra">
+          <End Type="TPVDBModel.Productos" Role="Productos" Multiplicity="0..1" />
+          <End Type="TPVDBModel.OrdenesDetalles" Role="OrdenesDetalles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Productos">
+              <PropertyRef Name="Codigo_Producto" />
+            </Principal>
+            <Dependent Role="OrdenesDetalles">
+              <PropertyRef Name="Codigo_Producto_Extra" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrdenesDetalles_ProductosUnidadesMedidas">
+          <End Type="TPVDBModel.ProductosUnidadesMedidas" Role="ProductosUnidadesMedidas" Multiplicity="0..1" />
+          <End Type="TPVDBModel.OrdenesDetalles" Role="OrdenesDetalles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductosUnidadesMedidas">
+              <PropertyRef Name="Codigo_Producto_Unidad_Medida" />
+            </Principal>
+            <Dependent Role="OrdenesDetalles">
+              <PropertyRef Name="Codigo_Producto_Unidad_Medida" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrdenesDetalles_Usuarios">
+          <End Type="TPVDBModel.Usuarios" Role="Usuarios" Multiplicity="1" />
+          <End Type="TPVDBModel.OrdenesDetalles" Role="OrdenesDetalles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuarios">
+              <PropertyRef Name="Codigo_Usuario" />
+            </Principal>
+            <Dependent Role="OrdenesDetalles">
+              <PropertyRef Name="Codigo_Usuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PermisosPerfiles_Perfiles">
+          <End Type="TPVDBModel.Perfiles" Role="Perfiles" Multiplicity="1" />
+          <End Type="TPVDBModel.PermisosPerfiles" Role="PermisosPerfiles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Perfiles">
+              <PropertyRef Name="Codigo_Perfil" />
+            </Principal>
+            <Dependent Role="PermisosPerfiles">
+              <PropertyRef Name="Codigo_Perfil" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Usuarios_Perfiles">
+          <End Type="TPVDBModel.Perfiles" Role="Perfiles" Multiplicity="1" />
+          <End Type="TPVDBModel.Usuarios" Role="Usuarios" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Perfiles">
+              <PropertyRef Name="Codigo_Perfil" />
+            </Principal>
+            <Dependent Role="Usuarios">
+              <PropertyRef Name="Codigo_Perfil" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PermisosPerfiles_Permisos">
+          <End Type="TPVDBModel.Permisos" Role="Permisos" Multiplicity="1" />
+          <End Type="TPVDBModel.PermisosPerfiles" Role="PermisosPerfiles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Permisos">
+              <PropertyRef Name="Codigo_Permiso" />
+            </Principal>
+            <Dependent Role="PermisosPerfiles">
+              <PropertyRef Name="Codigo_Permiso" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Producto_Unidad_Medida_Producto_Unidad_Medida">
+          <End Type="TPVDBModel.Productos" Role="Productos" Multiplicity="1" />
+          <End Type="TPVDBModel.ProductosUnidadesMedidas" Role="ProductosUnidadesMedidas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Productos">
+              <PropertyRef Name="Codigo_Producto" />
+            </Principal>
+            <Dependent Role="ProductosUnidadesMedidas">
+              <PropertyRef Name="Codigo_Producto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Productos_TiposProductos">
+          <End Type="TPVDBModel.TiposProductos" Role="TiposProductos" Multiplicity="1" />
+          <End Type="TPVDBModel.Productos" Role="Productos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TiposProductos">
+              <PropertyRef Name="Codigo_Tipo_Producto" />
+            </Principal>
+            <Dependent Role="Productos">
+              <PropertyRef Name="Codigo_Tipo_Producto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Producto_Unidad_Medida_UnidadesMedidas">
+          <End Type="TPVDBModel.UnidadesMedidas" Role="UnidadesMedidas" Multiplicity="1" />
+          <End Type="TPVDBModel.ProductosUnidadesMedidas" Role="ProductosUnidadesMedidas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UnidadesMedidas">
+              <PropertyRef Name="Codigo_Unidad_Medida" />
+            </Principal>
+            <Dependent Role="ProductosUnidadesMedidas">
+              <PropertyRef Name="Codigo_Unidad_Medida" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <ComplexType Name="SPC_GET_AREA_Result">
+          <Property Type="Int32" Name="Codigo_Area" Nullable="false" />
+          <Property Type="String" Name="Area" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="Color_Area" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="Orden" Nullable="false" />
+          <Property Type="Boolean" Name="Activo" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="SPC_GET_CATEGORIA_Result">
+          <Property Type="Int32" Name="Codigo_Categoria_Producto" Nullable="false" />
+          <Property Type="Int32" Name="Codigo_Categoria_Padre_Producto" Nullable="false" />
+          <Property Type="String" Name="Categoria_Producto" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="Orden" Nullable="false" />
+          <Property Type="Boolean" Name="Activo" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="SPC_GET_DATOSCONSULTA_Result">
+          <Property Type="DateTime" Name="Fecha" Nullable="true" />
+          <Property Type="Int32" Name="Codigo_Orden" Nullable="false" />
+          <Property Type="Int32" Name="Codigo_Mesa" Nullable="false" />
+          <Property Type="DateTime" Name="Hora_Orden" Nullable="false" Precision="23" />
+          <Property Type="Int32" Name="Codigo_Orden_Detalle" Nullable="false" />
+          <Property Type="Int32" Name="Codigo_Producto" Nullable="false" />
+          <Property Type="Int32" Name="Codigo_Producto_Unidad_Medida" Nullable="true" />
+          <Property Type="Int32" Name="Codigo_Producto_Extra" Nullable="true" />
+          <Property Type="String" Name="NombreProducto" Nullable="false" MaxLength="118" />
+          <Property Type="Int32" Name="Cantidad_Producto" Nullable="false" />
+          <Property Type="Decimal" Name="Sub_Total_Precio_Producto" Nullable="false" Precision="19" />
+          <Property Type="String" Name="Nota_Producto" Nullable="true" MaxLength="50" />
+          <Property Type="DateTime" Name="Hora_Orden_Detalle" Nullable="false" Precision="23" />
+          <Property Type="String" Name="Mesa" Nullable="false" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="SPC_GET_MESA_Result">
+          <Property Type="Int32" Name="Codigo_Mesa" Nullable="false" />
+          <Property Type="String" Name="Mesa" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="Codigo_Area" Nullable="false" />
+          <Property Type="String" Name="Color_Mesa" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="PosicionX" Nullable="false" MaxLength="10" />
+          <Property Type="String" Name="PosicionY" Nullable="false" MaxLength="10" />
+          <Property Type="String" Name="Base" Nullable="false" MaxLength="10" />
+          <Property Type="String" Name="Altura" Nullable="false" MaxLength="10" />
+          <Property Type="Boolean" Name="Ocupada" Nullable="true" />
+          <Property Type="Int32" Name="Codigo_Estado_Orden" Nullable="true" />
+          <Property Type="Boolean" Name="Activo" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="SPC_GET_ORDENDETALLE_Result">
+          <Property Type="Int32" Name="Codigo_Orden" Nullable="false" />
+          <Property Type="Int32" Name="Codigo_Mesa" Nullable="false" />
+          <Property Type="Int32" Name="Comensales" Nullable="false" />
+          <Property Type="DateTime" Name="Hora_Orden" Nullable="false" Precision="23" />
+          <Property Type="Int32" Name="Codigo_Estado_Orden" Nullable="false" />
+          <Property Type="Int32" Name="Codigo_Orden_Detalle" Nullable="false" />
+          <Property Type="Int32" Name="Codigo_Producto" Nullable="false" />
+          <Property Type="Int32" Name="Codigo_Producto_Unidad_Medida" Nullable="true" />
+          <Property Type="Int32" Name="Codigo_Producto_Extra" Nullable="true" />
+          <Property Type="String" Name="NombreProducto" Nullable="false" MaxLength="114" />
+          <Property Type="Int32" Name="Cantidad_Producto" Nullable="false" />
+          <Property Type="Decimal" Name="PrecioVenta" Nullable="true" Precision="19" />
+          <Property Type="Decimal" Name="Sub_Total_Precio_Producto" Nullable="false" Precision="19" />
+          <Property Type="String" Name="Nota_Producto" Nullable="true" MaxLength="50" />
+          <Property Type="DateTime" Name="Hora_Orden_Detalle" Nullable="false" Precision="23" />
+          <Property Type="Int32" Name="Codigo_Estado_Orden_Detalle" Nullable="false" />
+          <Property Type="Boolean" Name="Impresora" Nullable="false" />
+          <Property Type="Int32" Name="Codigo_Usuario" Nullable="false" />
+          <Property Type="Boolean" Name="Activo" Nullable="false" />
+          <Property Type="String" Name="Mesa" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="OrdenFactura" Nullable="false" />
+          <Property Type="DateTime" Name="Hora_Pago" Nullable="true" Precision="23" />
+          <Property Type="Int64" Name="NumeroFactura" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="SPC_GET_PERFIL_Result">
+          <Property Type="Int32" Name="Codigo_Perfil" Nullable="false" />
+          <Property Type="String" Name="Perfil" Nullable="false" MaxLength="50" />
+          <Property Type="Boolean" Name="Activo" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="SPC_GET_PERMISO_Result">
+          <Property Type="Int32" Name="Codigo_Permiso" Nullable="false" />
+          <Property Type="String" Name="Permiso" Nullable="false" MaxLength="50" />
+          <Property Type="Boolean" Name="Activo" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="SPC_GET_PERMISOSPERFILES_Result">
+          <Property Type="Int32" Name="Codigo_Perfil_Permiso" Nullable="false" />
+          <Property Type="Int32" Name="Codigo_Perfil" Nullable="false" />
+          <Property Type="Int32" Name="Codigo_Permiso" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="SPC_GET_PRODUCTO_Result">
+          <Property Type="Int32" Name="Codigo_Producto" Nullable="false" />
+          <Property Type="Int32" Name="Codigo_Categoria_Producto" Nullable="false" />
+          <Property Type="String" Name="NombreProducto" Nullable="false" MaxLength="50" />
+          <Property Type="Binary" Name="ImagenProducto" Nullable="true" MaxLength="Max" />
+          <Property Type="Decimal" Name="PrecioVenta" Nullable="false" Precision="19" />
+          <Property Type="Int32" Name="OrdenProducto" Nullable="false" />
+          <Property Type="Int32" Name="Codigo_Tipo_Producto" Nullable="false" />
+          <Property Type="Decimal" Name="PrecioComoExtra" Nullable="true" Precision="19" />
+          <Property Type="Boolean" Name="AceptaExtra" Nullable="false" />
+          <Property Type="Boolean" Name="Impresora" Nullable="false" />
+          <Property Type="Boolean" Name="Activo" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="SPC_GET_PRODUCTOSUNIDADESMEDIDAS_Result">
+          <Property Type="Int32" Name="Codigo_Producto" Nullable="false" />
+          <Property Type="String" Name="NombreProductoUnidadMedida" Nullable="false" MaxLength="61" />
+          <Property Type="Int32" Name="Codigo_Producto_Unidad_Medida" Nullable="true" />
+          <Property Type="Int32" Name="Codigo_Unidad_Medida" Nullable="true" />
+          <Property Type="String" Name="Abreviatura" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="Unidad_Medida" Nullable="true" MaxLength="15" />
+          <Property Type="Decimal" Name="Precio_Venta" Nullable="false" Precision="19" />
+        </ComplexType>
+        <ComplexType Name="SPC_GET_TIPOPRODUCTO_Result">
+          <Property Type="Int32" Name="Codigo_Tipo_Producto" Nullable="false" />
+          <Property Type="String" Name="Tipo_Producto" Nullable="false" MaxLength="50" />
+          <Property Type="Boolean" Name="Activo" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="SPC_GET_TOPVENTAS_Result">
+          <Property Type="String" Name="NombreProducto" Nullable="false" MaxLength="114" />
+          <Property Type="Int32" Name="Cantidad" Nullable="true" />
+          <Property Type="Decimal" Name="VentaTotal" Nullable="true" Precision="19" />
+        </ComplexType>
+        <ComplexType Name="SPC_GET_UNIDADESMEDIDAS_Result">
+          <Property Type="Int32" Name="Codigo_Unidad_Medida" Nullable="false" />
+          <Property Type="String" Name="Unidad_Medida" Nullable="false" MaxLength="15" />
+          <Property Type="String" Name="Abreviatura" Nullable="true" MaxLength="10" />
+        </ComplexType>
+        <ComplexType Name="SPC_GET_USUARIO_Result">
+          <Property Type="Int32" Name="Codigo_Usuario" Nullable="false" />
+          <Property Type="Int32" Name="Codigo_Perfil" Nullable="false" />
+          <Property Type="String" Name="Usuario" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="Clave" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="Nombre_Usuario" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Apellido_Usuario" Nullable="true" MaxLength="50" />
+          <Property Type="Boolean" Name="Activo" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="SPC_SET_ORDENDETALLE_Result">
+          <Property Type="Int32" Name="Codigo_Orden" Nullable="false" />
+          <Property Type="Int32" Name="Codigo_Mesa" Nullable="false" />
+          <Property Type="Int32" Name="Comensales" Nullable="false" />
+          <Property Type="DateTime" Name="Hora_Orden" Nullable="false" Precision="23" />
+          <Property Type="Int32" Name="Codigo_Estado_Orden" Nullable="false" />
+          <Property Type="Int32" Name="Codigo_Orden_Detalle" Nullable="false" />
+          <Property Type="Int32" Name="Codigo_Producto" Nullable="false" />
+          <Property Type="Int32" Name="Codigo_Producto_Unidad_Medida" Nullable="true" />
+          <Property Type="Int32" Name="Codigo_Producto_Extra" Nullable="true" />
+          <Property Type="String" Name="NombreProducto" Nullable="false" MaxLength="114" />
+          <Property Type="Int32" Name="Cantidad_Producto" Nullable="false" />
+          <Property Type="Decimal" Name="PrecioVenta" Nullable="true" Precision="19" />
+          <Property Type="Decimal" Name="Sub_Total_Precio_Producto" Nullable="false" Precision="19" />
+          <Property Type="String" Name="Nota_Producto" Nullable="true" MaxLength="50" />
+          <Property Type="DateTime" Name="Hora_Orden_Detalle" Nullable="false" Precision="23" />
+          <Property Type="Int32" Name="Codigo_Estado_Orden_Detalle" Nullable="false" />
+          <Property Type="Boolean" Name="Impresora" Nullable="false" />
+          <Property Type="Int32" Name="Codigo_Usuario" Nullable="false" />
+          <Property Type="Boolean" Name="Activo" Nullable="false" />
+          <Property Type="String" Name="Mesa" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="OrdenFactura" Nullable="false" />
+          <Property Type="DateTime" Name="Hora_Pago" Nullable="true" Precision="23" />
+          <Property Type="Int64" Name="NumeroFactura" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="SPC_GET_INFORMACIONEMPRESA_Result">
+          <Property Type="Int32" Name="IdInformacionEmpresa" Nullable="false" />
+          <Property Type="String" Name="NombreEmpresa" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="Direccion" Nullable="true" MaxLength="250" />
+          <Property Type="String" Name="CodigoPostal" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="Provincia" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Ciudad" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Pais" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="CIF" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="NIF" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="Telefono" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="Movil" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="Facebook" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="NombreImpresoraBarra" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="NombreImpresoraCocina" Nullable="true" MaxLength="100" />
+          <Property Type="Decimal" Name="PorcientoIVA" Nullable="true" Precision="18" Scale="0" />
+          <Property Type="String" Name="TipoLetraBarra" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="TipoLetraCocina" Nullable="true" MaxLength="50" />
+          <Property Type="Decimal" Name="TamanoLetraBarra" Nullable="true" Precision="18" Scale="0" />
+          <Property Type="Decimal" Name="TamanoLetraCocina" Nullable="true" Precision="18" Scale="0" />
+          <Property Type="String" Name="PlantillaPedidoBarra" Nullable="true" MaxLength="1000" />
+          <Property Type="String" Name="PlantillaPedidoCocina" Nullable="true" MaxLength="1000" />
+          <Property Type="String" Name="PlantillaAnulacionBarra" Nullable="true" MaxLength="1000" />
+          <Property Type="String" Name="PlantillaCuenta" Nullable="true" MaxLength="2000" />
+        </ComplexType>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="TPVDBModelStoreContainer" CdmEntityContainer="TPVDBEntities">
+          <EntitySetMapping Name="Areas">
+            <EntityTypeMapping TypeName="TPVDBModel.Areas">
+              <MappingFragment StoreEntitySet="Areas">
+                <ScalarProperty Name="Activo" ColumnName="Activo" />
+                <ScalarProperty Name="Orden" ColumnName="Orden" />
+                <ScalarProperty Name="Color_Area" ColumnName="Color_Area" />
+                <ScalarProperty Name="Area" ColumnName="Area" />
+                <ScalarProperty Name="Codigo_Area" ColumnName="Codigo_Area" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CategoriasProductos">
+            <EntityTypeMapping TypeName="TPVDBModel.CategoriasProductos">
+              <MappingFragment StoreEntitySet="CategoriasProductos">
+                <ScalarProperty Name="Activo" ColumnName="Activo" />
+                <ScalarProperty Name="Orden" ColumnName="Orden" />
+                <ScalarProperty Name="Categoria_Producto" ColumnName="Categoria_Producto" />
+                <ScalarProperty Name="Codigo_Categoria_Padre_Producto" ColumnName="Codigo_Categoria_Padre_Producto" />
+                <ScalarProperty Name="Codigo_Categoria_Producto" ColumnName="Codigo_Categoria_Producto" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EstadosOrden">
+            <EntityTypeMapping TypeName="TPVDBModel.EstadosOrden">
+              <MappingFragment StoreEntitySet="EstadosOrden">
+                <ScalarProperty Name="Activo" ColumnName="Activo" />
+                <ScalarProperty Name="Estado_Orden" ColumnName="Estado_Orden" />
+                <ScalarProperty Name="Codigo_Estado_Orden" ColumnName="Codigo_Estado_Orden" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EstadosOrdenDetalle">
+            <EntityTypeMapping TypeName="TPVDBModel.EstadosOrdenDetalle">
+              <MappingFragment StoreEntitySet="EstadosOrdenDetalle">
+                <ScalarProperty Name="Activo" ColumnName="Activo" />
+                <ScalarProperty Name="Estado_Orden_Detalle" ColumnName="Estado_Orden_Detalle" />
+                <ScalarProperty Name="Codigo_Estado_Orden_Detalle" ColumnName="Codigo_Estado_Orden_Detalle" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="InformacionEmpresa">
+            <EntityTypeMapping TypeName="TPVDBModel.InformacionEmpresa">
+              <MappingFragment StoreEntitySet="InformacionEmpresa">
+                <ScalarProperty Name="PlantillaCuenta" ColumnName="PlantillaCuenta" />
+                <ScalarProperty Name="PlantillaAnulacionBarra" ColumnName="PlantillaAnulacionBarra" />
+                <ScalarProperty Name="PlantillaPedidoCocina" ColumnName="PlantillaPedidoCocina" />
+                <ScalarProperty Name="PlantillaPedidoBarra" ColumnName="PlantillaPedidoBarra" />
+                <ScalarProperty Name="TamanoLetraCocina" ColumnName="TamanoLetraCocina" />
+                <ScalarProperty Name="TamanoLetraBarra" ColumnName="TamanoLetraBarra" />
+                <ScalarProperty Name="TipoLetraCocina" ColumnName="TipoLetraCocina" />
+                <ScalarProperty Name="TipoLetraBarra" ColumnName="TipoLetraBarra" />
+                <ScalarProperty Name="PorcientoIVA" ColumnName="PorcientoIVA" />
+                <ScalarProperty Name="NombreImpresoraCocina" ColumnName="NombreImpresoraCocina" />
+                <ScalarProperty Name="NombreImpresoraBarra" ColumnName="NombreImpresoraBarra" />
+                <ScalarProperty Name="Facebook" ColumnName="Facebook" />
+                <ScalarProperty Name="Movil" ColumnName="Movil" />
+                <ScalarProperty Name="Telefono" ColumnName="Telefono" />
+                <ScalarProperty Name="NIF" ColumnName="NIF" />
+                <ScalarProperty Name="CIF" ColumnName="CIF" />
+                <ScalarProperty Name="Pais" ColumnName="Pais" />
+                <ScalarProperty Name="Ciudad" ColumnName="Ciudad" />
+                <ScalarProperty Name="Provincia" ColumnName="Provincia" />
+                <ScalarProperty Name="CodigoPostal" ColumnName="CodigoPostal" />
+                <ScalarProperty Name="Direccion" ColumnName="Direccion" />
+                <ScalarProperty Name="NombreEmpresa" ColumnName="NombreEmpresa" />
+                <ScalarProperty Name="IdInformacionEmpresa" ColumnName="IdInformacionEmpresa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Mesas">
+            <EntityTypeMapping TypeName="TPVDBModel.Mesas">
+              <MappingFragment StoreEntitySet="Mesas">
+                <ScalarProperty Name="Activo" ColumnName="Activo" />
+                <ScalarProperty Name="Altura" ColumnName="Altura" />
+                <ScalarProperty Name="Base" ColumnName="Base" />
+                <ScalarProperty Name="PosicionY" ColumnName="PosicionY" />
+                <ScalarProperty Name="PosicionX" ColumnName="PosicionX" />
+                <ScalarProperty Name="Color_Mesa" ColumnName="Color_Mesa" />
+                <ScalarProperty Name="Codigo_Area" ColumnName="Codigo_Area" />
+                <ScalarProperty Name="Mesa" ColumnName="Mesa" />
+                <ScalarProperty Name="Codigo_Mesa" ColumnName="Codigo_Mesa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Metodos_Pago">
+            <EntityTypeMapping TypeName="TPVDBModel.Metodos_Pago">
+              <MappingFragment StoreEntitySet="Metodos_Pago">
+                <ScalarProperty Name="Activo" ColumnName="Activo" />
+                <ScalarProperty Name="Metodo_Pago" ColumnName="Metodo_Pago" />
+                <ScalarProperty Name="Codigo_Metodo_Pago" ColumnName="Codigo_Metodo_Pago" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Ordenes">
+            <EntityTypeMapping TypeName="TPVDBModel.Ordenes">
+              <MappingFragment StoreEntitySet="Ordenes">
+                <ScalarProperty Name="Activo" ColumnName="Activo" />
+                <ScalarProperty Name="Hora_Pago" ColumnName="Hora_Pago" />
+                <ScalarProperty Name="Codigo_Metodo_Pago" ColumnName="Codigo_Metodo_Pago" />
+                <ScalarProperty Name="Codigo_Estado_Orden" ColumnName="Codigo_Estado_Orden" />
+                <ScalarProperty Name="Hora_Orden" ColumnName="Hora_Orden" />
+                <ScalarProperty Name="Comensales" ColumnName="Comensales" />
+                <ScalarProperty Name="Codigo_Mesa" ColumnName="Codigo_Mesa" />
+                <ScalarProperty Name="Codigo_Orden" ColumnName="Codigo_Orden" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OrdenesDetalles">
+            <EntityTypeMapping TypeName="TPVDBModel.OrdenesDetalles">
+              <MappingFragment StoreEntitySet="OrdenesDetalles">
+                <ScalarProperty Name="Activo" ColumnName="Activo" />
+                <ScalarProperty Name="Codigo_Usuario" ColumnName="Codigo_Usuario" />
+                <ScalarProperty Name="Codigo_Estado_Orden_Detalle" ColumnName="Codigo_Estado_Orden_Detalle" />
+                <ScalarProperty Name="Hora_Orden_Detalle" ColumnName="Hora_Orden_Detalle" />
+                <ScalarProperty Name="Nota_Producto" ColumnName="Nota_Producto" />
+                <ScalarProperty Name="Cantidad_Personas" ColumnName="Cantidad_Personas" />
+                <ScalarProperty Name="Sub_Total_Precio_Producto" ColumnName="Sub_Total_Precio_Producto" />
+                <ScalarProperty Name="Codigo_Producto_Extra" ColumnName="Codigo_Producto_Extra" />
+                <ScalarProperty Name="Cantidad_Producto" ColumnName="Cantidad_Producto" />
+                <ScalarProperty Name="Codigo_Producto_Unidad_Medida" ColumnName="Codigo_Producto_Unidad_Medida" />
+                <ScalarProperty Name="Codigo_Producto" ColumnName="Codigo_Producto" />
+                <ScalarProperty Name="Codigo_Orden" ColumnName="Codigo_Orden" />
+                <ScalarProperty Name="Codigo_Orden_Detalle" ColumnName="Codigo_Orden_Detalle" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Perfiles">
+            <EntityTypeMapping TypeName="TPVDBModel.Perfiles">
+              <MappingFragment StoreEntitySet="Perfiles">
+                <ScalarProperty Name="Activo" ColumnName="Activo" />
+                <ScalarProperty Name="Perfil" ColumnName="Perfil" />
+                <ScalarProperty Name="Codigo_Perfil" ColumnName="Codigo_Perfil" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Permisos">
+            <EntityTypeMapping TypeName="TPVDBModel.Permisos">
+              <MappingFragment StoreEntitySet="Permisos">
+                <ScalarProperty Name="Activo" ColumnName="Activo" />
+                <ScalarProperty Name="Permiso" ColumnName="Permiso" />
+                <ScalarProperty Name="Codigo_Permiso" ColumnName="Codigo_Permiso" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PermisosPerfiles">
+            <EntityTypeMapping TypeName="TPVDBModel.PermisosPerfiles">
+              <MappingFragment StoreEntitySet="PermisosPerfiles">
+                <ScalarProperty Name="Codigo_Permiso" ColumnName="Codigo_Permiso" />
+                <ScalarProperty Name="Codigo_Perfil" ColumnName="Codigo_Perfil" />
+                <ScalarProperty Name="Codigo_Perfil_Permiso" ColumnName="Codigo_Perfil_Permiso" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Productos">
+            <EntityTypeMapping TypeName="TPVDBModel.Productos">
+              <MappingFragment StoreEntitySet="Productos">
+                <ScalarProperty Name="Activo" ColumnName="Activo" />
+                <ScalarProperty Name="Impresora" ColumnName="Impresora" />
+                <ScalarProperty Name="AceptaExtra" ColumnName="AceptaExtra" />
+                <ScalarProperty Name="PrecioComoExtra" ColumnName="PrecioComoExtra" />
+                <ScalarProperty Name="Codigo_Tipo_Producto" ColumnName="Codigo_Tipo_Producto" />
+                <ScalarProperty Name="OrdenProducto" ColumnName="OrdenProducto" />
+                <ScalarProperty Name="PrecioVenta" ColumnName="PrecioVenta" />
+                <ScalarProperty Name="ImagenProducto" ColumnName="ImagenProducto" />
+                <ScalarProperty Name="NombreProducto" ColumnName="NombreProducto" />
+                <ScalarProperty Name="Codigo_Categoria_Producto" ColumnName="Codigo_Categoria_Producto" />
+                <ScalarProperty Name="Codigo_Producto" ColumnName="Codigo_Producto" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProductosUnidadesMedidas">
+            <EntityTypeMapping TypeName="TPVDBModel.ProductosUnidadesMedidas">
+              <MappingFragment StoreEntitySet="ProductosUnidadesMedidas">
+                <ScalarProperty Name="Activo" ColumnName="Activo" />
+                <ScalarProperty Name="Precio_Venta" ColumnName="Precio_Venta" />
+                <ScalarProperty Name="Codigo_Unidad_Medida" ColumnName="Codigo_Unidad_Medida" />
+                <ScalarProperty Name="Codigo_Producto" ColumnName="Codigo_Producto" />
+                <ScalarProperty Name="Codigo_Producto_Unidad_Medida" ColumnName="Codigo_Producto_Unidad_Medida" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TiposProductos">
+            <EntityTypeMapping TypeName="TPVDBModel.TiposProductos">
+              <MappingFragment StoreEntitySet="TiposProductos">
+                <ScalarProperty Name="Activo" ColumnName="Activo" />
+                <ScalarProperty Name="Tipo_Producto" ColumnName="Tipo_Producto" />
+                <ScalarProperty Name="Codigo_Tipo_Producto" ColumnName="Codigo_Tipo_Producto" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UnidadesMedidas">
+            <EntityTypeMapping TypeName="TPVDBModel.UnidadesMedidas">
+              <MappingFragment StoreEntitySet="UnidadesMedidas">
+                <ScalarProperty Name="Activo" ColumnName="Activo" />
+                <ScalarProperty Name="Abreviatura" ColumnName="Abreviatura" />
+                <ScalarProperty Name="Unidad_Medida" ColumnName="Unidad_Medida" />
+                <ScalarProperty Name="Codigo_Unidad_Medida" ColumnName="Codigo_Unidad_Medida" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Usuarios">
+            <EntityTypeMapping TypeName="TPVDBModel.Usuarios">
+              <MappingFragment StoreEntitySet="Usuarios">
+                <ScalarProperty Name="Activo" ColumnName="Activo" />
+                <ScalarProperty Name="Apellido_Usuario" ColumnName="Apellido_Usuario" />
+                <ScalarProperty Name="Nombre_Usuario" ColumnName="Nombre_Usuario" />
+                <ScalarProperty Name="Clave" ColumnName="Clave" />
+                <ScalarProperty Name="Usuario" ColumnName="Usuario" />
+                <ScalarProperty Name="Codigo_Perfil" ColumnName="Codigo_Perfil" />
+                <ScalarProperty Name="Codigo_Usuario" ColumnName="Codigo_Usuario" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VW_NUMEROFACTURAANUAL">
+            <EntityTypeMapping TypeName="TPVDBModel.VW_NUMEROFACTURAANUAL">
+              <MappingFragment StoreEntitySet="VW_NUMEROFACTURAANUAL">
+                <ScalarProperty Name="NumeroFactura" ColumnName="NumeroFactura" />
+                <ScalarProperty Name="Codigo_Orden" ColumnName="Codigo_Orden" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="SPC_GET_AREA" FunctionName="TPVDBModel.Store.SPC_GET_AREA">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TPVDBModel.SPC_GET_AREA_Result">
+                <ScalarProperty Name="Codigo_Area" ColumnName="Codigo_Area" />
+                <ScalarProperty Name="Area" ColumnName="Area" />
+                <ScalarProperty Name="Color_Area" ColumnName="Color_Area" />
+                <ScalarProperty Name="Orden" ColumnName="Orden" />
+                <ScalarProperty Name="Activo" ColumnName="Activo" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SPC_GET_CATEGORIA" FunctionName="TPVDBModel.Store.SPC_GET_CATEGORIA">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TPVDBModel.SPC_GET_CATEGORIA_Result">
+                <ScalarProperty Name="Codigo_Categoria_Producto" ColumnName="Codigo_Categoria_Producto" />
+                <ScalarProperty Name="Codigo_Categoria_Padre_Producto" ColumnName="Codigo_Categoria_Padre_Producto" />
+                <ScalarProperty Name="Categoria_Producto" ColumnName="Categoria_Producto" />
+                <ScalarProperty Name="Orden" ColumnName="Orden" />
+                <ScalarProperty Name="Activo" ColumnName="Activo" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SPC_GET_DATOSCONSULTA" FunctionName="TPVDBModel.Store.SPC_GET_DATOSCONSULTA">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TPVDBModel.SPC_GET_DATOSCONSULTA_Result">
+                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+                <ScalarProperty Name="Codigo_Orden" ColumnName="Codigo_Orden" />
+                <ScalarProperty Name="Codigo_Mesa" ColumnName="Codigo_Mesa" />
+                <ScalarProperty Name="Hora_Orden" ColumnName="Hora_Orden" />
+                <ScalarProperty Name="Codigo_Orden_Detalle" ColumnName="Codigo_Orden_Detalle" />
+                <ScalarProperty Name="Codigo_Producto" ColumnName="Codigo_Producto" />
+                <ScalarProperty Name="Codigo_Producto_Unidad_Medida" ColumnName="Codigo_Producto_Unidad_Medida" />
+                <ScalarProperty Name="Codigo_Producto_Extra" ColumnName="Codigo_Producto_Extra" />
+                <ScalarProperty Name="NombreProducto" ColumnName="NombreProducto" />
+                <ScalarProperty Name="Cantidad_Producto" ColumnName="Cantidad_Producto" />
+                <ScalarProperty Name="Sub_Total_Precio_Producto" ColumnName="Sub_Total_Precio_Producto" />
+                <ScalarProperty Name="Nota_Producto" ColumnName="Nota_Producto" />
+                <ScalarProperty Name="Hora_Orden_Detalle" ColumnName="Hora_Orden_Detalle" />
+                <ScalarProperty Name="Mesa" ColumnName="Mesa" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SPC_GET_MESA" FunctionName="TPVDBModel.Store.SPC_GET_MESA">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TPVDBModel.SPC_GET_MESA_Result">
+                <ScalarProperty Name="Codigo_Mesa" ColumnName="Codigo_Mesa" />
+                <ScalarProperty Name="Mesa" ColumnName="Mesa" />
+                <ScalarProperty Name="Codigo_Area" ColumnName="Codigo_Area" />
+                <ScalarProperty Name="Color_Mesa" ColumnName="Color_Mesa" />
+                <ScalarProperty Name="PosicionX" ColumnName="PosicionX" />
+                <ScalarProperty Name="PosicionY" ColumnName="PosicionY" />
+                <ScalarProperty Name="Base" ColumnName="Base" />
+                <ScalarProperty Name="Altura" ColumnName="Altura" />
+                <ScalarProperty Name="Ocupada" ColumnName="Ocupada" />
+                <ScalarProperty Name="Codigo_Estado_Orden" ColumnName="Codigo_Estado_Orden" />
+                <ScalarProperty Name="Activo" ColumnName="Activo" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SPC_GET_ORDENDETALLE" FunctionName="TPVDBModel.Store.SPC_GET_ORDENDETALLE">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TPVDBModel.SPC_GET_ORDENDETALLE_Result">
+                <ScalarProperty Name="Codigo_Orden" ColumnName="Codigo_Orden" />
+                <ScalarProperty Name="Codigo_Mesa" ColumnName="Codigo_Mesa" />
+                <ScalarProperty Name="Comensales" ColumnName="Comensales" />
+                <ScalarProperty Name="Hora_Orden" ColumnName="Hora_Orden" />
+                <ScalarProperty Name="Codigo_Estado_Orden" ColumnName="Codigo_Estado_Orden" />
+                <ScalarProperty Name="Codigo_Orden_Detalle" ColumnName="Codigo_Orden_Detalle" />
+                <ScalarProperty Name="Codigo_Producto" ColumnName="Codigo_Producto" />
+                <ScalarProperty Name="Codigo_Producto_Unidad_Medida" ColumnName="Codigo_Producto_Unidad_Medida" />
+                <ScalarProperty Name="Codigo_Producto_Extra" ColumnName="Codigo_Producto_Extra" />
+                <ScalarProperty Name="NombreProducto" ColumnName="NombreProducto" />
+                <ScalarProperty Name="Cantidad_Producto" ColumnName="Cantidad_Producto" />
+                <ScalarProperty Name="PrecioVenta" ColumnName="PrecioVenta" />
+                <ScalarProperty Name="Sub_Total_Precio_Producto" ColumnName="Sub_Total_Precio_Producto" />
+                <ScalarProperty Name="Nota_Producto" ColumnName="Nota_Producto" />
+                <ScalarProperty Name="Hora_Orden_Detalle" ColumnName="Hora_Orden_Detalle" />
+                <ScalarProperty Name="Codigo_Estado_Orden_Detalle" ColumnName="Codigo_Estado_Orden_Detalle" />
+                <ScalarProperty Name="Impresora" ColumnName="Impresora" />
+                <ScalarProperty Name="Codigo_Usuario" ColumnName="Codigo_Usuario" />
+                <ScalarProperty Name="Activo" ColumnName="Activo" />
+                <ScalarProperty Name="Mesa" ColumnName="Mesa" />
+                <ScalarProperty Name="OrdenFactura" ColumnName="OrdenFactura" />
+                <ScalarProperty Name="Hora_Pago" ColumnName="Hora_Pago" />
+                <ScalarProperty Name="NumeroFactura" ColumnName="NumeroFactura" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SPC_GET_PERFIL" FunctionName="TPVDBModel.Store.SPC_GET_PERFIL">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TPVDBModel.SPC_GET_PERFIL_Result">
+                <ScalarProperty Name="Codigo_Perfil" ColumnName="Codigo_Perfil" />
+                <ScalarProperty Name="Perfil" ColumnName="Perfil" />
+                <ScalarProperty Name="Activo" ColumnName="Activo" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SPC_GET_PERMISO" FunctionName="TPVDBModel.Store.SPC_GET_PERMISO">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TPVDBModel.SPC_GET_PERMISO_Result">
+                <ScalarProperty Name="Codigo_Permiso" ColumnName="Codigo_Permiso" />
+                <ScalarProperty Name="Permiso" ColumnName="Permiso" />
+                <ScalarProperty Name="Activo" ColumnName="Activo" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SPC_GET_PERMISOSPERFILES" FunctionName="TPVDBModel.Store.SPC_GET_PERMISOSPERFILES">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TPVDBModel.SPC_GET_PERMISOSPERFILES_Result">
+                <ScalarProperty Name="Codigo_Perfil_Permiso" ColumnName="Codigo_Perfil_Permiso" />
+                <ScalarProperty Name="Codigo_Perfil" ColumnName="Codigo_Perfil" />
+                <ScalarProperty Name="Codigo_Permiso" ColumnName="Codigo_Permiso" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SPC_GET_PRODUCTO" FunctionName="TPVDBModel.Store.SPC_GET_PRODUCTO">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TPVDBModel.SPC_GET_PRODUCTO_Result">
+                <ScalarProperty Name="Codigo_Producto" ColumnName="Codigo_Producto" />
+                <ScalarProperty Name="Codigo_Categoria_Producto" ColumnName="Codigo_Categoria_Producto" />
+                <ScalarProperty Name="NombreProducto" ColumnName="NombreProducto" />
+                <ScalarProperty Name="ImagenProducto" ColumnName="ImagenProducto" />
+                <ScalarProperty Name="PrecioVenta" ColumnName="PrecioVenta" />
+                <ScalarProperty Name="OrdenProducto" ColumnName="OrdenProducto" />
+                <ScalarProperty Name="Codigo_Tipo_Producto" ColumnName="Codigo_Tipo_Producto" />
+                <ScalarProperty Name="PrecioComoExtra" ColumnName="PrecioComoExtra" />
+                <ScalarProperty Name="AceptaExtra" ColumnName="AceptaExtra" />
+                <ScalarProperty Name="Impresora" ColumnName="Impresora" />
+                <ScalarProperty Name="Activo" ColumnName="Activo" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SPC_GET_PRODUCTOSUNIDADESMEDIDAS" FunctionName="TPVDBModel.Store.SPC_GET_PRODUCTOSUNIDADESMEDIDAS">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TPVDBModel.SPC_GET_PRODUCTOSUNIDADESMEDIDAS_Result">
+                <ScalarProperty Name="Codigo_Producto" ColumnName="Codigo_Producto" />
+                <ScalarProperty Name="NombreProductoUnidadMedida" ColumnName="NombreProductoUnidadMedida" />
+                <ScalarProperty Name="Codigo_Producto_Unidad_Medida" ColumnName="Codigo_Producto_Unidad_Medida" />
+                <ScalarProperty Name="Codigo_Unidad_Medida" ColumnName="Codigo_Unidad_Medida" />
+                <ScalarProperty Name="Abreviatura" ColumnName="Abreviatura" />
+                <ScalarProperty Name="Unidad_Medida" ColumnName="Unidad_Medida" />
+                <ScalarProperty Name="Precio_Venta" ColumnName="Precio_Venta" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SPC_GET_TIPOPRODUCTO" FunctionName="TPVDBModel.Store.SPC_GET_TIPOPRODUCTO">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TPVDBModel.SPC_GET_TIPOPRODUCTO_Result">
+                <ScalarProperty Name="Codigo_Tipo_Producto" ColumnName="Codigo_Tipo_Producto" />
+                <ScalarProperty Name="Tipo_Producto" ColumnName="Tipo_Producto" />
+                <ScalarProperty Name="Activo" ColumnName="Activo" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SPC_GET_TOPVENTAS" FunctionName="TPVDBModel.Store.SPC_GET_TOPVENTAS">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TPVDBModel.SPC_GET_TOPVENTAS_Result">
+                <ScalarProperty Name="NombreProducto" ColumnName="NombreProducto" />
+                <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
+                <ScalarProperty Name="VentaTotal" ColumnName="VentaTotal" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SPC_GET_UNIDADESMEDIDAS" FunctionName="TPVDBModel.Store.SPC_GET_UNIDADESMEDIDAS">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TPVDBModel.SPC_GET_UNIDADESMEDIDAS_Result">
+                <ScalarProperty Name="Codigo_Unidad_Medida" ColumnName="Codigo_Unidad_Medida" />
+                <ScalarProperty Name="Unidad_Medida" ColumnName="Unidad_Medida" />
+                <ScalarProperty Name="Abreviatura" ColumnName="Abreviatura" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SPC_GET_USUARIO" FunctionName="TPVDBModel.Store.SPC_GET_USUARIO">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TPVDBModel.SPC_GET_USUARIO_Result">
+                <ScalarProperty Name="Codigo_Usuario" ColumnName="Codigo_Usuario" />
+                <ScalarProperty Name="Codigo_Perfil" ColumnName="Codigo_Perfil" />
+                <ScalarProperty Name="Usuario" ColumnName="Usuario" />
+                <ScalarProperty Name="Clave" ColumnName="Clave" />
+                <ScalarProperty Name="Nombre_Usuario" ColumnName="Nombre_Usuario" />
+                <ScalarProperty Name="Apellido_Usuario" ColumnName="Apellido_Usuario" />
+                <ScalarProperty Name="Activo" ColumnName="Activo" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SPC_SET_AREA" FunctionName="TPVDBModel.Store.SPC_SET_AREA" />
+          <FunctionImportMapping FunctionImportName="SPC_SET_CATEGORIA" FunctionName="TPVDBModel.Store.SPC_SET_CATEGORIA" />
+          <FunctionImportMapping FunctionImportName="SPC_SET_MESA" FunctionName="TPVDBModel.Store.SPC_SET_MESA" />
+          <FunctionImportMapping FunctionImportName="SPC_SET_ORDEN" FunctionName="TPVDBModel.Store.SPC_SET_ORDEN" />
+          <FunctionImportMapping FunctionImportName="SPC_SET_ORDENDETALLE" FunctionName="TPVDBModel.Store.SPC_SET_ORDENDETALLE">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TPVDBModel.SPC_SET_ORDENDETALLE_Result">
+                <ScalarProperty Name="Codigo_Orden" ColumnName="Codigo_Orden" />
+                <ScalarProperty Name="Codigo_Mesa" ColumnName="Codigo_Mesa" />
+                <ScalarProperty Name="Comensales" ColumnName="Comensales" />
+                <ScalarProperty Name="Hora_Orden" ColumnName="Hora_Orden" />
+                <ScalarProperty Name="Codigo_Estado_Orden" ColumnName="Codigo_Estado_Orden" />
+                <ScalarProperty Name="Codigo_Orden_Detalle" ColumnName="Codigo_Orden_Detalle" />
+                <ScalarProperty Name="Codigo_Producto" ColumnName="Codigo_Producto" />
+                <ScalarProperty Name="Codigo_Producto_Unidad_Medida" ColumnName="Codigo_Producto_Unidad_Medida" />
+                <ScalarProperty Name="Codigo_Producto_Extra" ColumnName="Codigo_Producto_Extra" />
+                <ScalarProperty Name="NombreProducto" ColumnName="NombreProducto" />
+                <ScalarProperty Name="Cantidad_Producto" ColumnName="Cantidad_Producto" />
+                <ScalarProperty Name="PrecioVenta" ColumnName="PrecioVenta" />
+                <ScalarProperty Name="Sub_Total_Precio_Producto" ColumnName="Sub_Total_Precio_Producto" />
+                <ScalarProperty Name="Nota_Producto" ColumnName="Nota_Producto" />
+                <ScalarProperty Name="Hora_Orden_Detalle" ColumnName="Hora_Orden_Detalle" />
+                <ScalarProperty Name="Codigo_Estado_Orden_Detalle" ColumnName="Codigo_Estado_Orden_Detalle" />
+                <ScalarProperty Name="Impresora" ColumnName="Impresora" />
+                <ScalarProperty Name="Codigo_Usuario" ColumnName="Codigo_Usuario" />
+                <ScalarProperty Name="Activo" ColumnName="Activo" />
+                <ScalarProperty Name="Mesa" ColumnName="Mesa" />
+                <ScalarProperty Name="OrdenFactura" ColumnName="OrdenFactura" />
+                <ScalarProperty Name="Hora_Pago" ColumnName="Hora_Pago" />
+                <ScalarProperty Name="NumeroFactura" ColumnName="NumeroFactura" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SPC_SET_PERFIL" FunctionName="TPVDBModel.Store.SPC_SET_PERFIL" />
+          <FunctionImportMapping FunctionImportName="SPC_SET_PERMISOSPERFILES" FunctionName="TPVDBModel.Store.SPC_SET_PERMISOSPERFILES" />
+          <FunctionImportMapping FunctionImportName="SPC_SET_PRODUCTO" FunctionName="TPVDBModel.Store.SPC_SET_PRODUCTO" />
+          <FunctionImportMapping FunctionImportName="SPC_SET_PRODUCTOSUNIDADESMEDIDAS" FunctionName="TPVDBModel.Store.SPC_SET_PRODUCTOSUNIDADESMEDIDAS" />
+          <FunctionImportMapping FunctionImportName="SPC_SET_UNIDADESMEDIDAS" FunctionName="TPVDBModel.Store.SPC_SET_UNIDADESMEDIDAS" />
+          <FunctionImportMapping FunctionImportName="SPC_SET_USUARIO" FunctionName="TPVDBModel.Store.SPC_SET_USUARIO" />
+          <FunctionImportMapping FunctionImportName="SPC_SET_INFORMACIONEMPRESA" FunctionName="TPVDBModel.Store.SPC_SET_INFORMACIONEMPRESA" />
+          <FunctionImportMapping FunctionImportName="SPC_GET_INFORMACIONEMPRESA" FunctionName="TPVDBModel.Store.SPC_GET_INFORMACIONEMPRESA">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TPVDBModel.SPC_GET_INFORMACIONEMPRESA_Result">
+                <ScalarProperty Name="IdInformacionEmpresa" ColumnName="IdInformacionEmpresa" />
+                <ScalarProperty Name="NombreEmpresa" ColumnName="NombreEmpresa" />
+                <ScalarProperty Name="Direccion" ColumnName="Direccion" />
+                <ScalarProperty Name="CodigoPostal" ColumnName="CodigoPostal" />
+                <ScalarProperty Name="Provincia" ColumnName="Provincia" />
+                <ScalarProperty Name="Ciudad" ColumnName="Ciudad" />
+                <ScalarProperty Name="Pais" ColumnName="Pais" />
+                <ScalarProperty Name="CIF" ColumnName="CIF" />
+                <ScalarProperty Name="NIF" ColumnName="NIF" />
+                <ScalarProperty Name="Telefono" ColumnName="Telefono" />
+                <ScalarProperty Name="Movil" ColumnName="Movil" />
+                <ScalarProperty Name="Facebook" ColumnName="Facebook" />
+                <ScalarProperty Name="NombreImpresoraBarra" ColumnName="NombreImpresoraBarra" />
+                <ScalarProperty Name="NombreImpresoraCocina" ColumnName="NombreImpresoraCocina" />
+                <ScalarProperty Name="PorcientoIVA" ColumnName="PorcientoIVA" />
+                <ScalarProperty Name="TipoLetraBarra" ColumnName="TipoLetraBarra" />
+                <ScalarProperty Name="TipoLetraCocina" ColumnName="TipoLetraCocina" />
+                <ScalarProperty Name="TamanoLetraBarra" ColumnName="TamanoLetraBarra" />
+                <ScalarProperty Name="TamanoLetraCocina" ColumnName="TamanoLetraCocina" />
+                <ScalarProperty Name="PlantillaPedidoBarra" ColumnName="PlantillaPedidoBarra" />
+                <ScalarProperty Name="PlantillaPedidoCocina" ColumnName="PlantillaPedidoCocina" />
+                <ScalarProperty Name="PlantillaAnulacionBarra" ColumnName="PlantillaAnulacionBarra" />
+                <ScalarProperty Name="PlantillaCuenta" ColumnName="PlantillaCuenta" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

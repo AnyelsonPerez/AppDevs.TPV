@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="99a02d09bc6d43a6b61f36617a1fdf7b" Name="Diagram1" ZoomLevel="25">
+        <EntityTypeShape EntityType="TPVDBModel.Areas" Width="1.5" PointX="1.5" PointY="19.125" />
+        <EntityTypeShape EntityType="TPVDBModel.CategoriasProductos" Width="1.5" PointX="0.75" PointY="30.5" />
+        <EntityTypeShape EntityType="TPVDBModel.EstadosOrden" Width="1.5" PointX="0.75" PointY="15.625" />
+        <EntityTypeShape EntityType="TPVDBModel.EstadosOrdenDetalle" Width="1.5" PointX="3" PointY="28" />
+        <EntityTypeShape EntityType="TPVDBModel.InformacionEmpresa" Width="1.5" PointX="7.75" PointY="0.75" />
+        <EntityTypeShape EntityType="TPVDBModel.Mesas" Width="1.5" PointX="0.75" PointY="11.75" />
+        <EntityTypeShape EntityType="TPVDBModel.Metodos_Pago" Width="1.5" PointX="0.75" PointY="22.125" />
+        <EntityTypeShape EntityType="TPVDBModel.Ordenes" Width="1.5" PointX="3" PointY="14.125" />
+        <EntityTypeShape EntityType="TPVDBModel.OrdenesDetalles" Width="1.5" PointX="5.25" PointY="5.25" />
+        <EntityTypeShape EntityType="TPVDBModel.Perfiles" Width="1.5" PointX="0.75" PointY="3.875" />
+        <EntityTypeShape EntityType="TPVDBModel.Permisos" Width="1.5" PointX="0.75" PointY="1" />
+        <EntityTypeShape EntityType="TPVDBModel.PermisosPerfiles" Width="1.5" PointX="3" PointY="2.875" />
+        <EntityTypeShape EntityType="TPVDBModel.Productos" Width="1.5" PointX="3" PointY="31" />
+        <EntityTypeShape EntityType="TPVDBModel.ProductosUnidadesMedidas" Width="1.5" PointX="3" PointY="24.625" />
+        <EntityTypeShape EntityType="TPVDBModel.TiposProductos" Width="1.5" PointX="0.75" PointY="33.875" />
+        <EntityTypeShape EntityType="TPVDBModel.UnidadesMedidas" Width="1.5" PointX="0.75" PointY="25" />
+        <EntityTypeShape EntityType="TPVDBModel.Usuarios" Width="1.5" PointX="3" PointY="6.25" />
+        <EntityTypeShape EntityType="TPVDBModel.VW_NUMEROFACTURAANUAL" Width="1.5" PointX="2.75" PointY="0.75" />
+        <AssociationConnector Association="TPVDBModel.FK_Mesas_Areas" />
+        <AssociationConnector Association="TPVDBModel.FK_CategoriasProductos_CategoriasProductos" />
+        <AssociationConnector Association="TPVDBModel.FK_Productos_CategoriasProductos" />
+        <AssociationConnector Association="TPVDBModel.FK_Ordenes_EstadosOrden" />
+        <AssociationConnector Association="TPVDBModel.FK_OrdenesDetalles_EstadosOrdenDetalle" />
+        <AssociationConnector Association="TPVDBModel.FK_Ordenes_Mesas" />
+        <AssociationConnector Association="TPVDBModel.FK_Ordenes_Metodos_Pago" />
+        <AssociationConnector Association="TPVDBModel.FK_OrdenesDetalles_Ordenes" />
+        <AssociationConnector Association="TPVDBModel.FK_OrdenesDetalles_Productos" />
+        <AssociationConnector Association="TPVDBModel.FK_OrdenesDetalles_Productos_Extra" />
+        <AssociationConnector Association="TPVDBModel.FK_OrdenesDetalles_ProductosUnidadesMedidas" />
+        <AssociationConnector Association="TPVDBModel.FK_OrdenesDetalles_Usuarios" />
+        <AssociationConnector Association="TPVDBModel.FK_PermisosPerfiles_Perfiles" />
+        <AssociationConnector Association="TPVDBModel.FK_Usuarios_Perfiles" />
+        <AssociationConnector Association="TPVDBModel.FK_PermisosPerfiles_Permisos" />
+        <AssociationConnector Association="TPVDBModel.FK_Producto_Unidad_Medida_Producto_Unidad_Medida" />
+        <AssociationConnector Association="TPVDBModel.FK_Productos_TiposProductos" />
+        <AssociationConnector Association="TPVDBModel.FK_Producto_Unidad_Medida_UnidadesMedidas" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
