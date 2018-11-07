@@ -286,7 +286,17 @@ namespace AppDevs.TPV.Sales
                 codigo_Orden.Value = Codigo_Orden;
 
                 if (Comensales >= 0)
+                {
                     DB.SPC_SET_ORDEN(codigo_Orden, null, Comensales, null, null, null);
+                    var servicios = DB.OrdenesDetalles.Where(w => w.Codigo_Orden == Codigo_Orden && w.Productos.Codigo_Tipo_Producto == 5);
+                    if (servicios != null)
+                    {
+                        foreach (var servicio in servicios)
+                            servicio.Nota_Producto = string.Format("{0:N0} PAX", Comensales);
+
+                        DB.SaveChanges();
+                    }
+                }
                 else
                     resultado = false;
 
@@ -373,10 +383,12 @@ namespace AppDevs.TPV.Sales
             {
                 var Usuario = (Usuarios)HttpContext.Current.Session[C_SV_USUARIO];
                 var Camarero = (String.IsNullOrEmpty(Usuario.Nombre_Usuario) ? Usuario.Usuario : Usuario.Nombre_Usuario + " " + Usuario.Apellido_Usuario);
-                var Mesa = Pedidos.First().Mesa;
+                var Mesa = Pedidos.First().Mesa.Trim();
+                var Comensales = Pedidos.First().Comensales;
+                if (ImprimirEnCocina && Comensales > 1)
+                    Mesa = string.Format("{0} - {1} PAX", Mesa, Comensales);
 
                 String NombreImpresora = ImprimirEnCocina ? NombreImpresoraCocina : NombreImpresoraBarra;
-                if (ImprimirEnCocina) Mesa = string.Format(" ", Mesa, Pedidos.First().Comensales);
                 int TamanoLetra = ImprimirEnCocina ? 16 : 11;
                 int AnchoPagina = ImprimirEnCocina ? Properties.Settings.Default.MaximoCaracteresCocina : Properties.Settings.Default.MaximoCaracteresBarra;
                 string letra = "Consolas";
@@ -389,15 +401,15 @@ namespace AppDevs.TPV.Sales
                     if (info.TamanoLetraBarra > 0)
                         TamanoLetra = ImprimirEnCocina ? (int)info.TamanoLetraCocina : (int)info.TamanoLetraBarra;
                 }
-                System.Drawing.Font ConsolasNormal = new System.Drawing.Font(letra, TamanoLetra, System.Drawing.FontStyle.Regular);
-                System.Drawing.Font ConsolasBold = new System.Drawing.Font(letra, TamanoLetra, System.Drawing.FontStyle.Bold);
+                System.Drawing.Font Normal = new System.Drawing.Font(letra, TamanoLetra, System.Drawing.FontStyle.Regular);
+                System.Drawing.Font Bold = new System.Drawing.Font(letra, TamanoLetra, System.Drawing.FontStyle.Bold);
                 var center = new StringFormat() { Alignment = StringAlignment.Center };
 
                 int Index = 0;
                 var LineasImpresion = new List<LineaPedido>();
-                LineasImpresion.Add(new LineaPedido(Index++, new string('*', AnchoPagina), ConsolasNormal));
-                LineasImpresion.Add(new LineaPedido(Index++, Mesa, ConsolasBold, center));
-                LineasImpresion.Add(new LineaPedido(Index, new string('*', AnchoPagina), ConsolasNormal));
+                LineasImpresion.Add(new LineaPedido(Index++, new string('*', AnchoPagina), Normal));
+                LineasImpresion.Add(new LineaPedido(Index++, Mesa, Bold, center));
+                LineasImpresion.Add(new LineaPedido(Index, new string('*', AnchoPagina), Normal));
 
                 foreach (var pedido in Pedidos)
                 {
@@ -420,21 +432,21 @@ namespace AppDevs.TPV.Sales
 
                     foreach (var Descripcion in DescripcionTotal.Trim().Split(AnchoPagina))
                     {
-                        LineasImpresion.Add(new LineaPedido(++Index, filler + Descripcion.Trim(), ConsolasNormal));
+                        LineasImpresion.Add(new LineaPedido(++Index, filler + Descripcion.Trim(), Normal));
                         filler = "   ";
                     }
                 }
 
                 ///-- línea en blanco
                 Index++;
-                LineasImpresion.Add(new LineaPedido(++Index, string.Format("Por: {0}", Camarero), ConsolasNormal));
-                LineasImpresion.Add(new LineaPedido(++Index, DateTime.Now.ToShortTimeString(), ConsolasNormal));
+                LineasImpresion.Add(new LineaPedido(++Index, string.Format("Por: {0}", Camarero), Normal));
+                LineasImpresion.Add(new LineaPedido(++Index, DateTime.Now.ToShortTimeString(), Normal));
 
                 HttpContext.Current.Session.Add(C_SV_IMPRESION, LineasImpresion);
 
                 var pd = new System.Drawing.Printing.PrintDocument();
                 pd.PrintPage += new System.Drawing.Printing.PrintPageEventHandler(pd_PrintPage);
-                pd.DefaultPageSettings.PaperSize = new System.Drawing.Printing.PaperSize("3 1/8 inc x 220 mm", 313, (Index + 2) * (ConsolasNormal.Height));
+                pd.DefaultPageSettings.PaperSize = new System.Drawing.Printing.PaperSize("3 1/8 inc x 220 mm", 313, (Index + 2) * (Normal.Height));
                 pd.DefaultPageSettings.Margins = new System.Drawing.Printing.Margins(0, 0, 0, 0);
 
                 if (!string.IsNullOrEmpty(NombreImpresora))

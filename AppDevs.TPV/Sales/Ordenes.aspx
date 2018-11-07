@@ -251,8 +251,22 @@
                                 <b><span id="lblMesa" runat="server"></span></b>
                             </button>
                         </li>
+                        <%--<li class="dropdown">
+                            <button id="btnCambiarPAX" type="button" class="btn btn-flat" disabled="disabled">
+                                <span class="fa fa-male fa-2x fa-fw media-middle" aria-hidden="true"></span>
+                                <span id="lblPAX" runat="server">0</span> PAX
+                            </button>
+                        </li>--%>
+                    </ul>
+                    <ul class="nav navbar-top-links navbar-left">
+                        <%--<li class="dropdown">
+                            <button id="btnCambiarNombreMesa" type="button" class="btn btn-flat">
+                                <span class="fa fa-edit fa-2x fa-fw media-middle" aria-hidden="true"></span>
+                                <b><span id="lblMesa" runat="server"></span></b>
+                            </button>
+                        </li>--%>
                         <li class="dropdown">
-                            <button id="btnCambiarPAX" type="button" class="btn btn-flat">
+                            <button id="btnCambiarPAX" type="button" class="btn btn-flat" disabled="disabled">
                                 <span class="fa fa-male fa-2x fa-fw media-middle" aria-hidden="true"></span>
                                 <span id="lblPAX" runat="server">0</span> PAX
                             </button>
@@ -659,37 +673,6 @@
                 }
             });
             con.start();
-
-            if ($('#<%= lblPAX.ClientID %>')[0].innerText == "0") {
-                $('#txtPersonasPorMesa')[0].value = 1;
-
-                PersonasPorMesa.dialog("option", "buttons", [{
-                    text: "GUARDAR",
-                    click: function (e) {
-                        e.preventDefault();
-                        var comensales = $('#txtPersonasPorMesa')[0].value;
-                        $.ajax({
-                            type: "POST",
-                            url: 'Ordenes.aspx/CambiarPAX',
-                            data: JSON.stringify({
-                                Codigo_Orden: (!comanda.dataset.codigoorden ? 0 : comanda.dataset.codigoorden),
-                                Comensales: comensales
-                            }),
-                            contentType: "application/json; charset=utf-8",
-                            dataType: "json",
-                            success: function (msg) {
-                                if (msg.d === true) {
-                                    $('#<%= lblPAX.ClientID %>')[0].innerText = comensales;
-
-                                PersonasPorMesa.dialog("close");
-                            }
-                        }
-                    });
-                }
-                }]);
-                PersonasPorMesa.dialog("open");
-            }
-
         });
 
         function getEventTarget(e) {
@@ -1385,6 +1368,7 @@
             btnPedido.disabled = ($('.list-group-item.list-group-item-danger', comanda).length == 0);
             btnCuenta.disabled = !comanda.hasChildNodes();
             btnCobrar.disabled = btnCuenta.disabled;
+            $("#btnCambiarPAX").prop("disabled", btnCuenta.disabled);
 
             var disabled = ($('.seleccionado.list-group-item-danger', comanda).length != 1);
             btnEliminar.disabled = $('.seleccionado', comanda).length == 0;
@@ -1439,6 +1423,38 @@
                     PrecioPorPersona.dialog("open");
                 } else {
                     CompletarPedido(Producto, null);
+                }
+
+                //-- Si es "Servicios por personas" preguntar cuantas personas hay en la mesa
+                var NoComensales = $('#<%= lblPAX.ClientID %>')[0].innerText;
+                if (Producto.Codigo_Tipo_Producto == 5 && (NoComensales == "0" || NoComensales == "1")) {
+                    $('#txtPersonasPorMesa')[0].value = 1;
+
+                    PersonasPorMesa.dialog("option", "buttons", [{
+                        text: "GUARDAR",
+                        click: function (e) {
+                            e.preventDefault();
+                            var comensales = $('#txtPersonasPorMesa')[0].value;
+                            $.ajax({
+                                type: "POST",
+                                url: 'Ordenes.aspx/CambiarPAX',
+                                data: JSON.stringify({
+                                    Codigo_Orden: (!comanda.dataset.codigoorden ? 0 : comanda.dataset.codigoorden),
+                                    Comensales: comensales
+                                }),
+                                contentType: "application/json; charset=utf-8",
+                                dataType: "json",
+                                success: function (msg) {
+                                    if (msg.d === true) {
+                                        $('#<%= lblPAX.ClientID %>')[0].innerText = comensales;
+
+                                    PersonasPorMesa.dialog("close");
+                                }
+                            }
+                        });
+                    }
+                }]);
+                PersonasPorMesa.dialog("open");
                 }
             });
         }
