@@ -558,34 +558,35 @@ namespace AppDevs.TPV.Sales
         [WebMethod]
         public static void ImprimirCuenta(int CodigoOrden)
         {
-
-            const int LINE_MAX_LENGHT = 41;
+            int LINE_MAX_LENGHT = Properties.Settings.Default.MaximoCaracteresBarra;
             var center = new StringFormat() { Alignment = StringAlignment.Center };
 
             Usuarios usuario = null;
             string AtendidoPor = string.Empty;
             InformacionEmpresa info = null;
-            System.Drawing.Font ConsolasNormal = null;
-            System.Drawing.Font ConsolasBold = null;
+            System.Drawing.Font Normal = null;
+            System.Drawing.Font Bold = null;
             List<SPC_GET_ORDENDETALLE_Result> OrdenDetalle = null;
             var Mesa = string.Empty;
             decimal TotalFactura = 0;
+            int comensales = 0;
 
             using (var DB = new TPVDBEntities())
             {
                 info = DB.InformacionEmpresa.First();
-                ConsolasNormal = new System.Drawing.Font(info.TipoLetraBarra, (int)info.TamanoLetraBarra, System.Drawing.FontStyle.Regular);
-                ConsolasBold = new System.Drawing.Font(info.TipoLetraBarra, (int)info.TamanoLetraBarra, System.Drawing.FontStyle.Bold);
+                Normal = new System.Drawing.Font(info.TipoLetraBarra, (int)info.TamanoLetraBarra, System.Drawing.FontStyle.Regular);
+                Bold = new System.Drawing.Font(info.TipoLetraBarra, (int)info.TamanoLetraBarra, System.Drawing.FontStyle.Bold);
 
                 if (!string.IsNullOrEmpty(info.TipoLetraBarra))
                 {
-                    ConsolasNormal = new System.Drawing.Font(new System.Drawing.FontFamily(info.TipoLetraBarra), (float)info.TamanoLetraBarra.Value, System.Drawing.FontStyle.Regular);
-                    ConsolasBold = new System.Drawing.Font(new System.Drawing.FontFamily(info.TipoLetraBarra), (float)info.TamanoLetraBarra, System.Drawing.FontStyle.Bold);
+                    Normal = new System.Drawing.Font(new System.Drawing.FontFamily(info.TipoLetraBarra), (float)info.TamanoLetraBarra.Value, System.Drawing.FontStyle.Regular);
+                    Bold = new System.Drawing.Font(new System.Drawing.FontFamily(info.TipoLetraBarra), (float)info.TamanoLetraBarra, System.Drawing.FontStyle.Bold);
                 }
 
                 var orden = DB.Ordenes.Where(w => w.Codigo_Orden == CodigoOrden).First();
                 usuario = orden.OrdenesDetalles.First().Usuarios;
                 AtendidoPor = usuario.Nombre_Usuario + " " + usuario.Apellido_Usuario;
+                comensales = orden.Comensales;
 
                 if (orden.Codigo_Estado_Orden == 1)
                 {
@@ -605,24 +606,24 @@ namespace AppDevs.TPV.Sales
 
             int Index = 0;
             var LineasImpresion = new List<LineaPedido>();
-            LineasImpresion.Add(new LineaPedido(Index++, info.NombreEmpresa.ToUpper(), ConsolasBold, center));
-            LineasImpresion.Add(new LineaPedido(Index++, info.Direccion, ConsolasNormal, center));
+            LineasImpresion.Add(new LineaPedido(Index++, info.NombreEmpresa.ToUpper(), Bold, center));
+            LineasImpresion.Add(new LineaPedido(Index++, info.Direccion, Normal, center));
             LineasImpresion.Add(new LineaPedido(Index++, string.Format("{0} {1}, {2}",
-                info.CodigoPostal, info.Ciudad, info.Provincia), ConsolasNormal, center));
+                info.CodigoPostal, info.Ciudad, info.Provincia), Normal, center));
 
             if (!string.IsNullOrEmpty(info.Telefono))
-                LineasImpresion.Add(new LineaPedido(Index++, "Tel. " + info.Telefono, ConsolasNormal, center));
+                LineasImpresion.Add(new LineaPedido(Index++, "Tel. " + info.Telefono, Normal, center));
             if (!string.IsNullOrEmpty(info.Movil) && info.Telefono != info.Movil)
-                LineasImpresion.Add(new LineaPedido(Index++, "Móvil " + info.Movil, ConsolasNormal, center));
+                LineasImpresion.Add(new LineaPedido(Index++, "Móvil " + info.Movil, Normal, center));
             if (!string.IsNullOrEmpty(info.NIF))
-                LineasImpresion.Add(new LineaPedido(Index++, "N.I.F: " + info.NIF, ConsolasNormal, center));
+                LineasImpresion.Add(new LineaPedido(Index++, "N.I.F: " + info.NIF, Normal, center));
             if (!string.IsNullOrEmpty(info.CIF))
-                LineasImpresion.Add(new LineaPedido(Index++, "C.I.F: " + info.CIF, ConsolasNormal, center));
+                LineasImpresion.Add(new LineaPedido(Index++, "C.I.F: " + info.CIF, Normal, center));
 
             Index++;
             LineasImpresion.Add(new LineaPedido(Index++, string.Format("Factura Simplificada: {0}",
-                NumeroFactura.PadLeft(LINE_MAX_LENGHT - 22, ' ')), ConsolasNormal));
-            LineasImpresion.Add(new LineaPedido(Index++, new string('-', LINE_MAX_LENGHT), ConsolasNormal));
+                NumeroFactura.PadLeft(LINE_MAX_LENGHT - 22, ' ')), Normal));
+            LineasImpresion.Add(new LineaPedido(Index++, new string('-', LINE_MAX_LENGHT), Normal));
             var grpProductos = OrdenDetalle.GroupBy(g => new { g.NombreProducto }).ToList();
             foreach (var Producto in grpProductos)
             {
@@ -664,24 +665,30 @@ namespace AppDevs.TPV.Sales
                         if (intFiller == 0)
                         {
                             LineasImpresion.Add(new LineaPedido(Index++,
-                                string.Format("{0} {1} {2}", cantidad, Descripcion, total), ConsolasNormal));
+                                string.Format("{0} {1} {2}", cantidad, Descripcion, total), Normal));
                         }
                         else if (intFiller > 0)
                         {
                             LineasImpresion.Add(new LineaPedido(Index++,
-                                string.Format("{0} {1}{2} {3}", cantidad, Descripcion, new string('.', intFiller), total), ConsolasNormal));
+                                string.Format("{0} {1}{2} {3}", cantidad, Descripcion, new string('.', intFiller), total), Normal));
                         }
 
                         TotalFactura += Linea.Sub_Total_Precio_Producto;
                     }
                 }
             }
-            LineasImpresion.Add(new LineaPedido(Index++, new string('-', LINE_MAX_LENGHT), ConsolasNormal));
+            LineasImpresion.Add(new LineaPedido(Index++, new string('-', LINE_MAX_LENGHT), Normal));
             LineasImpresion.Add(new LineaPedido(Index++, string.Format("TOTAL: {0}",
-                TotalFactura.ToString("F").PadLeft(LINE_MAX_LENGHT - 7, '.')), ConsolasBold));
-
+                TotalFactura.ToString("F").PadLeft(LINE_MAX_LENGHT - 7, '.')), Bold));
+            if (comensales > 1)
+            {
+                Index++;
+                LineasImpresion.Add(new LineaPedido(Index++, string.Format("{0} por persona",
+                    (TotalFactura / comensales).ToString("F")), Normal, center));
+                Index++;
+            }
             Index++;
-            LineasImpresion.Add(new LineaPedido(Index++, "TIPO    BASE    IVA     TOTAL", ConsolasNormal));
+            LineasImpresion.Add(new LineaPedido(Index++, "TIPO    BASE    IVA     TOTAL", Normal));
 
             var Impuestos = TotalFactura / (1 + info.PorcientoIVA.Value);
 
@@ -691,27 +698,27 @@ namespace AppDevs.TPV.Sales
                     (TotalFactura - Impuestos).ToString("F").PadRight(7, ' '),
                     Impuestos.ToString("F").PadRight(7, ' '),
                     TotalFactura.ToString("F")),
-                ConsolasNormal));
+                Normal));
 
             Index++;
-            LineasImpresion.Add(new LineaPedido(Index++, "PRECIOS CON IVA INCLUIDO", ConsolasNormal));
-            LineasImpresion.Add(new LineaPedido(Index++, "ATENDIDO POR: " + AtendidoPor, ConsolasNormal));
-            LineasImpresion.Add(new LineaPedido(Index++, "MESA: " + Mesa.ToUpper(), ConsolasBold));
-            LineasImpresion.Add(new LineaPedido(Index++, "FECHA: " + DateTime.Now.ToString("dd MMM HH:mm:ss"), ConsolasNormal));
+            LineasImpresion.Add(new LineaPedido(Index++, "PRECIOS CON IVA INCLUIDO", Normal));
+            LineasImpresion.Add(new LineaPedido(Index++, "ATENDIDO POR: " + AtendidoPor, Normal));
+            LineasImpresion.Add(new LineaPedido(Index++, "MESA: " + Mesa.ToUpper(), Bold));
+            LineasImpresion.Add(new LineaPedido(Index++, "FECHA: " + DateTime.Now.ToString("dd MMM HH:mm:ss"), Normal));
 
             Index++;
             if (!string.IsNullOrEmpty(info.Facebook))
             {
-                LineasImpresion.Add(new LineaPedido(Index++, "Síguenos en FB", ConsolasBold, center));
-                LineasImpresion.Add(new LineaPedido(Index++, info.Facebook, ConsolasNormal, center));
+                LineasImpresion.Add(new LineaPedido(Index++, "Síguenos en FB", Bold, center));
+                LineasImpresion.Add(new LineaPedido(Index++, info.Facebook, Normal, center));
             }
-            LineasImpresion.Add(new LineaPedido(Index++, "Gracias por su visita", ConsolasNormal, center));
+            LineasImpresion.Add(new LineaPedido(Index++, "Gracias por su visita", Normal, center));
 
             HttpContext.Current.Session.Add(C_SV_IMPRESION, LineasImpresion);
 
             var pd = new System.Drawing.Printing.PrintDocument();
             pd.PrintPage += new System.Drawing.Printing.PrintPageEventHandler(pd_PrintPage);
-            pd.DefaultPageSettings.PaperSize = new System.Drawing.Printing.PaperSize("3 1/8 inc x 220 mm", 313, (Index + 2) * ConsolasNormal.Height);
+            pd.DefaultPageSettings.PaperSize = new System.Drawing.Printing.PaperSize("3 1/8 inc x 220 mm", 313, (Index + 2) * Normal.Height);
             pd.DefaultPageSettings.Margins = new System.Drawing.Printing.Margins(0, 0, 0, 0);
 
             if (!string.IsNullOrEmpty(info.NombreImpresoraBarra))
