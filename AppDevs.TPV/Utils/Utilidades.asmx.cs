@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Printing;
 using System.Web;
 using System.Web.Services;
 
@@ -40,7 +41,7 @@ namespace AppDevs.TPV.Utils
         public void CargarPermisos()
         {
             //System.Web.Security.FormsAuthentication.GetAuthCookie()
-            var usuario = (Usuarios)HttpContext.Current.Session[C_SV_USUARIO];
+            var usuario = HttpContext.Current.Session[C_SV_USUARIO] as Usuarios;
             if (usuario != null)
                 using (var DB = new TPVDBEntities())
                 {
@@ -53,7 +54,7 @@ namespace AppDevs.TPV.Utils
         [WebMethod(EnableSession = true)]
         public object GetPermisos()
         {
-            var usuario = (Usuarios)HttpContext.Current.Session[C_SV_USUARIO];
+            var usuario = HttpContext.Current.Session[C_SV_USUARIO] as Usuarios;
 
             try
             {
@@ -100,7 +101,7 @@ namespace AppDevs.TPV.Utils
         {
             get
             {
-                return Permisos.Where(w => w.Codigo_Permiso == C_PER_AccesoAdministracion).FirstOrDefault() != null;
+                return Permisos?.FirstOrDefault(w => w.Codigo_Permiso == C_PER_AccesoAdministracion) != null;
             }
         }
 
@@ -108,7 +109,7 @@ namespace AppDevs.TPV.Utils
         {
             get
             {
-                return Permisos.Where(w => w.Codigo_Permiso == C_PER_AccesoConfiguracion).FirstOrDefault() != null;
+                return Permisos?.FirstOrDefault(w => w.Codigo_Permiso == C_PER_AccesoConfiguracion) != null;
             }
         }
 
@@ -116,7 +117,7 @@ namespace AppDevs.TPV.Utils
         {
             get
             {
-                return Permisos.Where(w => w.Codigo_Permiso == C_PER_AccesoVentas).FirstOrDefault() != null;
+                return Permisos?.FirstOrDefault(w => w.Codigo_Permiso == C_PER_AccesoVentas) != null;
             }
         }
 
@@ -124,7 +125,7 @@ namespace AppDevs.TPV.Utils
         {
             get
             {
-                return Permisos.Where(w => w.Codigo_Permiso == C_PER_AccesoInfEmpresa).FirstOrDefault() != null;
+                return Permisos?.FirstOrDefault(w => w.Codigo_Permiso == C_PER_AccesoInfEmpresa) != null;
             }
         }
 
@@ -140,9 +141,22 @@ namespace AppDevs.TPV.Utils
         public object GetPrinters()
         {
             var resultado = new List<object>();
-            foreach (var NombrePrinter in System.Drawing.Printing.PrinterSettings.InstalledPrinters)
+            //foreach (var NombrePrinter in System.Drawing.Printing.PrinterSettings.InstalledPrinters)
+            //{
+            //    resultado.Add(new { DisplayText = NombrePrinter, Value = NombrePrinter });
+            //}
+
+            var server = new PrintServer();
+            var locales = server.GetPrintQueues(new[] { EnumeratedPrintQueueTypes.Local, EnumeratedPrintQueueTypes.Connections });
+            foreach (var printer in locales)
             {
-                resultado.Add(new { DisplayText = NombrePrinter, Value = NombrePrinter });
+                resultado.Add(new { DisplayText = printer.FullName, Value = printer.FullName });
+            }
+            var compartidos = server.GetPrintQueues(new[] { EnumeratedPrintQueueTypes.Shared, EnumeratedPrintQueueTypes.Connections });
+            foreach (var printer in locales)
+            {
+                if (locales.SingleOrDefault(s => s.FullName == printer.FullName) == null)
+                    resultado.Add(new { DisplayText = printer.FullName, Value = printer.FullName });
             }
 
             return new { Result = "OK", Options = resultado };

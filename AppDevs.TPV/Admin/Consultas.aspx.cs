@@ -7,6 +7,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using AppDevs.TPV.Utils;
 using System.Drawing;
+using NLog;
 
 namespace AppDevs.TPV.Admin
 {
@@ -61,7 +62,7 @@ namespace AppDevs.TPV.Admin
                 using (var DB = new TPVDBEntities())
                 {
                     var detalle =
-                        DB.OrdenesDetalles.Where(w => w.Activo && w.Ordenes.Codigo_Estado_Orden == 3
+                        DB.OrdenesDetalles.Where(w => w.Activo //&& w.Ordenes.Codigo_Estado_Orden == 3
                             && w.Ordenes.Hora_Pago >= (Desde != null ? Desde : w.Ordenes.Hora_Pago)
                             && w.Ordenes.Hora_Pago <= (Hasta != null ? Hasta : w.Ordenes.Hora_Pago))
                             .GroupBy(g => g.Productos.Codigo_Categoria_Producto)
@@ -90,7 +91,7 @@ namespace AppDevs.TPV.Admin
                 using (var DB = new TPVDBEntities())
                 {
                     var detalle =
-                        DB.OrdenesDetalles.Where(w => w.Activo && w.Ordenes.Codigo_Estado_Orden == 3
+                        DB.OrdenesDetalles.Where(w => w.Activo //&& w.Ordenes.Codigo_Estado_Orden == 3
                             && w.Ordenes.Hora_Pago >= (Desde != null ? Desde : w.Ordenes.Hora_Pago)
                             && w.Ordenes.Hora_Pago <= (Hasta != null ? Hasta : w.Ordenes.Hora_Pago))
                             .GroupBy(g => new { g.Productos.Codigo_Producto, g.ProductosUnidadesMedidas.UnidadesMedidas.Unidad_Medida })
@@ -157,10 +158,10 @@ namespace AppDevs.TPV.Admin
                             && w.Ordenes.Hora_Pago <= (Hasta != null ? Hasta : w.Ordenes.Hora_Pago))
                             .GroupBy(g => g.Usuarios.Nombre_Usuario + " " + g.Usuarios.Apellido_Usuario)
                             .Select(s => new
-                             {
-                                 NombreCompleto = s.Key,
-                                 total = s.Sum(t => t.Sub_Total_Precio_Producto)
-                             })
+                            {
+                                NombreCompleto = s.Key,
+                                total = s.Sum(t => t.Sub_Total_Precio_Producto)
+                            })
                             .OrderBy(o => o.NombreCompleto)
                             .ToList();
 
@@ -180,10 +181,19 @@ namespace AppDevs.TPV.Admin
             {
                 using (var DB = new TPVDBEntities())
                 {
-                    var ordenes =
-                        DB.OrdenesDetalles.Where(w => w.Activo && w.Ordenes.Codigo_Estado_Orden == 3
-                            && w.Ordenes.Hora_Pago >= (Desde != null ? Desde : w.Ordenes.Hora_Pago)
-                            && w.Ordenes.Hora_Pago <= (Hasta != null ? Hasta : w.Ordenes.Hora_Pago)).ToList();
+                    var detalle =
+                         DB.OrdenesDetalles.Where(w => w.Activo && w.Ordenes.Codigo_Estado_Orden == 3
+                             && w.Ordenes.Hora_Pago >= (Desde != null ? Desde : w.Ordenes.Hora_Pago)
+                             && w.Ordenes.Hora_Pago <= (Hasta != null ? Hasta : w.Ordenes.Hora_Pago))
+                             .GroupBy(g => new { g.Ordenes.Metodos_Pago.Metodo_Pago })
+                             .Select(s => new
+                             {
+                                 s.Key.Metodo_Pago,
+                                 total = s.Sum(t => t.Sub_Total_Precio_Producto)
+                             })
+                             .OrderBy(o => o.Metodo_Pago)
+                             .ToList();
+
 
                     var info = DB.InformacionEmpresa.FirstOrDefault();
                     String NombreImpresora = info.NombreImpresoraBarra;
@@ -220,17 +230,18 @@ namespace AppDevs.TPV.Admin
                     LineasImpresion.Add(new LineaPedido(Index++, DescripcionTotal, ConsolasNormal));
 
                     LineasImpresion.Add(new LineaPedido(++Index, new string('-', AnchoPagina), ConsolasNormal));
-                    DescripcionTotal = string.Format("TOTAL {0}", ordenes.Sum(s => s.Sub_Total_Precio_Producto).Value.ToString("C").PadLeft(30));
+                    DescripcionTotal = string.Format("TOTAL {0}", detalle.Sum(s => s.total).Value.ToString("C").PadLeft(30));
                     LineasImpresion.Add(new LineaPedido(++Index, DescripcionTotal, ConsolasBold));
                     LineasImpresion.Add(new LineaPedido(++Index, new string('-', AnchoPagina), ConsolasNormal));
-
-                    //foreach (var pedido in detalle)
-                    //{
-                    //    DescripcionTotal =
-                    //        string.Format("{0} {1}", pedido.Metodo_Pago,
-                    //        pedido.total.ToString("F").PadLeft(AnchoPagina - pedido.Metodo_Pago.Length - 1));
-                    //    LineasImpresion.Add(new LineaPedido(++Index, DescripcionTotal, ConsolasNormal));
-                    //}
+                                        
+                    foreach (var pedido in detalle)
+                    {
+                        DescripcionTotal =
+                            string.Format("{0} {1}", pedido.Metodo_Pago,
+                            pedido.total?.ToString("C").PadLeft(AnchoPagina - pedido.Metodo_Pago.Length - 1));
+                        LineasImpresion.Add(new LineaPedido(++Index, DescripcionTotal, ConsolasNormal));
+                    }
+                    LineasImpresion.Add(new LineaPedido(++Index, new string('-', AnchoPagina), ConsolasNormal));
 
                     var pd = new System.Drawing.Printing.PrintDocument();
                     pd.PrintPage += new System.Drawing.Printing.PrintPageEventHandler(pd_PrintPage);
@@ -238,13 +249,17 @@ namespace AppDevs.TPV.Admin
                     pd.DefaultPageSettings.Margins = new System.Drawing.Printing.Margins(0, 0, 0, 0);
 
                     if (!string.IsNullOrEmpty(NombreImpresora))
+                    {
                         pd.PrinterSettings.PrinterName = NombreImpresora;
+                    }
 
                     pd.Print();
+
                 }
             }
-            catch
+            catch (Exception ex)
             {
+                (LogManager.GetCurrentClassLogger()).Error(ex, "ha ocurrido un error al intentar generar el cierre diario");
                 throw new Exception("ha ocurrido un error al intentar generar el cierre diario");
             }
         }

@@ -69,8 +69,8 @@ namespace AppDevs.TPV
 
                     DB.SPC_SET_USUARIO(null, 1, _Usuario, _Clave, null, null, null);
 
-                    var Usuarios = DB.SPC_GET_USUARIO(null, null, _Usuario, _Clave, null, null, null).ToList();
-                    HttpContext.Current.Session.Add(C_SV_USUARIO, Usuarios.FirstOrDefault());
+                    var Usuario = DB.Usuarios.Where(w => w.Usuario == _Usuario && w.Clave == _Clave).FirstOrDefault();
+                    HttpContext.Current.Session.Add(C_SV_USUARIO, Usuario);
                     //Utilidades.CargarPermisos();
                     FormsAuthentication.RedirectFromLoginPage(_Usuario, false);
 
@@ -87,25 +87,34 @@ namespace AppDevs.TPV
         {
             using (var DB = new TPVDBEntities())
             {
-                var InfoEmpresa = DB.SPC_GET_INFORMACIONEMPRESA().FirstOrDefault();
-                if (InfoEmpresa == null)
+                try
                 {
-                    loginModal.Attributes.Add("class", "hide");
-                    dInfoEmpresa.Attributes.Add("class", "show");
+                    var InfoEmpresa = DB.SPC_GET_INFORMACIONEMPRESA().FirstOrDefault();
+                    if (InfoEmpresa == null)
+                    {
+                        loginModal.Attributes.Add("class", "hide");
+                        dInfoEmpresa.Attributes.Add("class", "show");
 
-                    txtUsuario.Attributes.Remove("required");
-                    txtClave.Attributes.Remove("required");
+                        txtUsuario.Attributes.Remove("required");
+                        txtClave.Attributes.Remove("required");
+                    }
+                    else
+                    {
+                        loginModal.Attributes.Add("class", "show");
+                        dInfoEmpresa.Attributes.Add("class", "hide");
+
+                        NombreEmpresa.Attributes.Remove("required");
+                        Direccion.Attributes.Remove("required");
+                        PorcientoIVA.Attributes.Remove("required");
+                        Usuario.Attributes.Remove("required");
+                        Clave.Attributes.Remove("required");
+                    }
                 }
-                else
+                catch
                 {
-                    loginModal.Attributes.Add("class", "show");
-                    dInfoEmpresa.Attributes.Add("class", "hide");
-
-                    NombreEmpresa.Attributes.Remove("required");
-                    Direccion.Attributes.Remove("required");
-                    PorcientoIVA.Attributes.Remove("required");
-                    Usuario.Attributes.Remove("required");
-                    Clave.Attributes.Remove("required");
+                    ///Resources
+                    var sql = System.IO.File.ReadAllText("~/SqlScript/SqlScript.sql");
+                    DB.Database.ExecuteSqlCommandAsync(sql);
                 }
             }
         }

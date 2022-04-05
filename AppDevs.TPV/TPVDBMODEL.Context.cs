@@ -142,47 +142,6 @@ namespace AppDevs.TPV
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SPC_GET_MESA_Result>("SPC_GET_MESA", codigo_MesaParameter, mesaParameter, codigo_AreaParameter, color_MesaParameter, posicionXParameter, posicionYParameter, baseParameter, alturaParameter, activoParameter);
         }
     
-        public virtual ObjectResult<SPC_GET_ORDENDETALLE_Result> SPC_GET_ORDENDETALLE(Nullable<int> codigo_Orden, Nullable<int> codigo_Mesa, Nullable<int> codigo_Estado_Orden, Nullable<int> codigo_Orden_Detalle, Nullable<int> codigo_Producto, Nullable<int> codigo_Producto_Unidad_Medida, Nullable<int> codigo_Estado_Orden_Detalle, Nullable<int> codigo_Usuario, Nullable<bool> activo)
-        {
-            var codigo_OrdenParameter = codigo_Orden.HasValue ?
-                new ObjectParameter("Codigo_Orden", codigo_Orden) :
-                new ObjectParameter("Codigo_Orden", typeof(int));
-    
-            var codigo_MesaParameter = codigo_Mesa.HasValue ?
-                new ObjectParameter("Codigo_Mesa", codigo_Mesa) :
-                new ObjectParameter("Codigo_Mesa", typeof(int));
-    
-            var codigo_Estado_OrdenParameter = codigo_Estado_Orden.HasValue ?
-                new ObjectParameter("Codigo_Estado_Orden", codigo_Estado_Orden) :
-                new ObjectParameter("Codigo_Estado_Orden", typeof(int));
-    
-            var codigo_Orden_DetalleParameter = codigo_Orden_Detalle.HasValue ?
-                new ObjectParameter("Codigo_Orden_Detalle", codigo_Orden_Detalle) :
-                new ObjectParameter("Codigo_Orden_Detalle", typeof(int));
-    
-            var codigo_ProductoParameter = codigo_Producto.HasValue ?
-                new ObjectParameter("Codigo_Producto", codigo_Producto) :
-                new ObjectParameter("Codigo_Producto", typeof(int));
-    
-            var codigo_Producto_Unidad_MedidaParameter = codigo_Producto_Unidad_Medida.HasValue ?
-                new ObjectParameter("Codigo_Producto_Unidad_Medida", codigo_Producto_Unidad_Medida) :
-                new ObjectParameter("Codigo_Producto_Unidad_Medida", typeof(int));
-    
-            var codigo_Estado_Orden_DetalleParameter = codigo_Estado_Orden_Detalle.HasValue ?
-                new ObjectParameter("Codigo_Estado_Orden_Detalle", codigo_Estado_Orden_Detalle) :
-                new ObjectParameter("Codigo_Estado_Orden_Detalle", typeof(int));
-    
-            var codigo_UsuarioParameter = codigo_Usuario.HasValue ?
-                new ObjectParameter("Codigo_Usuario", codigo_Usuario) :
-                new ObjectParameter("Codigo_Usuario", typeof(int));
-    
-            var activoParameter = activo.HasValue ?
-                new ObjectParameter("Activo", activo) :
-                new ObjectParameter("Activo", typeof(bool));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SPC_GET_ORDENDETALLE_Result>("SPC_GET_ORDENDETALLE", codigo_OrdenParameter, codigo_MesaParameter, codigo_Estado_OrdenParameter, codigo_Orden_DetalleParameter, codigo_ProductoParameter, codigo_Producto_Unidad_MedidaParameter, codigo_Estado_Orden_DetalleParameter, codigo_UsuarioParameter, activoParameter);
-        }
-    
         public virtual ObjectResult<SPC_GET_PERFIL_Result> SPC_GET_PERFIL(Nullable<int> codigo_Perfil, string perfil, Nullable<bool> activo)
         {
             var codigo_PerfilParameter = codigo_Perfil.HasValue ?
@@ -819,6 +778,47 @@ namespace AppDevs.TPV
         public virtual ObjectResult<SPC_GET_INFORMACIONEMPRESA_Result> SPC_GET_INFORMACIONEMPRESA()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SPC_GET_INFORMACIONEMPRESA_Result>("SPC_GET_INFORMACIONEMPRESA");
+        }
+    
+        public virtual ObjectResult<SPC_GET_ORDENDETALLE_Result> SPC_GET_ORDENDETALLE(Nullable<int> codigo_Orden, Nullable<int> codigo_Mesa, Nullable<int> codigo_Estado_Orden, Nullable<int> codigo_Orden_Detalle, Nullable<int> codigo_Producto, Nullable<int> codigo_Producto_Unidad_Medida, Nullable<int> codigo_Estado_Orden_Detalle, Nullable<int> codigo_Usuario, Nullable<bool> activo)
+        {
+            var codigo_OrdenParameter = codigo_Orden.HasValue ?
+                new ObjectParameter("Codigo_Orden", codigo_Orden) :
+                new ObjectParameter("Codigo_Orden", typeof(int));
+    
+            var codigo_MesaParameter = codigo_Mesa.HasValue ?
+                new ObjectParameter("Codigo_Mesa", codigo_Mesa) :
+                new ObjectParameter("Codigo_Mesa", typeof(int));
+    
+            var codigo_Estado_OrdenParameter = codigo_Estado_Orden.HasValue ?
+                new ObjectParameter("Codigo_Estado_Orden", codigo_Estado_Orden) :
+                new ObjectParameter("Codigo_Estado_Orden", typeof(int));
+    
+            var codigo_Orden_DetalleParameter = codigo_Orden_Detalle.HasValue ?
+                new ObjectParameter("Codigo_Orden_Detalle", codigo_Orden_Detalle) :
+                new ObjectParameter("Codigo_Orden_Detalle", typeof(int));
+    
+            var codigo_ProductoParameter = codigo_Producto.HasValue ?
+                new ObjectParameter("Codigo_Producto", codigo_Producto) :
+                new ObjectParameter("Codigo_Producto", typeof(int));
+    
+            var codigo_Producto_Unidad_MedidaParameter = codigo_Producto_Unidad_Medida.HasValue ?
+                new ObjectParameter("Codigo_Producto_Unidad_Medida", codigo_Producto_Unidad_Medida) :
+                new ObjectParameter("Codigo_Producto_Unidad_Medida", typeof(int));
+    
+            var codigo_Estado_Orden_DetalleParameter = codigo_Estado_Orden_Detalle.HasValue ?
+                new ObjectParameter("Codigo_Estado_Orden_Detalle", codigo_Estado_Orden_Detalle) :
+                new ObjectParameter("Codigo_Estado_Orden_Detalle", typeof(int));
+    
+            var codigo_UsuarioParameter = codigo_Usuario.HasValue ?
+                new ObjectParameter("Codigo_Usuario", codigo_Usuario) :
+                new ObjectParameter("Codigo_Usuario", typeof(int));
+    
+            var activoParameter = activo.HasValue ?
+                new ObjectParameter("Activo", activo) :
+                new ObjectParameter("Activo", typeof(bool));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SPC_GET_ORDENDETALLE_Result>("SPC_GET_ORDENDETALLE", codigo_OrdenParameter, codigo_MesaParameter, codigo_Estado_OrdenParameter, codigo_Orden_DetalleParameter, codigo_ProductoParameter, codigo_Producto_Unidad_MedidaParameter, codigo_Estado_Orden_DetalleParameter, codigo_UsuarioParameter, activoParameter);
         }
     }
 }

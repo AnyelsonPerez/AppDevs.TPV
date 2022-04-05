@@ -109,6 +109,11 @@
                         </a>
                         <ul class="dropdown-menu dropdown-user">
                             <li>
+                                <a href="#" onclick="document.documentElement.webkitRequestFullScreen();">
+                                    <i class="glyphicon glyphicon-fullscreen"></i> Pantalla completa
+                                </a>
+                            </li>
+                            <li>
                                 <asp:LinkButton ID="LinkButton1" runat="server" OnClick="Logout_Click">
                                     <i class="glyphicon glyphicon-log-out"></i> Salir del sistema
                                 </asp:LinkButton>
@@ -317,14 +322,15 @@
     <script type="text/javascript">
         var Permisos = null;
         $(document).ready(function () {
-            var permisos = GetPermisos();
+            Permisos = GetPermisos();
 
-            if (!permisos.Admin) $("#liAdmin").hide();
-            $("#aDashboard").prop("disabled", permisos.SoloVentas);
+            if (!Permisos.Admin) $("#liAdmin").hide();
+            $("#aDashboard").prop("disabled", Permisos.SoloVentas);
 
             var con = $.hubConnection();
             var hub = con.createHubProxy("refreshHub");
             hub.on("onRefrescar", function (CodigoMesa, CodigoArea) {
+                console.log("onRefrescar");
                 if (CodigoArea == dArea.dataset.codigoarea) {
                     //var area = $('a:focus', ul)[0];
                     //if (!area) area = $('a', ul)[0];
@@ -421,7 +427,7 @@
 
                             dMesa.classList.add('mesaActiva');
                             dMesa.dataset.codigomesa = mesa.Codigo_Mesa;
-
+                            console.log(mesa.Mesa, mesa);
                         }
                     });
                 }
@@ -429,6 +435,9 @@
         }
 
         function invertColor(hex) {
+            if (hex.indexOf("rgb") != 0 && hex.indexOf('#') != 0) {
+                return "#000";
+            }
             if (hex.indexOf("rgb") === 0) {
                 hex = rgb2hex(hex);
             }

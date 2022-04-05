@@ -69,7 +69,8 @@ namespace AppDevs.TPV.Admin
 
                 //-- Pendientes
                 var pendientes = DB.Ordenes.Where(w => w.Activo && w.Codigo_Estado_Orden != 3
-                    && w.OrdenesDetalles.Sum(s => s.Sub_Total_Precio_Producto) > 0).ToList();
+                    && w.Mesas.Activo && w.Mesas.Areas.Activo
+                    && w.OrdenesDetalles.Where(ww => ww.Activo).Sum(s => s.Sub_Total_Precio_Producto) > 0).ToList();
                 int mesasPendienteCobrar = pendientes.Count();
                 decimal? pendienteCobrar = pendientes.Sum(s => s.OrdenesDetalles.Where(w => w.Activo).Sum(od => od.Sub_Total_Precio_Producto));
 
@@ -80,7 +81,7 @@ namespace AppDevs.TPV.Admin
                     EfectivoVentas = efectivoVentas.ToString("N2"),
                     TarjetaVentas = tarjetaVentas.Value.ToString("N2"),
                     CantidadVentas = cantidadVentas,
-                    PendienteCobrar = pendienteCobrar,
+                    PendienteCobrar = pendienteCobrar.Value.ToString("N2"),
                     MesasPendienteCobrar = mesasPendienteCobrar
                 };
             }

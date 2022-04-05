@@ -30,6 +30,7 @@ namespace AppDevs.TPV
         public System.DateTime Hora_Orden_Detalle { get; set; }
         public int Codigo_Estado_Orden_Detalle { get; set; }
         public bool Impresora { get; set; }
+        public Nullable<bool> Primero { get; set; }
         public int Codigo_Usuario { get; set; }
         public bool Activo { get; set; }
         public string Mesa { get; set; }

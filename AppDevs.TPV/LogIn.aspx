@@ -30,7 +30,7 @@
                 if (Usuario.Value.Length > 2 && Clave.Value.Length > 2 &&
                 UsuarioInicial(NombreEmpresa.Value, Direccion.Value, CodigoPostal.Value, Provincia.Value,
                     Ciudad.Value, Pais.Value, CIF.Value, NIF.Value, Telefono.Value, Movil.Value, Facebook.Value,
-                    ImpresoraBarra.Value, ImpresoraCocina.Value, "", "Consolas", "Consolas", "8", "8", null, null, null, null,
+                    ImpresoraBarra.Value, ImpresoraCocina.Value, PorcientoIVA.Value, "Consolas", "Consolas", "10", "10", null, null, null, null,
                     Usuario.Value, Clave.Value))
                     FormsAuthentication.RedirectFromLoginPage(txtUsuario.Value, false);
                 else
@@ -138,7 +138,7 @@
                                             class="form-control input-lg" placeholder="Nombre de empresa" />
                                     </div>
                                     <div class="form-group col-lg-2 col-md-2 col-sm-2 col-xs-2">
-                                        <label for="PorcientoIVA" class="control-label">Porciento IVA</label>
+                                        <label for="PorcientoIVA" class="control-label">% IVA</label>
                                         <input id="PorcientoIVA" runat="server" name="PorcientoIVA" type="text" required="required"
                                             class="form-control input-lg" />
                                     </div>
@@ -203,11 +203,11 @@
                                 <div class="row">
                                     <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-6">
                                         <label for="ImpresoraBarra" class="control-label">Impresora de Barra</label>
-                                        <input id="ImpresoraBarra" runat="server" name="ImpresoraBarra" type="text" class="form-control input-lg" placeholder="Impresora de Barra" />
+                                        <input id="ImpresoraBarra" runat="server" name="ImpresoraBarra" type="text" class="form-control input-lg" placeholder="Impresora de Barra" value="Barra" />
                                     </div>
                                     <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-6">
                                         <label for="ImpresoraCocina" class="control-label">Impresora de Cocina</label>
-                                        <input id="ImpresoraCocina" runat="server" name="ImpresoraCocina" type="text" class="form-control input-lg" placeholder="Impresora de Cocina" />
+                                        <input id="ImpresoraCocina" runat="server" name="ImpresoraCocina" type="text" class="form-control input-lg" placeholder="Impresora de Cocina" value="Cocina" />
                                     </div>
                                 </div>
                             </div>

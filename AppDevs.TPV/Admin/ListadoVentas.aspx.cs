@@ -60,9 +60,9 @@ namespace AppDevs.TPV.Admin
                     return new { Result = "OK", Records = Resultado.Skip(jtStartIndex).Take(jtPageSize), TotalRecordCount = total };
                 }
             }
-            catch (Exception ex)
+            catch 
             {
-                return new { Result = "ERROR", Message = "Ha ocurrido un error al cargar el listado de ventas." };
+                return new { Result = "ERROR", Message = "Ha ocurrido un error al cargar el listado de ventas."};
             }
         }
 

@@ -138,7 +138,7 @@
                             { field: "Hora_Pago", title: "Fecha y Hora" },
                             { field: "Mesa", title: "Mesa" },
                             { field: "Metodo_Pago", title: "Método de Pago" },
-                            { field: "Total", title: "Total", footerTemplate: "Total: {sum}" }
+                            { field: "Total", title: "Total", format: "{0:n2}", footerTemplate: "Total: {sum:n2}" }
                         ],
                         toolbar: [
                             {
@@ -185,7 +185,7 @@
                         },
                         columns: [
                             { field: "Categoria_Producto", title: "Categoría" },
-                            { field: "total", title: "Total", footerTemplate: "Total: {sum}" }
+                            { field: "total", title: "Total", format: "{0:n2}", footerTemplate: "Total: {sum:n2}" }
                         ],
                         toolbar: [
                             {
@@ -235,7 +235,7 @@
                             { field: "Categoria_Producto", title: "Categoría" },
                             { field: "NombreProducto", title: "Producto" },
                             { field: "cantidad", width: "170px", title: "Cantidad", footerTemplate: "Cantidad: {count}" },
-                            { field: "total", title: "Total", footerTemplate: "Total: {sum}" }
+                            { field: "total", title: "Total", format: "{0:n2}", footerTemplate: "Total: {sum:n2}" }
                         ],
                         toolbar: [
                             {
@@ -281,7 +281,7 @@
                         },
                         columns: [
                             { field: "Metodo_Pago", title: "Método" },
-                            { field: "total", title: "Total", footerTemplate: "Total: {sum}" }
+                            { field: "total", title: "Total", format: "{0:n2}", footerTemplate: "Total: {sum:n2}" }
                         ],
                         toolbar: [
                             {
@@ -334,7 +334,7 @@
                         },
                         columns: [
                             { field: "NombreCompleto", title: "Usuario" },
-                            { field: "total", title: "Total", footerTemplate: "Total: {sum}" }
+                            { field: "total", title: "Total", format: "{0:n2}", footerTemplate: "Total: {sum:n2}" }
                         ],
                         toolbar: [
                             {

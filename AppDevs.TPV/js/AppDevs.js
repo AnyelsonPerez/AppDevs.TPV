@@ -48,6 +48,9 @@ function GetPermisos() {
             }
         },
         error: function (xhr, ajaxOptions, thrownError) {
+            console.error("error en GetPermisions", xhr);
+            console.error("error en GetPermisions", ajaxOptions);
+            console.error("error en GetPermisions", thrownError);
             Permisos = null;
         }
     });

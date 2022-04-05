@@ -277,23 +277,23 @@
                 <ul class="nav navbar-top-links navbar-right">
                     <li class="dropdown">
                         <button id="btnPedido" type="button" class="btn btn-primary" disabled="disabled">
-                            <span class="glyphicon glyphicon-bell" aria-hidden="true"></span>&nbsp Pedir</button>
+                            <span class="glyphicon glyphicon-bell" aria-hidden="true"></span>&nbsp; Pedir</button>
                     </li>
                     <li class="dropdown">
                         <button id="btnMover" type="button" class="btn btn-warning" disabled="disabled">
-                            <span class="glyphicon glyphicon-random" aria-hidden="true"></span>&nbsp Mover</button>
+                            <span class="glyphicon glyphicon-random" aria-hidden="true"></span>&nbsp; Mover</button>
                     </li>
                     <li class="dropdown">
                         <button id="btnCuenta" type="button" class="btn btn-info" disabled="disabled">
-                            <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>&nbsp Cuenta</button>
+                            <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>&nbsp; Cuenta</button>
                     </li>
                     <li class="dropdown">
                         <button id="btnCobrar" type="button" class="btn btn-success" disabled="disabled">
-                            <span class="glyphicon glyphicon-eur" aria-hidden="true"></span>&nbsp Cobrar</button>
+                            <span class="glyphicon glyphicon-eur" aria-hidden="true"></span>&nbsp; Cobrar</button>
                     </li>
                     <li class="dropdown">
                         <a href="/Sales/Areas.aspx" class="btn btn-danger">
-                            <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>&nbsp Salir
+                            <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>&nbsp; Salir
                         </a>
                     </li>
                     <!-- /.dropdown -->
@@ -302,6 +302,11 @@
                             <i class="fa fa-user fa-fw"></i><i class="fa fa-caret-down"></i>
                         </a>
                         <ul class="dropdown-menu dropdown-user">
+                            <li>
+                                <a href="#" onclick="document.documentElement.webkitRequestFullScreen();">
+                                    <i class="glyphicon glyphicon-fullscreen"></i> Pantalla completa
+                                </a>
+                            </li>
                             <li>
                                 <asp:LinkButton ID="LinkButton1" runat="server" OnClick="Logout_Click">
                                     <i class="glyphicon glyphicon-log-out"></i> Salir del sistema
@@ -615,6 +620,31 @@
                         <button id="btnCobrarCerrarCuenta" type="button" class="btn btn-danger" data-dismiss="modal">Cerrar Cuenta</button>
                     </div>
                 </div>
+            </div>
+        </div>
+        <div class="modal fade" id="dPedido" role="dialog">
+            <div class="modal-dialog">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header success">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Seleccionar Primeros</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div id="ComandaPrimeros">
+                            <%--<a href="#" data-codigoordendetalle="122621" data-precioventa="2.50" class="list-group-item list-group-item-danger"><h4 class="cantidad">1</h4><h4 class="producto">Ensaladilla (Tapa)</h4><h4 class="precio">2.50</h4></a>
+                            <a href="#" data-codigoordendetalle="122621" data-precioventa="2.50" class="list-group-item list-group-item-danger"><h4 class="cantidad">1</h4><h4 class="producto">Ensaladilla (Tapa)</h4><h4 class="precio">2.50</h4></a>
+                            <a href="#" data-codigoordendetalle="122621" data-precioventa="2.50" class="list-group-item list-group-item-danger"><h4 class="cantidad">1</h4><h4 class="producto">Ensaladilla (Tapa)</h4><h4 class="precio">2.50</h4></a>
+                            <a href="#" data-codigoordendetalle="122621" data-precioventa="2.50" class="list-group-item list-group-item-danger"><h4 class="cantidad">1</h4><h4 class="producto">Ensaladilla (Tapa)</h4><h4 class="precio">2.50</h4></a>--%>
+                        </div>
+                        <%--<h1 id="dCobrarTotal"></h1>
+                        <div id="dMetodosPago" class="btn-group btn-group-justified" data-toggle="buttons">
+                        </div>--%>
+                    </div>
+                    <div class="modal-footer">
+                        <button id="btnPedidoPedir" type="button" class="btn btn-success" data-dismiss="modal">Pedir</button>
+                    </div>
+                </div>
 
             </div>
         </div>
@@ -633,11 +663,12 @@
         con.start();
 
         $(document).ready(function () {
+            console.log("GetPermisos");
             Permisos = GetPermisos();
-
+            console.log("IsAdmin?",Permisos);
             if (!Permisos.Admin) $("#liAdmin").hide();
             $("#aDashboard").prop("disabled", Permisos.SoloVentas);
-
+            console.log("OcultarBotones");
             if (!Permisos.MoverClientesMesa) $("#btnMover").hide();
             if (!Permisos.CambiarSubTotal) $("#btnSubtotal").hide();
             if (!Permisos.EliminarPedido) $("#btnEliminar").hide();
@@ -646,13 +677,16 @@
 
             if (!Permisos.CambiarNombreMesa) $("#iCambiarNombreMesa").hide();
             $("#btnCambiarNombreMesa").prop("disabled", !Permisos.CambiarNombreMesa);
-
+            console.log("CalcularTotalComanda");
             CalcularTotalComanda();
-
+            console.log("SignalR");
             var con = $.hubConnection();
             var hub = con.createHubProxy("refreshHub");
+
             hub.on("onRefrescar", function (Mesa, Area) {
+                console.log("onRefrescar");
                 if (Mesa == comanda.dataset.codigomesa) {
+                    console.log("onRefrescar ismesa?");
                     $.ajax({
                         type: "POST",
                         url: 'Ordenes.aspx/GetOrdenDetalle',
@@ -663,16 +697,20 @@
                         contentType: "application/json; charset=utf-8",
                         dataType: "json",
                         success: function (msg) {
+                            console.log("onSuccess");
                             MostrarPedidosEnComanda(msg.d);
 
                             if (Comanda.hasChildNodes())
                                 Comanda.firstChild.classList.add('seleccionado');
                             HabilitarBotones();
+                            console.log("SignalR OK");
                         }
                     });
                 }
             });
+            console.log("SignalR OK");
             con.start();
+            console.log("FIN READY");
         });
 
         function getEventTarget(e) {
@@ -825,6 +863,22 @@
             HabilitarBotones();
         };
 
+        var comandaPrimeros = document.getElementById('ComandaPrimeros');
+        comandaPrimeros.onclick = function (e) {
+            e.preventDefault();
+
+            var target = getEventTarget(e);
+
+            if (target.localName.toLowerCase() != 'a')
+                target = target.parentNode;
+
+            if (!target.classList.contains("list-group-item"))
+                return;
+
+            target.classList.toggle("seleccionado");
+            target.dataset.primero = !target.dataset.primero ? 1 : 0;
+        };
+
         var btnEliminar = document.getElementById('btnEliminar');
         btnEliminar.onclick = function (e) {
             e.preventDefault();
@@ -944,10 +998,85 @@
         var btnPedido = document.getElementById('btnPedido');
         btnPedido.onclick = function (e) {
             e.preventDefault();
+            //-- Tomar los nuevos pedidos
+            var pendientesCocina = $('.list-group-item-danger[data-imprimircocina="1"]', comanda);
+            if (pendientesCocina.length < 2) {
+                HacerPedido();
+                //-- Salir a el area de mesas
+                window.location.href = "/Sales/Areas.aspx";
+            }
+            else {
+                //-- Agregar a la lista de primeros
+                while (comandaPrimeros.firstChild) {
+                    comandaPrimeros.removeChild(comandaPrimeros.firstChild);
+                }
+                pendientesCocina.each(function () {
+                    var pendiente = this.cloneNode(true);
+                    pendiente.classList.remove('seleccionado');
+                    comandaPrimeros.appendChild(pendiente);
+                });
+                //-- Mostrar ventana de primeros
+                $("#dPedido").modal("show");
+            }
+        }
+
+        var btnPedidoPedir = document.getElementById('btnPedidoPedir');
+        btnPedidoPedir.onclick = function (e) {
+            e.preventDefault();
+
+            var pendientesCocina = $('.list-group-item-danger', comandaPrimeros);
+            var primeros = $('[data-primero="1"]', comandaPrimeros);
+            if (primeros.length > 0 && primeros.length < pendientesCocina.length) {
+                //-- Marcar Primeros
+                    
+                var codigosOrdenesDetalle = [];
+                primeros.each(function () {
+                    codigosOrdenesDetalle.push(this.dataset.codigoordendetalle);
+                });
+
+                //-- Actualizar los primeros en BD
+                $.ajax({
+                    type: "POST",
+                    async: false,
+                    url: 'Ordenes.aspx/MarcarPrimeros',
+                    data: JSON.stringify({
+                        lstCodigoOrdenDetalle: codigosOrdenesDetalle
+                    }),
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (e) {
+                        
+                    }
+                });
+            }
+
+            //-- Generar cuenta
             HacerPedido();
             //-- Salir a el area de mesas
             window.location.href = "/Sales/Areas.aspx";
         }
+
+        //var btnPedidoCerrar = document.getElementById('btnPedidoCerrar');
+        //btnPedidoCerrar.onclick = function (e) {
+        //    e.preventDefault();
+        //    //var metodoPago = $("input[name='metodoPago']:checked").val();
+        //    ////-- Cerrar cuenta y salir de comanda
+        //    //$.ajax({
+        //    //    type: "POST",
+        //    //    url: 'Ordenes.aspx/CobrarCuenta',
+        //    //    data: JSON.stringify({
+        //    //        Codigo_Orden: comanda.dataset.codigoorden,
+        //    //        Codigo_Metodo_Pago: metodoPago
+        //    //    }),
+        //    //    contentType: "application/json; charset=utf-8",
+        //    //    dataType: "json",
+        //    //    success: function (e) {
+        //    //        hub.invoke("refrescar", comanda.dataset.codigomesa, comanda.dataset.codigoarea);
+        //    //        window.location.href = "/Sales/Areas.aspx";
+        //    //    }
+        //    //});
+        //}
+
 
         var btnCuenta = document.getElementById('btnCuenta');
         btnCuenta.onclick = function (e) {
@@ -1006,10 +1135,10 @@
         var btnCobrarImprimirCuenta = document.getElementById('btnCobrarImprimirCuenta');
         btnCobrarImprimirCuenta.onclick = function (e) {
             e.preventDefault();
-            //-- Generar cuenta
-            ImprimirCuenta()
             //-- Deshabilitar
             btnCobrarImprimirCuenta.disabled = true;
+            //-- Generar cuenta
+            ImprimirCuenta();
         }
 
         var btnCobrarCerrarCuenta = document.getElementById('btnCobrarCerrarCuenta');
@@ -1428,7 +1557,7 @@
                 //-- Si es "Servicios por personas" preguntar cuantas personas hay en la mesa
                 var NoComensales = $('#<%= lblPAX.ClientID %>')[0].innerText;
                 if (Producto.Codigo_Tipo_Producto == 5 && (NoComensales == "0" || NoComensales == "1")) {
-                    $('#txtPersonasPorMesa')[0].value = 1;
+                    $('#txtPersonasPorMesa')[0].value = NoComensales;
 
                     PersonasPorMesa.dialog("option", "buttons", [{
                         text: "GUARDAR",
@@ -1448,13 +1577,13 @@
                                     if (msg.d === true) {
                                         $('#<%= lblPAX.ClientID %>')[0].innerText = comensales;
 
-                                    PersonasPorMesa.dialog("close");
+                                        PersonasPorMesa.dialog("close");
+                                    }
                                 }
-                            }
-                        });
-                    }
-                }]);
-                PersonasPorMesa.dialog("open");
+                            });
+                        }
+                    }]);
+                    PersonasPorMesa.dialog("open");
                 }
             });
         }
@@ -1488,6 +1617,7 @@
                 a.href = "#";
                 a.dataset.codigoordendetalle = Producto.Codigo_Orden_Detalle;
                 a.dataset.precioventa = Producto.PrecioVenta;
+                a.dataset.imprimircocina = Producto.Impresora ? 1 : 0;
 
                 a.classList.add("list-group-item");
                 if (Producto.Codigo_Estado_Orden_Detalle == 1)

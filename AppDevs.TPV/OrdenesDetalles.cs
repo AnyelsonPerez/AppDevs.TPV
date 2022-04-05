@@ -27,6 +27,7 @@ namespace AppDevs.TPV
         public int Codigo_Estado_Orden_Detalle { get; set; }
         public int Codigo_Usuario { get; set; }
         public bool Activo { get; set; }
+        public Nullable<bool> Primero { get; set; }
     
         public virtual EstadosOrdenDetalle EstadosOrdenDetalle { get; set; }
         public virtual Ordenes Ordenes { get; set; }

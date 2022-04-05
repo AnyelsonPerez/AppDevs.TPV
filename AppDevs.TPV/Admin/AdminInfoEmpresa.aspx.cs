@@ -28,7 +28,7 @@ namespace AppDevs.TPV.Admin
                     info.NombreEmpresa, info.Direccion, info.CodigoPostal, info.Provincia, info.Ciudad, info.Pais,
                     info.CIF, info.NIF, info.Telefono, info.Movil, info.Facebook, info.NombreImpresoraBarra,
                     info.NombreImpresoraCocina, info.PorcientoIVA, info.TipoLetraBarra, info.TipoLetraCocina,
-                    8, 10, info.PlantillaPedidoBarra, info.PlantillaPedidoCocina,
+                    null, null, info.PlantillaPedidoBarra, info.PlantillaPedidoCocina,
                     info.PlantillaAnulacionBarra, info.PlantillaCuenta);
 
                 resultado = true;

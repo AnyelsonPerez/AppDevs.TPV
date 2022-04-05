@@ -118,6 +118,7 @@
           <Property Name="Cantidad_Personas" Type="int" />
           <Property Name="Nota_Producto" Type="varchar" MaxLength="50" />
           <Property Name="Hora_Orden_Detalle" Type="datetime" Nullable="false" />
+          <Property Name="Primero" Type="bit" />
           <Property Name="Codigo_Estado_Orden_Detalle" Type="int" Nullable="false" />
           <Property Name="Codigo_Usuario" Type="int" Nullable="false" />
           <Property Name="Activo" Type="bit" Nullable="false" />
@@ -859,17 +860,6 @@ advertencia 6002: La tabla o vista 'TPV.dbo.VW_NUMEROFACTURAANUAL' no tiene defi
             <Parameter Name="Altura" Mode="In" Type="String" />
             <Parameter Name="Activo" Mode="In" Type="Boolean" />
           </FunctionImport>
-          <FunctionImport Name="SPC_GET_ORDENDETALLE" ReturnType="Collection(TPVDBModel.SPC_GET_ORDENDETALLE_Result)">
-            <Parameter Name="Codigo_Orden" Mode="In" Type="Int32" />
-            <Parameter Name="Codigo_Mesa" Mode="In" Type="Int32" />
-            <Parameter Name="Codigo_Estado_Orden" Mode="In" Type="Int32" />
-            <Parameter Name="Codigo_Orden_Detalle" Mode="In" Type="Int32" />
-            <Parameter Name="Codigo_Producto" Mode="In" Type="Int32" />
-            <Parameter Name="Codigo_Producto_Unidad_Medida" Mode="In" Type="Int32" />
-            <Parameter Name="Codigo_Estado_Orden_Detalle" Mode="In" Type="Int32" />
-            <Parameter Name="Codigo_Usuario" Mode="In" Type="Int32" />
-            <Parameter Name="Activo" Mode="In" Type="Boolean" />
-          </FunctionImport>
           <FunctionImport Name="SPC_GET_PERFIL" ReturnType="Collection(TPVDBModel.SPC_GET_PERFIL_Result)">
             <Parameter Name="Codigo_Perfil" Mode="In" Type="Int32" />
             <Parameter Name="Perfil" Mode="In" Type="String" />
@@ -1046,6 +1036,17 @@ advertencia 6002: La tabla o vista 'TPV.dbo.VW_NUMEROFACTURAANUAL' no tiene defi
             <Parameter Name="PlantillaCuenta" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="SPC_GET_INFORMACIONEMPRESA" ReturnType="Collection(TPVDBModel.SPC_GET_INFORMACIONEMPRESA_Result)" />
+          <FunctionImport Name="SPC_GET_ORDENDETALLE" ReturnType="Collection(TPVDBModel.SPC_GET_ORDENDETALLE_Result)">
+            <Parameter Name="Codigo_Orden" Mode="In" Type="Int32" />
+            <Parameter Name="Codigo_Mesa" Mode="In" Type="Int32" />
+            <Parameter Name="Codigo_Estado_Orden" Mode="In" Type="Int32" />
+            <Parameter Name="Codigo_Orden_Detalle" Mode="In" Type="Int32" />
+            <Parameter Name="Codigo_Producto" Mode="In" Type="Int32" />
+            <Parameter Name="Codigo_Producto_Unidad_Medida" Mode="In" Type="Int32" />
+            <Parameter Name="Codigo_Estado_Orden_Detalle" Mode="In" Type="Int32" />
+            <Parameter Name="Codigo_Usuario" Mode="In" Type="Int32" />
+            <Parameter Name="Activo" Mode="In" Type="Boolean" />
+          </FunctionImport>
         </EntityContainer>
         <EntityType Name="Areas">
           <Key>
@@ -1182,6 +1183,7 @@ advertencia 6002: La tabla o vista 'TPV.dbo.VW_NUMEROFACTURAANUAL' no tiene defi
           <NavigationProperty Name="Productos1" Relationship="TPVDBModel.FK_OrdenesDetalles_Productos_Extra" FromRole="OrdenesDetalles" ToRole="Productos" />
           <NavigationProperty Name="ProductosUnidadesMedidas" Relationship="TPVDBModel.FK_OrdenesDetalles_ProductosUnidadesMedidas" FromRole="OrdenesDetalles" ToRole="ProductosUnidadesMedidas" />
           <NavigationProperty Name="Usuarios" Relationship="TPVDBModel.FK_OrdenesDetalles_Usuarios" FromRole="OrdenesDetalles" ToRole="Usuarios" />
+          <Property Name="Primero" Type="Boolean" />
         </EntityType>
         <EntityType Name="Perfiles">
           <Key>
@@ -1545,31 +1547,6 @@ advertencia 6002: La tabla o vista 'TPV.dbo.VW_NUMEROFACTURAANUAL' no tiene defi
           <Property Type="Int32" Name="Codigo_Estado_Orden" Nullable="true" />
           <Property Type="Boolean" Name="Activo" Nullable="false" />
         </ComplexType>
-        <ComplexType Name="SPC_GET_ORDENDETALLE_Result">
-          <Property Type="Int32" Name="Codigo_Orden" Nullable="false" />
-          <Property Type="Int32" Name="Codigo_Mesa" Nullable="false" />
-          <Property Type="Int32" Name="Comensales" Nullable="false" />
-          <Property Type="DateTime" Name="Hora_Orden" Nullable="false" Precision="23" />
-          <Property Type="Int32" Name="Codigo_Estado_Orden" Nullable="false" />
-          <Property Type="Int32" Name="Codigo_Orden_Detalle" Nullable="false" />
-          <Property Type="Int32" Name="Codigo_Producto" Nullable="false" />
-          <Property Type="Int32" Name="Codigo_Producto_Unidad_Medida" Nullable="true" />
-          <Property Type="Int32" Name="Codigo_Producto_Extra" Nullable="true" />
-          <Property Type="String" Name="NombreProducto" Nullable="false" MaxLength="114" />
-          <Property Type="Int32" Name="Cantidad_Producto" Nullable="false" />
-          <Property Type="Decimal" Name="PrecioVenta" Nullable="true" Precision="19" />
-          <Property Type="Decimal" Name="Sub_Total_Precio_Producto" Nullable="false" Precision="19" />
-          <Property Type="String" Name="Nota_Producto" Nullable="true" MaxLength="50" />
-          <Property Type="DateTime" Name="Hora_Orden_Detalle" Nullable="false" Precision="23" />
-          <Property Type="Int32" Name="Codigo_Estado_Orden_Detalle" Nullable="false" />
-          <Property Type="Boolean" Name="Impresora" Nullable="false" />
-          <Property Type="Int32" Name="Codigo_Usuario" Nullable="false" />
-          <Property Type="Boolean" Name="Activo" Nullable="false" />
-          <Property Type="String" Name="Mesa" Nullable="false" MaxLength="50" />
-          <Property Type="Int32" Name="OrdenFactura" Nullable="false" />
-          <Property Type="DateTime" Name="Hora_Pago" Nullable="true" Precision="23" />
-          <Property Type="Int64" Name="NumeroFactura" Nullable="true" />
-        </ComplexType>
         <ComplexType Name="SPC_GET_PERFIL_Result">
           <Property Type="Int32" Name="Codigo_Perfil" Nullable="false" />
           <Property Type="String" Name="Perfil" Nullable="false" MaxLength="50" />
@@ -1680,6 +1657,32 @@ advertencia 6002: La tabla o vista 'TPV.dbo.VW_NUMEROFACTURAANUAL' no tiene defi
           <Property Type="String" Name="PlantillaPedidoCocina" Nullable="true" MaxLength="1000" />
           <Property Type="String" Name="PlantillaAnulacionBarra" Nullable="true" MaxLength="1000" />
           <Property Type="String" Name="PlantillaCuenta" Nullable="true" MaxLength="2000" />
+        </ComplexType>
+        <ComplexType Name="SPC_GET_ORDENDETALLE_Result">
+          <Property Type="Int32" Name="Codigo_Orden" Nullable="false" />
+          <Property Type="Int32" Name="Codigo_Mesa" Nullable="false" />
+          <Property Type="Int32" Name="Comensales" Nullable="false" />
+          <Property Type="DateTime" Name="Hora_Orden" Nullable="false" Precision="23" />
+          <Property Type="Int32" Name="Codigo_Estado_Orden" Nullable="false" />
+          <Property Type="Int32" Name="Codigo_Orden_Detalle" Nullable="false" />
+          <Property Type="Int32" Name="Codigo_Producto" Nullable="false" />
+          <Property Type="Int32" Name="Codigo_Producto_Unidad_Medida" Nullable="true" />
+          <Property Type="Int32" Name="Codigo_Producto_Extra" Nullable="true" />
+          <Property Type="String" Name="NombreProducto" Nullable="false" MaxLength="114" />
+          <Property Type="Int32" Name="Cantidad_Producto" Nullable="false" />
+          <Property Type="Decimal" Name="PrecioVenta" Nullable="true" Precision="19" />
+          <Property Type="Decimal" Name="Sub_Total_Precio_Producto" Nullable="false" Precision="19" />
+          <Property Type="String" Name="Nota_Producto" Nullable="true" MaxLength="50" />
+          <Property Type="DateTime" Name="Hora_Orden_Detalle" Nullable="false" Precision="23" />
+          <Property Type="Int32" Name="Codigo_Estado_Orden_Detalle" Nullable="false" />
+          <Property Type="Boolean" Name="Impresora" Nullable="false" />
+          <Property Type="Boolean" Name="Primero" Nullable="true" />
+          <Property Type="Int32" Name="Codigo_Usuario" Nullable="false" />
+          <Property Type="Boolean" Name="Activo" Nullable="false" />
+          <Property Type="String" Name="Mesa" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="OrdenFactura" Nullable="false" />
+          <Property Type="DateTime" Name="Hora_Pago" Nullable="true" Precision="23" />
+          <Property Type="Int64" Name="NumeroFactura" Nullable="true" />
         </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
@@ -1797,6 +1800,7 @@ advertencia 6002: La tabla o vista 'TPV.dbo.VW_NUMEROFACTURAANUAL' no tiene defi
           <EntitySetMapping Name="OrdenesDetalles">
             <EntityTypeMapping TypeName="TPVDBModel.OrdenesDetalles">
               <MappingFragment StoreEntitySet="OrdenesDetalles">
+                <ScalarProperty Name="Primero" ColumnName="Primero" />
                 <ScalarProperty Name="Activo" ColumnName="Activo" />
                 <ScalarProperty Name="Codigo_Usuario" ColumnName="Codigo_Usuario" />
                 <ScalarProperty Name="Codigo_Estado_Orden_Detalle" ColumnName="Codigo_Estado_Orden_Detalle" />
@@ -1967,35 +1971,6 @@ advertencia 6002: La tabla o vista 'TPV.dbo.VW_NUMEROFACTURAANUAL' no tiene defi
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="SPC_GET_ORDENDETALLE" FunctionName="TPVDBModel.Store.SPC_GET_ORDENDETALLE">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="TPVDBModel.SPC_GET_ORDENDETALLE_Result">
-                <ScalarProperty Name="Codigo_Orden" ColumnName="Codigo_Orden" />
-                <ScalarProperty Name="Codigo_Mesa" ColumnName="Codigo_Mesa" />
-                <ScalarProperty Name="Comensales" ColumnName="Comensales" />
-                <ScalarProperty Name="Hora_Orden" ColumnName="Hora_Orden" />
-                <ScalarProperty Name="Codigo_Estado_Orden" ColumnName="Codigo_Estado_Orden" />
-                <ScalarProperty Name="Codigo_Orden_Detalle" ColumnName="Codigo_Orden_Detalle" />
-                <ScalarProperty Name="Codigo_Producto" ColumnName="Codigo_Producto" />
-                <ScalarProperty Name="Codigo_Producto_Unidad_Medida" ColumnName="Codigo_Producto_Unidad_Medida" />
-                <ScalarProperty Name="Codigo_Producto_Extra" ColumnName="Codigo_Producto_Extra" />
-                <ScalarProperty Name="NombreProducto" ColumnName="NombreProducto" />
-                <ScalarProperty Name="Cantidad_Producto" ColumnName="Cantidad_Producto" />
-                <ScalarProperty Name="PrecioVenta" ColumnName="PrecioVenta" />
-                <ScalarProperty Name="Sub_Total_Precio_Producto" ColumnName="Sub_Total_Precio_Producto" />
-                <ScalarProperty Name="Nota_Producto" ColumnName="Nota_Producto" />
-                <ScalarProperty Name="Hora_Orden_Detalle" ColumnName="Hora_Orden_Detalle" />
-                <ScalarProperty Name="Codigo_Estado_Orden_Detalle" ColumnName="Codigo_Estado_Orden_Detalle" />
-                <ScalarProperty Name="Impresora" ColumnName="Impresora" />
-                <ScalarProperty Name="Codigo_Usuario" ColumnName="Codigo_Usuario" />
-                <ScalarProperty Name="Activo" ColumnName="Activo" />
-                <ScalarProperty Name="Mesa" ColumnName="Mesa" />
-                <ScalarProperty Name="OrdenFactura" ColumnName="OrdenFactura" />
-                <ScalarProperty Name="Hora_Pago" ColumnName="Hora_Pago" />
-                <ScalarProperty Name="NumeroFactura" ColumnName="NumeroFactura" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="SPC_GET_PERFIL" FunctionName="TPVDBModel.Store.SPC_GET_PERFIL">
             <ResultMapping>
               <ComplexTypeMapping TypeName="TPVDBModel.SPC_GET_PERFIL_Result">
@@ -2159,6 +2134,36 @@ advertencia 6002: La tabla o vista 'TPV.dbo.VW_NUMEROFACTURAANUAL' no tiene defi
                 <ScalarProperty Name="PlantillaPedidoCocina" ColumnName="PlantillaPedidoCocina" />
                 <ScalarProperty Name="PlantillaAnulacionBarra" ColumnName="PlantillaAnulacionBarra" />
                 <ScalarProperty Name="PlantillaCuenta" ColumnName="PlantillaCuenta" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SPC_GET_ORDENDETALLE" FunctionName="TPVDBModel.Store.SPC_GET_ORDENDETALLE">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TPVDBModel.SPC_GET_ORDENDETALLE_Result">
+                <ScalarProperty Name="Codigo_Orden" ColumnName="Codigo_Orden" />
+                <ScalarProperty Name="Codigo_Mesa" ColumnName="Codigo_Mesa" />
+                <ScalarProperty Name="Comensales" ColumnName="Comensales" />
+                <ScalarProperty Name="Hora_Orden" ColumnName="Hora_Orden" />
+                <ScalarProperty Name="Codigo_Estado_Orden" ColumnName="Codigo_Estado_Orden" />
+                <ScalarProperty Name="Codigo_Orden_Detalle" ColumnName="Codigo_Orden_Detalle" />
+                <ScalarProperty Name="Codigo_Producto" ColumnName="Codigo_Producto" />
+                <ScalarProperty Name="Codigo_Producto_Unidad_Medida" ColumnName="Codigo_Producto_Unidad_Medida" />
+                <ScalarProperty Name="Codigo_Producto_Extra" ColumnName="Codigo_Producto_Extra" />
+                <ScalarProperty Name="NombreProducto" ColumnName="NombreProducto" />
+                <ScalarProperty Name="Cantidad_Producto" ColumnName="Cantidad_Producto" />
+                <ScalarProperty Name="PrecioVenta" ColumnName="PrecioVenta" />
+                <ScalarProperty Name="Sub_Total_Precio_Producto" ColumnName="Sub_Total_Precio_Producto" />
+                <ScalarProperty Name="Nota_Producto" ColumnName="Nota_Producto" />
+                <ScalarProperty Name="Hora_Orden_Detalle" ColumnName="Hora_Orden_Detalle" />
+                <ScalarProperty Name="Codigo_Estado_Orden_Detalle" ColumnName="Codigo_Estado_Orden_Detalle" />
+                <ScalarProperty Name="Impresora" ColumnName="Impresora" />
+                <ScalarProperty Name="Primero" ColumnName="Primero" />
+                <ScalarProperty Name="Codigo_Usuario" ColumnName="Codigo_Usuario" />
+                <ScalarProperty Name="Activo" ColumnName="Activo" />
+                <ScalarProperty Name="Mesa" ColumnName="Mesa" />
+                <ScalarProperty Name="OrdenFactura" ColumnName="OrdenFactura" />
+                <ScalarProperty Name="Hora_Pago" ColumnName="Hora_Pago" />
+                <ScalarProperty Name="NumeroFactura" ColumnName="NumeroFactura" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
