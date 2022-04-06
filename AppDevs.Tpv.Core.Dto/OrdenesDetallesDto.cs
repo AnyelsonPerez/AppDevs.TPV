@@ -1,12 +1,9 @@
-namespace AppDevs.Tpv.Core.Domain
+namespace AppDevs.Tpv.Core.Dto
 {
     using System;
-    using System.ComponentModel.DataAnnotations;
-    using System.ComponentModel.DataAnnotations.Schema;
 
-    public partial class OrdenesDetalles
+    public class OrdenesDetallesDto
     {
-        [Key]
         public int Codigo_Orden_Detalle { get; set; }
 
         public int Codigo_Orden { get; set; }
@@ -19,12 +16,10 @@ namespace AppDevs.Tpv.Core.Domain
 
         public int? Codigo_Producto_Extra { get; set; }
 
-        [Column(TypeName = "money")]
         public decimal Sub_Total_Precio_Producto { get; set; }
 
         public int? Cantidad_Personas { get; set; }
 
-        [StringLength(50)]
         public string Nota_Producto { get; set; }
 
         public bool Primero { get; set; }
@@ -37,16 +32,16 @@ namespace AppDevs.Tpv.Core.Domain
 
         public bool Activo { get; set; }
 
-        public virtual EstadosOrdenDetalle EstadosOrdenDetalle { get; set; }
+        public EstadosOrdenDetalleDto EstadosOrdenDetalle { get; set; }
 
-        public virtual Ordenes Ordenes { get; set; }
+        public OrdenesDto Ordenes { get; set; }
 
-        public virtual Productos Productos { get; set; }
+        public ProductosDto Productos { get; set; }
 
-        public virtual Productos ProductosExtra { get; set; }
+        public ProductosDto ProductosExtra { get; set; }
 
-        public virtual ProductosUnidadesMedidas ProductosUnidadesMedidas { get; set; }
+        public ProductosUnidadesMedidasDto ProductosUnidadesMedidas { get; set; }
 
-        public virtual Usuarios Usuarios { get; set; }
+        public UsuariosDto Usuarios { get; set; }
     }
 }

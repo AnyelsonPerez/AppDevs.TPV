@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppDevs.Tpv.Core", "AppDevs
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppDevs.Tpv.Core.Domain", "AppDevs.Tpv.Core.Domain\AppDevs.Tpv.Core.Domain.csproj", "{F2298E25-843B-46E9-995D-BCB139BA268B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppDevs.Tpv.Core.Dto", "AppDevs.Tpv.Core.Dto\AppDevs.Tpv.Core.Dto.csproj", "{4E108FB5-74D0-4729-979B-773F9B14E467}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{F2298E25-843B-46E9-995D-BCB139BA268B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F2298E25-843B-46E9-995D-BCB139BA268B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F2298E25-843B-46E9-995D-BCB139BA268B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4E108FB5-74D0-4729-979B-773F9B14E467}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4E108FB5-74D0-4729-979B-773F9B14E467}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4E108FB5-74D0-4729-979B-773F9B14E467}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4E108FB5-74D0-4729-979B-773F9B14E467}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

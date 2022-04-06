@@ -1,11 +1,18 @@
-﻿namespace AppDevs.Tpv.Core.Domain
+namespace AppDevs.Tpv.Core.Domain
 {
-    public class PermisosPerfiles
+    using System.ComponentModel.DataAnnotations;
+
+    public partial class PermisosPerfiles
     {
-        public int Codigo_Perfil_permiso { get; set; }
+        [Key]
+        public int Codigo_Perfil_Permiso { get; set; }
 
         public int Codigo_Perfil { get; set; }
 
         public int Codigo_Permiso { get; set; }
+
+        public virtual Perfiles Perfiles { get; set; }
+
+        public virtual Permisos Permisos { get; set; }
     }
 }
