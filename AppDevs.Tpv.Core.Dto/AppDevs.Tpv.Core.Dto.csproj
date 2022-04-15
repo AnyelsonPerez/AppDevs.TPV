@@ -46,6 +46,7 @@
     <Compile Include="EstadosOrdenDto.cs" />
     <Compile Include="EstadosOrdenDetalleDto.cs" />
     <Compile Include="InformacionEmpresaDto.cs" />
+    <Compile Include="Interfaces\IUsuariosService.cs" />
     <Compile Include="MesasDto.cs" />
     <Compile Include="Metodos_PagoDto.cs" />
     <Compile Include="OrdenesDto.cs" />
