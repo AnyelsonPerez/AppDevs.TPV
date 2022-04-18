@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using AppDevs.Tpv.Core.Domain.Model;
 using AppDevs.Tpv.Core.Domain.Persistence;
 using AppDevs.Tpv.Core.Domain.Persistence.Interfaces;
@@ -14,28 +15,36 @@ namespace AppDevs.Tpv.Core.Repository
             _dataContext = dataContext;
         }
 
-        public Usuarios AddOrUpdateUser(Usuarios usuario)
+        public IEnumerable<Usuarios> GetUsuarios(Usuarios usuario)
         {
-            if (usuario == null)
-            {
-                return null;
-            }
-
-            return Upsert(usuario);
+            return _dataContext
+                .CallGetProcedure<Usuarios, Usuarios>(
+                    "[SPC_GET_USUARIO]",
+                    usuario)
+                .ToList();
         }
+
+        //public Usuarios AddOrUpdateUser(Usuarios usuario)
+        //{
+        //    if (usuario == null)
+        //    {
+        //        return null;
+        //    }
+
+        //    return Upsert(usuario);
+        //}
 
         public Usuarios GetUsuarioById(int id)
         {
             return _dataContext
                 .CallGetProcedure<Usuarios, object>(
-                    "[SPC_GET_USUARIO]", 
+                    "[SPC_GET_USUARIO]",
                     new { Codigo_Usuario = id })
                 .FirstOrDefault();
         }
 
         public Usuarios GetUsuarioByUserNameAndPassword(string nombre, string clave)
         {
-
             return _dataContext
                 .CallGetProcedure<Usuarios, object>(
                     "[SPC_GET_USUARIO]",
@@ -43,9 +52,24 @@ namespace AppDevs.Tpv.Core.Repository
                 .FirstOrDefault();
         }
 
-        private Usuarios Upsert(Usuarios usuario)
+        //private Usuarios Upsert(Usuarios usuario)
+        //{
+        //    var id = _dataContext.CallSetProcedure($"[SPC_SET_USUARIO]", usuario);
+
+        //    return GetUsuarioById(id);
+        //}
+
+        public Usuarios SetUsuario(Usuarios usuario)
         {
-            var id = _dataContext.CallSetProcedure($"[SPC_SET_USUARIO]", usuario);
+            var id = _dataContext
+                .CallSetProcedure<Usuarios>(
+                    "[SPC_SET_USUARIO]",
+                    usuario);
+
+            if (id == 0)
+            {
+                return null;
+            }
 
             return GetUsuarioById(id);
         }

@@ -41,7 +41,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Extensions\PerfilesExtensions.cs" />
     <Compile Include="Extensions\UsuariosExtensions.cs" />
+    <Compile Include="PerfilesService.cs" />
     <Compile Include="UsuariosService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

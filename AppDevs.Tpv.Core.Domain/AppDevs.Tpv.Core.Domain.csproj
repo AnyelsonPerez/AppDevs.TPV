@@ -51,6 +51,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Persistence\IDataContext.cs" />
+    <Compile Include="Persistence\Interfaces\IPerfilesRepository.cs" />
     <Compile Include="Persistence\Interfaces\IUsuariosRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -64,9 +65,7 @@
       <Name>AppDevs.Tpv.Core.DB</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Model\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>

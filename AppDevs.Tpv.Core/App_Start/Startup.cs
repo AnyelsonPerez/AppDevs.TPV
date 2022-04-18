@@ -25,7 +25,6 @@ namespace AppDevs.Tpv.Core.App_Start
 
         private void RegisterDependencies(IAppBuilder app, HttpConfiguration config)
         {
-            
             var builder = new ContainerBuilder();
 
             builder.RegisterApiControllers(Assembly.GetExecutingAssembly());
@@ -51,6 +50,10 @@ namespace AppDevs.Tpv.Core.App_Start
 
         private void RegisterServices(ContainerBuilder builder)
         {
+            builder.RegisterType<PerfilesService>()
+                .As<IPerfilesService>()
+                .InstancePerRequest();
+
             builder.RegisterType<UsuariosService>()
                 .As<IUsuariosService>()
                 .InstancePerRequest();
@@ -64,6 +67,10 @@ namespace AppDevs.Tpv.Core.App_Start
             builder.RegisterType<DataContext>()
                 .As<IDataContext>()
                 .SingleInstance();
+
+            builder.RegisterType<PerfilesRepository>()
+                .As<IPerfilesRepository>()
+                .InstancePerRequest();
 
             builder.RegisterType<UsuariosRepository>()
                 .As<IUsuariosRepository>()

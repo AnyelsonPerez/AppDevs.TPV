@@ -23,5 +23,24 @@ namespace AppDevs.Tpv.Core.Services.Extensions
                 Activo = domain.Activo
             };
         }
+
+        public static Usuarios ToDomain(this UsuariosDto dto)
+        {
+            if (dto == null)
+            {
+                return null;
+            }
+
+            return new Usuarios()
+            {
+                Codigo_Usuario = dto.Codigo_Usuario,
+                Codigo_Perfil = dto.Codigo_Perfil,
+                Usuario = dto.Usuario,
+                Clave = dto.Clave,
+                Nombre_Usuario = dto.Nombre_Usuario,
+                Apellido_Usuario = dto.Apellido_Usuario,
+                Activo = dto.Activo
+            };
+        }
     }
 }

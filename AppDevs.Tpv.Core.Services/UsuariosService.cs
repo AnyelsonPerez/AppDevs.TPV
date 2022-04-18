@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using AppDevs.Tpv.Core.Domain.Persistence.Interfaces;
 using AppDevs.Tpv.Core.Dto;
 using AppDevs.Tpv.Core.Dto.Interfaces;
@@ -15,6 +17,13 @@ namespace AppDevs.Tpv.Core.Services
             _usuariosRepository = usuariosRepository ?? throw new ArgumentNullException(nameof(usuariosRepository));
         }
 
+        public IEnumerable<UsuariosDto> GetUsuarios(UsuariosDto usuario)
+        {
+            return _usuariosRepository
+                .GetUsuarios(usuario.ToDomain())
+                .Select(x => x.ToDto());
+        }
+
         public UsuariosDto GetUsuarioById(int id)
         {
             return _usuariosRepository
@@ -27,6 +36,39 @@ namespace AppDevs.Tpv.Core.Services
             return _usuariosRepository
                 .GetUsuarioByUserNameAndPassword(usuario, clave)
                 .ToDto();
+        }
+
+        public UsuariosDto SetUsuario(UsuariosDto usuario)
+        {
+            return _usuariosRepository
+                .SetUsuario(usuario.ToDomain())
+                .ToDto();
+        }
+
+        public bool DeleteUsuario(int id)
+        {
+            if (id == 0)
+            {
+                return false;
+            }
+
+            var usuario = GetUsuarioById(id);
+
+            if (usuario == null)
+            {
+                return false;
+            }
+
+            if (!usuario.Activo)
+            {
+                return true;
+            }
+
+            usuario.Activo = false;
+
+            SetUsuario(usuario);
+
+            return true;
         }
     }
 }
