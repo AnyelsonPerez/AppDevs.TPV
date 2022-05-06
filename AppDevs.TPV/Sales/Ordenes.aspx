@@ -597,9 +597,8 @@
                 </div>
             </div>
         </div>
-        <div class="modal fade" id="dCobrar" role="dialog">
+        <%--<div class="modal fade" id="dCobrar" role="dialog">
             <div class="modal-dialog">
-                <!-- Modal content-->
                 <div class="modal-content">
                     <div class="modal-header info">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -615,7 +614,50 @@
                         <button id="btnCobrarCerrarCuenta" type="button" class="btn btn-danger" data-dismiss="modal">Cerrar Cuenta</button>
                     </div>
                 </div>
+            </div>
+        </div>--%>
 
+        <div class="modal fade" id="dCobrar" role="dialog">
+            <div class="modal-dialog">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header info">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Cobrar</h4>
+                    </div>
+                    <div class="modal-body text-right">
+                        <h1><span id="dCobrarTotal"></span>€</h1>
+                        <div id="dMetodosPago" class="btn-group btn-group-justified" data-toggle="buttons"></div>
+                        <br />
+
+                        <h4 class="text-center">Cambio de:</h4>
+                        
+                        <input id="txtCobrarDe" type="number" autofocus="autofocus" class="form-control input-lg" style="width:200px; margin:auto" />
+
+                        <br />
+
+                        <div id="dBilletes" class="btn-group btn-group-lg btn-group-justified" data-toggle="buttons">
+                            <label class="btn btn-default billete">
+                                <input type="radio" name="billete" value="5">5 €</label>
+                            <label class="btn btn-default billete">
+                                <input type="radio" name="billete" value="10">10 €</label>
+                            <label class="btn btn-default billete">
+                                <input type="radio" name="billete" value="20">20 €</label>
+                            <label class="btn btn-default billete">
+                                <input type="radio" name="billete" value="50">50 €</label>
+                            <label class="btn btn-default billete">
+                                <input type="radio" name="billete" value="100">100 €</label>
+                            <label class="btn btn-default billete">
+                                <input type="radio" name="billete" value="200">200 €</label>
+                        </div>
+
+                        <h1><span id="dCobrarCambio">0,0</span> €</h1>
+                    </div>
+                    <div class="modal-footer">
+                        <button id="btnCobrarImprimirCuenta" type="button" class="btn btn-success" data-dismiss="modal">Imprimir Cuenta</button>
+                        <button id="btnCobrarCerrarCuenta" type="button" class="btn btn-danger" data-dismiss="modal">Cerrar Cuenta</button>
+                    </div>
+                </div>
             </div>
         </div>
         <!-- /#wrapper -->
@@ -1186,6 +1228,32 @@
             PersonasPorMesa.dialog("open");
         };
 
+        $('.billete').on('click', function (e) {
+            $("#txtCobrarDe").val("");
+
+            var billete = toFloat($("input", this).val()).toFixed(2);
+
+            var total = toFloat($("#dCobrarTotal")[0].innerText).toFixed(2);
+            var cambio = billete - total;
+            if (cambio >= 0)
+                $("#dCobrarCambio")[0].innerText = toFloat(cambio).toFixed(2);
+            else
+                $("#dCobrarCambio")[0].innerText = "Falta";
+        });
+
+        $('#txtCobrarDe').on('keyup', function (e) {
+            $(".billete.active").removeClass("active");
+
+            var billete = $("#txtCobrarDe").val();
+            
+            var total = toFloat($("#dCobrarTotal")[0].innerText).toFixed(2);
+            var cambio = billete - total;
+            if (cambio >= 0)
+                $("#dCobrarCambio")[0].innerText = toFloat(cambio).toFixed(2);
+            else
+                $("#dCobrarCambio")[0].innerText = "Falta";
+        });
+
         function AgregarTab(Lista, Titulo, Codigo, CodigoPadre) {
             var li = document.createElement('li');
             var a = document.createElement('a');
@@ -1244,7 +1312,7 @@
         function AgregarOrdenDetalle(CodigoOrdenDetalle, CodigoProducto, CodigoProductoUnidadMedida, CantidadProducto, CodigoProductoExtra, SubTotal, NotaProducto, CantidadPersonas) {
             //-- Deselecionar el que pueda estar seleccionado
             $('.seleccionado', comanda).removeClass('seleccionado');
-            //-- 
+            //--
             if (!!CantidadProducto && !!SubTotal)
                 SubTotal = toFloat(CantidadProducto) * toFloat(SubTotal);
 
@@ -1282,7 +1350,7 @@
         function MasUno(CodigoOrdenDetalle, CodigoMesa) {
             //-- Deselecionar el que pueda estar seleccionado
             $('.seleccionado', comanda).removeClass('seleccionado');
-            //-- 
+            //--
 
             $.ajax({
                 type: "POST",
@@ -1448,13 +1516,13 @@
                                     if (msg.d === true) {
                                         $('#<%= lblPAX.ClientID %>')[0].innerText = comensales;
 
-                                    PersonasPorMesa.dialog("close");
+                                        PersonasPorMesa.dialog("close");
+                                    }
                                 }
-                            }
-                        });
-                    }
-                }]);
-                PersonasPorMesa.dialog("open");
+                            });
+                        }
+                    }]);
+                    PersonasPorMesa.dialog("open");
                 }
             });
         }
@@ -1690,5 +1758,4 @@
         }
     </script>
 </body>
-
 </html>
