@@ -304,7 +304,7 @@
                         <ul class="dropdown-menu dropdown-user">
                             <li>
                                 <a href="#" onclick="document.documentElement.webkitRequestFullScreen();">
-                                    <i class="glyphicon glyphicon-fullscreen"></i> Pantalla completa
+                                    <i class="glyphicon glyphicon-fullscreen"></i>Pantalla completa
                                 </a>
                             </li>
                             <li>
@@ -611,9 +611,32 @@
                         <h4 class="modal-title">Cobrar</h4>
                     </div>
                     <div class="modal-body text-right">
-                        <h1 id="dCobrarTotal"></h1>
-                        <div id="dMetodosPago" class="btn-group btn-group-justified" data-toggle="buttons">
+                        <h1><span id="dCobrarTotal"></span>€</h1>
+                        <div id="dMetodosPago" class="btn-group btn-group-justified" data-toggle="buttons"></div>
+                        <br />
+
+                        <h4 class="text-center">Cambio de:</h4>
+
+                        <input id="txtCobrarDe" type="number" autofocus="autofocus" class="form-control input-lg" style="width: 200px; margin: auto" />
+
+                        <br />
+
+                        <div id="dBilletes" class="btn-group btn-group-lg btn-group-justified" data-toggle="buttons">
+                            <label class="btn btn-default billete">
+                                <input type="radio" name="billete" value="5">5 €</label>
+                            <label class="btn btn-default billete">
+                                <input type="radio" name="billete" value="10">10 €</label>
+                            <label class="btn btn-default billete">
+                                <input type="radio" name="billete" value="20">20 €</label>
+                            <label class="btn btn-default billete">
+                                <input type="radio" name="billete" value="50">50 €</label>
+                            <label class="btn btn-default billete">
+                                <input type="radio" name="billete" value="100">100 €</label>
+                            <label class="btn btn-default billete">
+                                <input type="radio" name="billete" value="200">200 €</label>
                         </div>
+
+                        <h1><span id="dCobrarCambio">0,0</span> €</h1>
                     </div>
                     <div class="modal-footer">
                         <button id="btnCobrarImprimirCuenta" type="button" class="btn btn-success" data-dismiss="modal">Imprimir Cuenta</button>
@@ -645,7 +668,6 @@
                         <button id="btnPedidoPedir" type="button" class="btn btn-success" data-dismiss="modal">Pedir</button>
                     </div>
                 </div>
-
             </div>
         </div>
         <!-- /#wrapper -->
@@ -665,7 +687,7 @@
         $(document).ready(function () {
             console.log("GetPermisos");
             Permisos = GetPermisos();
-            console.log("IsAdmin?",Permisos);
+            console.log("IsAdmin?", Permisos);
             if (!Permisos.Admin) $("#liAdmin").hide();
             $("#aDashboard").prop("disabled", Permisos.SoloVentas);
             console.log("OcultarBotones");
@@ -1028,7 +1050,7 @@
             var primeros = $('[data-primero="1"]', comandaPrimeros);
             if (primeros.length > 0 && primeros.length < pendientesCocina.length) {
                 //-- Marcar Primeros
-                    
+
                 var codigosOrdenesDetalle = [];
                 primeros.each(function () {
                     codigosOrdenesDetalle.push(this.dataset.codigoordendetalle);
@@ -1045,7 +1067,7 @@
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
                     success: function (e) {
-                        
+
                     }
                 });
             }
@@ -1076,7 +1098,6 @@
         //    //    }
         //    //});
         //}
-
 
         var btnCuenta = document.getElementById('btnCuenta');
         btnCuenta.onclick = function (e) {
@@ -1315,6 +1336,32 @@
             PersonasPorMesa.dialog("open");
         };
 
+        $('.billete').on('click', function (e) {
+            $("#txtCobrarDe").val("");
+
+            var billete = toFloat($("input", this).val()).toFixed(2);
+
+            var total = toFloat($("#dCobrarTotal")[0].innerText).toFixed(2);
+            var cambio = billete - total;
+            if (cambio >= 0)
+                $("#dCobrarCambio")[0].innerText = toFloat(cambio).toFixed(2);
+            else
+                $("#dCobrarCambio")[0].innerText = "Falta";
+        });
+
+        $('#txtCobrarDe').on('keyup', function (e) {
+            $(".billete.active").removeClass("active");
+
+            var billete = $("#txtCobrarDe").val();
+
+            var total = toFloat($("#dCobrarTotal")[0].innerText).toFixed(2);
+            var cambio = billete - total;
+            if (cambio >= 0)
+                $("#dCobrarCambio")[0].innerText = toFloat(cambio).toFixed(2);
+            else
+                $("#dCobrarCambio")[0].innerText = "Falta";
+        });
+
         function AgregarTab(Lista, Titulo, Codigo, CodigoPadre) {
             var li = document.createElement('li');
             var a = document.createElement('a');
@@ -1373,7 +1420,7 @@
         function AgregarOrdenDetalle(CodigoOrdenDetalle, CodigoProducto, CodigoProductoUnidadMedida, CantidadProducto, CodigoProductoExtra, SubTotal, NotaProducto, CantidadPersonas) {
             //-- Deselecionar el que pueda estar seleccionado
             $('.seleccionado', comanda).removeClass('seleccionado');
-            //-- 
+            //--
             if (!!CantidadProducto && !!SubTotal)
                 SubTotal = toFloat(CantidadProducto) * toFloat(SubTotal);
 
@@ -1411,7 +1458,7 @@
         function MasUno(CodigoOrdenDetalle, CodigoMesa) {
             //-- Deselecionar el que pueda estar seleccionado
             $('.seleccionado', comanda).removeClass('seleccionado');
-            //-- 
+            //--
 
             $.ajax({
                 type: "POST",
@@ -1820,5 +1867,4 @@
         }
     </script>
 </body>
-
 </html>
