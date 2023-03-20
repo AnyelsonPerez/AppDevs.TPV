@@ -51,8 +51,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Persistence\IDataContext.cs" />
-    <Compile Include="Persistence\Interfaces\IPerfilesRepository.cs" />
-    <Compile Include="Persistence\Interfaces\IUsuariosRepository.cs" />
+    <Compile Include="Persistence\Interfaces\IRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

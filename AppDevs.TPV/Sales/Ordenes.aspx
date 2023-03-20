@@ -631,8 +631,8 @@
                         <br />
 
                         <h4 class="text-center">Cambio de:</h4>
-                        
-                        <input id="txtCobrarDe" type="number" autofocus="autofocus" class="form-control input-lg" style="width:200px; margin:auto" />
+
+                        <input id="txtCobrarDe" type="number" autofocus="autofocus" class="form-control input-lg" style="width: 200px; margin: auto" />
 
                         <br />
 
@@ -1245,7 +1245,7 @@
             $(".billete.active").removeClass("active");
 
             var billete = $("#txtCobrarDe").val();
-            
+
             var total = toFloat($("#dCobrarTotal")[0].innerText).toFixed(2);
             var cambio = billete - total;
             if (cambio >= 0)

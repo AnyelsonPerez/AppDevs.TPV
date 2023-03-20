@@ -12,7 +12,7 @@ namespace AppDevs.TPV
 {
     public partial class LogIn : System.Web.UI.Page
     {
-        const string C_SV_USUARIO = "_Usuario";
+        private const string C_SV_USUARIO = "_Usuario";
 
         [WebMethod]
         public static bool Entrar(string _Usuario, string _Clave)
@@ -33,7 +33,6 @@ namespace AppDevs.TPV
                         //FormsAuthentication.SetAuthCookie(usuario.Usuario,true);
                         //new Utilidades().CargarPermisos();
                         FormsAuthentication.RedirectFromLoginPage(_Usuario, false);
-
                     }
                 }
             }
@@ -53,17 +52,14 @@ namespace AppDevs.TPV
             bool resultado = false;
             try
             {
-                decimal _IVA = 0;
-                decimal.TryParse(PorcientoIVA, out _IVA);
-                decimal _TamanoLetraBarra = 0;
-                decimal.TryParse(TamanoLetraBarra, out _TamanoLetraBarra);
-                decimal _TamanoLetraCocina = 0;
-                decimal.TryParse(TamanoLetraCocina, out _TamanoLetraCocina);
+                decimal.TryParse(PorcientoIVA, out decimal _IVA);
+                decimal.TryParse(TamanoLetraBarra, out decimal _TamanoLetraBarra);
+                decimal.TryParse(TamanoLetraCocina, out decimal _TamanoLetraCocina);
 
                 using (var DB = new TPVDBEntities())
                 {
                     DB.SPC_SET_INFORMACIONEMPRESA(NombreEmpresa, Direccion, CodigoPostal, Provincia, Ciudad, Pais,
-                        CIF, NIF, Telefono, Movil, Facebook, NombreImpresoraBarra, NombreImpresoraCocina, _IVA,
+                        CIF, NIF, Telefono, Movil, Facebook, NombreImpresoraBarra, NombreImpresoraCocina, 0,
                         TipoLetraBarra, TipoLetraCocina, _TamanoLetraBarra, _TamanoLetraCocina, PlantillaPedidoBarra,
                         PlantillaPedidoCocina, PlantillaAnulacionBarra, PlantillaCuenta);
 

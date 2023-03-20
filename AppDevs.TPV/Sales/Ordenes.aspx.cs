@@ -198,8 +198,6 @@ namespace AppDevs.TPV.Sales
                 var Usuario = (Usuarios)HttpContext.Current.Session[C_SV_USUARIO];
                 resultado = DB.SPC_SET_ORDENDETALLE(_CodigoOrdenDetalle, _CodigoOrden, _CodigoProducto, _CodigoProductoUnidadMedida, _CantidadProducto,
                     _CodigoProductoExtra, _SubTotal, _CantidadPersonas, _NotaProducto, DateTime.Now, _CodigoEstadoOrdenDetalle, Usuario.Codigo_Usuario, true).ToList();
-
-
             }
             return resultado;
         }
@@ -233,7 +231,6 @@ namespace AppDevs.TPV.Sales
                         Detalle.Codigo_Producto_Unidad_Medida, cantidad_Producto, Detalle.Codigo_Producto_Extra, sub_Total_Precio_Producto, null, Detalle.Nota_Producto,
                         null);
                 }
-
             }
             return resultado;
         }
@@ -282,8 +279,10 @@ namespace AppDevs.TPV.Sales
             using (var DB = new TPVDBEntities())
             {
                 bool resultado = true;
-                var codigo_Orden = new System.Data.Entity.Core.Objects.ObjectParameter("Codigo_Orden", typeof(Nullable<int>));
-                codigo_Orden.Value = Codigo_Orden;
+                var codigo_Orden = new System.Data.Entity.Core.Objects.ObjectParameter("Codigo_Orden", typeof(Nullable<int>))
+                {
+                    Value = Codigo_Orden
+                };
 
                 if (Comensales >= 0)
                 {
@@ -358,7 +357,7 @@ namespace AppDevs.TPV.Sales
             return resultado;
         }
 
-        static void Pedidos(int CodigoOrden)
+        private static void Pedidos(int CodigoOrden)
         {
             using (var DB = new TPVDBEntities())
             {
@@ -376,7 +375,7 @@ namespace AppDevs.TPV.Sales
             }
         }
 
-        static void ImprimirPedidos(IGrouping<bool, SPC_GET_ORDENDETALLE_Result> Pedidos, bool ImprimirEnCocina,
+        private static void ImprimirPedidos(IGrouping<bool, SPC_GET_ORDENDETALLE_Result> Pedidos, bool ImprimirEnCocina,
             string NombreImpresoraCocina, string NombreImpresoraBarra)
         {
             try
@@ -406,10 +405,12 @@ namespace AppDevs.TPV.Sales
                 var center = new StringFormat() { Alignment = StringAlignment.Center };
 
                 int Index = 0;
-                var LineasImpresion = new List<LineaPedido>();
-                LineasImpresion.Add(new LineaPedido(Index++, new string('*', AnchoPagina), Normal));
-                LineasImpresion.Add(new LineaPedido(Index++, Mesa, Bold, center));
-                LineasImpresion.Add(new LineaPedido(Index, new string('*', AnchoPagina), Normal));
+                var LineasImpresion = new List<LineaPedido>
+                {
+                    new LineaPedido(Index++, new string('*', AnchoPagina), Normal),
+                    new LineaPedido(Index++, Mesa, Bold, center),
+                    new LineaPedido(Index, new string('*', AnchoPagina), Normal)
+                };
 
                 foreach (var pedido in Pedidos)
                 {
@@ -445,7 +446,7 @@ namespace AppDevs.TPV.Sales
                 HttpContext.Current.Session.Add(C_SV_IMPRESION, LineasImpresion);
 
                 var pd = new System.Drawing.Printing.PrintDocument();
-                pd.PrintPage += new System.Drawing.Printing.PrintPageEventHandler(pd_PrintPage);
+                pd.PrintPage += new System.Drawing.Printing.PrintPageEventHandler(Pd_PrintPage);
                 pd.DefaultPageSettings.PaperSize = new System.Drawing.Printing.PaperSize("3 1/8 inc x 220 mm", 313, (Index + 2) * (Normal.Height));
                 pd.DefaultPageSettings.Margins = new System.Drawing.Printing.Margins(0, 0, 0, 0);
 
@@ -460,7 +461,7 @@ namespace AppDevs.TPV.Sales
             }
         }
 
-        static void ImprimirAnulacion(SPC_GET_ORDENDETALLE_Result PedidoAnulado, bool ImprimirEnCocina,
+        private static void ImprimirAnulacion(SPC_GET_ORDENDETALLE_Result PedidoAnulado, bool ImprimirEnCocina,
             string NombreImpresoraCocina, string NombreImpresoraBarra)
         {
             try
@@ -486,9 +487,11 @@ namespace AppDevs.TPV.Sales
                 var center = new StringFormat() { Alignment = StringAlignment.Center };
 
                 int Index = 0;
-                var LineasImpresion = new List<LineaPedido>();
-                LineasImpresion.Add(new LineaPedido(Index++, "ANULACIÓN", ConsolasBold, center));
-                LineasImpresion.Add(new LineaPedido(Index, PedidoAnulado.Mesa, ConsolasBold, center));
+                var LineasImpresion = new List<LineaPedido>
+                {
+                    new LineaPedido(Index++, "ANULACIÓN", ConsolasBold, center),
+                    new LineaPedido(Index, PedidoAnulado.Mesa, ConsolasBold, center)
+                };
 
                 string DescripcionTotal = string.Empty;
                 string filler = string.Empty;
@@ -524,7 +527,7 @@ namespace AppDevs.TPV.Sales
                 HttpContext.Current.Session.Add(C_SV_IMPRESION, LineasImpresion);
 
                 var pd = new System.Drawing.Printing.PrintDocument();
-                pd.PrintPage += new System.Drawing.Printing.PrintPageEventHandler(pd_PrintPage);
+                pd.PrintPage += new System.Drawing.Printing.PrintPageEventHandler(Pd_PrintPage);
                 pd.DefaultPageSettings.PaperSize = new System.Drawing.Printing.PaperSize("3 1/8 inc x 220 mm", 313, (Index + 2) * (ConsolasNormal.Height));
                 pd.DefaultPageSettings.Margins = new System.Drawing.Printing.Margins(0, 0, 0, 0);
 
@@ -605,11 +608,13 @@ namespace AppDevs.TPV.Sales
             var NumeroFactura = string.Format("{0}-{1}", ordenDetalle.Hora_Pago.Value.Year, ordenDetalle.NumeroFactura.Value.ToString().PadLeft(6, '0'));
 
             int Index = 0;
-            var LineasImpresion = new List<LineaPedido>();
-            LineasImpresion.Add(new LineaPedido(Index++, info.NombreEmpresa.ToUpper(), Bold, center));
-            LineasImpresion.Add(new LineaPedido(Index++, info.Direccion, Normal, center));
-            LineasImpresion.Add(new LineaPedido(Index++, string.Format("{0} {1}, {2}",
-                info.CodigoPostal, info.Ciudad, info.Provincia), Normal, center));
+            var LineasImpresion = new List<LineaPedido>
+            {
+                new LineaPedido(Index++, info.NombreEmpresa.ToUpper(), Bold, center),
+                new LineaPedido(Index++, info.Direccion, Normal, center),
+                new LineaPedido(Index++, string.Format("{0} {1}, {2}",
+                info.CodigoPostal, info.Ciudad, info.Provincia), Normal, center)
+            };
 
             if (!string.IsNullOrEmpty(info.Telefono))
                 LineasImpresion.Add(new LineaPedido(Index++, "Tel. " + info.Telefono, Normal, center));
@@ -717,7 +722,7 @@ namespace AppDevs.TPV.Sales
             HttpContext.Current.Session.Add(C_SV_IMPRESION, LineasImpresion);
 
             var pd = new System.Drawing.Printing.PrintDocument();
-            pd.PrintPage += new System.Drawing.Printing.PrintPageEventHandler(pd_PrintPage);
+            pd.PrintPage += new System.Drawing.Printing.PrintPageEventHandler(Pd_PrintPage);
             pd.DefaultPageSettings.PaperSize = new System.Drawing.Printing.PaperSize("3 1/8 inc x 220 mm", 313, (Index + 2) * Normal.Height);
             pd.DefaultPageSettings.Margins = new System.Drawing.Printing.Margins(0, 0, 0, 0);
 
@@ -733,7 +738,7 @@ namespace AppDevs.TPV.Sales
                 System.Globalization.CultureInfo.GetCultureInfo("en-US"), "{0:0.00}", Valor);
         }
 
-        static void pd_PrintPage(object sender, System.Drawing.Printing.PrintPageEventArgs ev)
+        private static void Pd_PrintPage(object sender, System.Drawing.Printing.PrintPageEventArgs ev)
         {
             var LineasImpresion = (List<LineaPedido>)HttpContext.Current.Session[C_SV_IMPRESION];
             foreach (var Linea in LineasImpresion)
@@ -742,7 +747,7 @@ namespace AppDevs.TPV.Sales
             }
         }
 
-        static void WriteLine(System.Drawing.Printing.PrintPageEventArgs ev, int LineIndex, string LineText, Font Fuente, StringFormat Center = null)
+        private static void WriteLine(System.Drawing.Printing.PrintPageEventArgs ev, int LineIndex, string LineText, Font Fuente, StringFormat Center = null)
         {
             System.Drawing.SolidBrush br = new System.Drawing.SolidBrush(System.Drawing.Color.Black);
 
@@ -755,6 +760,7 @@ namespace AppDevs.TPV.Sales
         }
     }
 }
+
 public static class StringExt
 {
     public static string Truncate(this string value, int maxLength)

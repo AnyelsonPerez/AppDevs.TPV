@@ -13,6 +13,7 @@ namespace AppDevs.Tpv.Core.Repository
             _tpvDataContext = tpvDataContext;
         }
 
+        //TODO: COMPLETAR CRUD
         //public void Delete<T>(string Where) where T : class
         //{
         //    var query = $"UPDATE {nameof(T)} SET Activo = 0 WHERE {Where}";
@@ -39,6 +40,7 @@ namespace AppDevs.Tpv.Core.Repository
         {
             return _tpvDataContext.Set(query, param, commandType: System.Data.CommandType.StoredProcedure);
         }
+
         public IEnumerable<T> CallGetProcedure<T, U>(string query, U param) where T : class where U : class
         {
             return _tpvDataContext.Get<T, U>(query, param, commandType: System.Data.CommandType.StoredProcedure);

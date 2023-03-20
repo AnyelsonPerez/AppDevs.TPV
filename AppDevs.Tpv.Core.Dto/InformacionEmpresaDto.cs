@@ -23,6 +23,7 @@ namespace AppDevs.Tpv.Core.Dto
         public string Telefono { get; set; }
 
         public string Movil { get; set; }
+
         public string Facebook { get; set; }
 
         public string NombreImpresoraBarra { get; set; }

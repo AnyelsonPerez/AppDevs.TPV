@@ -41,8 +41,35 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="InformacionEmpresaService.cs" />
+    <Compile Include="CategoriasProductoService.cs" />
+    <Compile Include="Extensions\UnidadesMedidasExtensions.cs" />
+    <Compile Include="Extensions\TiposProductosExtensions.cs" />
+    <Compile Include="Extensions\ProductosUnidadesMedidasExtensions.cs" />
+    <Compile Include="Extensions\ProductosExtensions.cs" />
+    <Compile Include="Extensions\PermisosPerfilesExtensions.cs" />
+    <Compile Include="Extensions\PermisosExtensions.cs" />
+    <Compile Include="Extensions\OrdenesExtensions.cs" />
+    <Compile Include="Extensions\OrdenesDetalleExtensions.cs" />
+    <Compile Include="Extensions\MetodosPagoExtensions.cs" />
+    <Compile Include="Extensions\InformacionEmpresaExtensions.cs" />
+    <Compile Include="Extensions\EstadosOrdenExtensions.cs" />
+    <Compile Include="Extensions\EstadosOrdenDetalleExtensions.cs" />
+    <Compile Include="Extensions\CategoriasProductoExtensions.cs" />
+    <Compile Include="Extensions\AreasExtensions.cs" />
+    <Compile Include="Extensions\MesasExtensions.cs" />
     <Compile Include="Extensions\PerfilesExtensions.cs" />
     <Compile Include="Extensions\UsuariosExtensions.cs" />
+    <Compile Include="AreasService.cs" />
+    <Compile Include="OrdenesService.cs" />
+    <Compile Include="OrdenesDetalleService.cs" />
+    <Compile Include="MesasService.cs" />
+    <Compile Include="UnidadesMedidasService.cs" />
+    <Compile Include="TiposProductosService.cs" />
+    <Compile Include="ProductosUnidadesMedidasService.cs" />
+    <Compile Include="ProductosService.cs" />
+    <Compile Include="PermisosService.cs" />
+    <Compile Include="PermisosPerfilesService.cs" />
     <Compile Include="PerfilesService.cs" />
     <Compile Include="UsuariosService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

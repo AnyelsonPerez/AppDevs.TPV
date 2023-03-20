@@ -3,40 +3,41 @@ using System.Linq;
 using AppDevs.Tpv.Core.Domain.Model;
 using AppDevs.Tpv.Core.Domain.Persistence;
 using AppDevs.Tpv.Core.Domain.Persistence.Interfaces;
+using AppDevs.Tpv.Core.Repository.Extensions;
 
 namespace AppDevs.Tpv.Core.Repository
 {
-    public class PerfilesRepository : IPerfilesRepository
+    public class PerfilesRepository : IRepository<Perfiles>
     {
         private readonly IDataContext _dataContext;
 
         public PerfilesRepository(IDataContext dataContext)
         {
-            _dataContext = dataContext;
+            _dataContext = dataContext ?? throw new System.ArgumentNullException(nameof(dataContext));
         }
 
-        public IEnumerable<Perfiles> GetPerfiles(Perfiles usuario)
+        public IEnumerable<Perfiles> Get(Perfiles perfil)
         {
             return _dataContext
-                .CallGetProcedure<Perfiles, Perfiles>(
+                .CallGetProcedure<Perfiles, object>(
                     "[SPC_GET_PERFIL]",
-                    usuario)
+                    perfil.ToDynamic())
                 .ToList();
         }
 
-        public Perfiles GetPerfilById(int id)
+        public Perfiles Get(int id)
         {
             return _dataContext
                  .CallGetProcedure<Perfiles, object>(
                      "[SPC_GET_PERFIL]",
-                     new { Codigo_Usuario = id })
+                     new { Codigo_Perfil = id })
                  .FirstOrDefault();
         }
 
-        public Perfiles SetPerfil(Perfiles perfil)
+        public Perfiles Set(Perfiles perfil)
         {
             var id = _dataContext
-                .CallSetProcedure<Perfiles>(
+                .CallSetProcedure(
                     "[SPC_SET_PERFIL]",
                     perfil);
 
@@ -45,7 +46,7 @@ namespace AppDevs.Tpv.Core.Repository
                 return null;
             }
 
-            return GetPerfilById(id);
+            return Get(id);
         }
     }
 }

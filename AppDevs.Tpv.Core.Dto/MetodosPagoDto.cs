@@ -2,7 +2,7 @@ namespace AppDevs.Tpv.Core.Dto
 {
     using System.Collections.Generic;
 
-    public class Metodos_PagoDto
+    public class MetodosPagoDto
     {
         public int Codigo_Metodo_Pago { get; set; }
 

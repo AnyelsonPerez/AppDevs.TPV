@@ -12,7 +12,7 @@ namespace AppDevs.TPV.Admin
 {
     public partial class Consultas : System.Web.UI.Page
     {
-        static List<LineaPedido> LineasImpresion = null;
+        private static List<LineaPedido> LineasImpresion = null;
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -157,10 +157,10 @@ namespace AppDevs.TPV.Admin
                             && w.Ordenes.Hora_Pago <= (Hasta != null ? Hasta : w.Ordenes.Hora_Pago))
                             .GroupBy(g => g.Usuarios.Nombre_Usuario + " " + g.Usuarios.Apellido_Usuario)
                             .Select(s => new
-                             {
-                                 NombreCompleto = s.Key,
-                                 total = s.Sum(t => t.Sub_Total_Precio_Producto)
-                             })
+                            {
+                                NombreCompleto = s.Key,
+                                total = s.Sum(t => t.Sub_Total_Precio_Producto)
+                            })
                             .OrderBy(o => o.NombreCompleto)
                             .ToList();
 
@@ -195,11 +195,13 @@ namespace AppDevs.TPV.Admin
                     var center = new StringFormat() { Alignment = StringAlignment.Center };
 
                     int Index = 0;
-                    LineasImpresion = new List<LineaPedido>();
-                    LineasImpresion.Add(new LineaPedido(Index++, info.NombreEmpresa, ConsolasNormal, center));
-                    LineasImpresion.Add(new LineaPedido(Index++, info.Direccion, ConsolasNormal, center));
-                    LineasImpresion.Add(new LineaPedido(Index++, string.Format("{0} {1}, {2}",
-                        info.CodigoPostal, info.Ciudad, info.Provincia), ConsolasNormal, center));
+                    LineasImpresion = new List<LineaPedido>
+                    {
+                        new LineaPedido(Index++, info.NombreEmpresa, ConsolasNormal, center),
+                        new LineaPedido(Index++, info.Direccion, ConsolasNormal, center),
+                        new LineaPedido(Index++, string.Format("{0} {1}, {2}",
+                        info.CodigoPostal, info.Ciudad, info.Provincia), ConsolasNormal, center)
+                    };
 
                     if (!string.IsNullOrEmpty(info.Telefono))
                         LineasImpresion.Add(new LineaPedido(Index++, "Tel. " + info.Telefono, ConsolasNormal, center));
@@ -233,7 +235,7 @@ namespace AppDevs.TPV.Admin
                     //}
 
                     var pd = new System.Drawing.Printing.PrintDocument();
-                    pd.PrintPage += new System.Drawing.Printing.PrintPageEventHandler(pd_PrintPage);
+                    pd.PrintPage += new System.Drawing.Printing.PrintPageEventHandler(Pd_PrintPage);
                     pd.DefaultPageSettings.PaperSize = new System.Drawing.Printing.PaperSize("3 1/8 inc x 220 mm", 313, (Index + 2) * 15);
                     pd.DefaultPageSettings.Margins = new System.Drawing.Printing.Margins(0, 0, 0, 0);
 
@@ -255,7 +257,7 @@ namespace AppDevs.TPV.Admin
                 System.Globalization.CultureInfo.GetCultureInfo("en-US"), "{0:0.00}", Valor);
         }
 
-        static void pd_PrintPage(object sender, System.Drawing.Printing.PrintPageEventArgs ev)
+        private static void Pd_PrintPage(object sender, System.Drawing.Printing.PrintPageEventArgs ev)
         {
             foreach (var Linea in LineasImpresion)
             {
@@ -263,7 +265,7 @@ namespace AppDevs.TPV.Admin
             }
         }
 
-        static void WriteLine(System.Drawing.Printing.PrintPageEventArgs ev, int LineIndex, string LineText, Font Fuente, StringFormat Center = null)
+        private static void WriteLine(System.Drawing.Printing.PrintPageEventArgs ev, int LineIndex, string LineText, Font Fuente, StringFormat Center = null)
         {
             System.Drawing.SolidBrush br = new System.Drawing.SolidBrush(System.Drawing.Color.Black);
             int Y = (LineIndex) * 15;

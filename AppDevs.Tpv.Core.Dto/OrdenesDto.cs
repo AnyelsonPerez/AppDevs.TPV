@@ -25,7 +25,7 @@ namespace AppDevs.Tpv.Core.Dto
 
         public MesasDto Mesas { get; set; }
 
-        public Metodos_PagoDto Metodos_Pago { get; set; }
+        public MetodosPagoDto Metodos_Pago { get; set; }
 
         public IEnumerable<OrdenesDetallesDto> OrdenesDetalles { get; set; }
     }

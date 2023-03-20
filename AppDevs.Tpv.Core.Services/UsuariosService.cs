@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using AppDevs.Tpv.Core.Domain.Model;
 using AppDevs.Tpv.Core.Domain.Persistence.Interfaces;
 using AppDevs.Tpv.Core.Dto;
 using AppDevs.Tpv.Core.Dto.Interfaces;
@@ -8,51 +9,52 @@ using AppDevs.Tpv.Core.Services.Extensions;
 
 namespace AppDevs.Tpv.Core.Services
 {
-    public class UsuariosService : IUsuariosService
+    public class UsuariosService : IService<UsuariosDto>
     {
-        private readonly IUsuariosRepository _usuariosRepository;
+        private readonly IRepository<Usuarios> _usuariosRepository;
 
-        public UsuariosService(IUsuariosRepository usuariosRepository)
+        public UsuariosService(IRepository<Usuarios> usuariosRepository)
         {
             _usuariosRepository = usuariosRepository ?? throw new ArgumentNullException(nameof(usuariosRepository));
         }
 
-        public IEnumerable<UsuariosDto> GetUsuarios(UsuariosDto usuario)
+        public IEnumerable<UsuariosDto> Get(UsuariosDto usuario)
         {
             return _usuariosRepository
-                .GetUsuarios(usuario.ToDomain())
+                .Get(usuario.ToDomain())
                 .Select(x => x.ToDto());
         }
 
-        public UsuariosDto GetUsuarioById(int id)
+        public UsuariosDto Get(int id)
         {
             return _usuariosRepository
-                .GetUsuarioById(id)
+                .Get(id)
                 .ToDto();
         }
 
-        public UsuariosDto GetUsuarioByCredenciales(string usuario, string clave)
+        public UsuariosDto Get(string usuario, string clave)
         {
             return _usuariosRepository
-                .GetUsuarioByUserNameAndPassword(usuario, clave)
+                .Get(new Usuarios { Usuario = usuario, Clave = clave })
+                .FirstOrDefault()
                 .ToDto();
         }
 
-        public UsuariosDto SetUsuario(UsuariosDto usuario)
+        public UsuariosDto Set(UsuariosDto usuario)
         {
             return _usuariosRepository
-                .SetUsuario(usuario.ToDomain())
+                .Set(usuario.ToDomain())
                 .ToDto();
         }
 
-        public bool DeleteUsuario(int id)
+        public bool Delete(int id)
         {
             if (id == 0)
             {
                 return false;
             }
 
-            var usuario = GetUsuarioById(id);
+            var usuario = Get(id);
 
             if (usuario == null)
             {
@@ -66,7 +68,7 @@ namespace AppDevs.Tpv.Core.Services
 
             usuario.Activo = false;
 
-            SetUsuario(usuario);
+            Set(usuario);
 
             return true;
         }

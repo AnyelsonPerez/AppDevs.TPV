@@ -7,12 +7,12 @@ using AppDevs.Tpv.Core.Dto.Interfaces;
 
 namespace AppDevs.Tpv.Core.Controllers
 {
-    [RoutePrefix("api/Usuarios")]
+    [RoutePrefix("api/usuarios")]
     public class UsuariosController : ApiController
     {
-        private readonly IUsuariosService _usuariosService;
+        private readonly IService<UsuariosDto> _usuariosService;
 
-        public UsuariosController(IUsuariosService usuariosService)
+        public UsuariosController(IService<UsuariosDto> usuariosService)
         {
             _usuariosService = usuariosService ?? throw new ArgumentNullException(nameof(usuariosService));
         }
@@ -21,7 +21,7 @@ namespace AppDevs.Tpv.Core.Controllers
         [Route("")]
         public IEnumerable<UsuariosDto> GetUsuarios([FromUri] UsuariosDto usuarioDto)
         {
-            return _usuariosService.GetUsuarios(usuarioDto);
+            return _usuariosService.Get(usuarioDto);
         }
 
         [HttpPost]
@@ -33,7 +33,7 @@ namespace AppDevs.Tpv.Core.Controllers
                 throw new HttpResponseException(HttpStatusCode.BadRequest);
             }
 
-            return _usuariosService.SetUsuario(usuarioDto);
+            return _usuariosService.Set(usuarioDto);
         }
 
         [HttpPut]
@@ -45,21 +45,21 @@ namespace AppDevs.Tpv.Core.Controllers
                 throw new HttpResponseException(HttpStatusCode.BadRequest);
             }
 
-            return _usuariosService.SetUsuario(usuarioDto);
+            return _usuariosService.Set(usuarioDto);
         }
 
         [HttpDelete]
         [Route("")]
         public bool DeleteUsuario(int id)
         {
-            return _usuariosService.DeleteUsuario(id);
+            return _usuariosService.Delete(id);
         }
 
         [HttpGet]
         [Route("")]
         public UsuariosDto GetUsuario(int id)
         {
-            return _usuariosService.GetUsuarioById(id);
+            return _usuariosService.Get(id);
         }
 
         //[HttpGet]

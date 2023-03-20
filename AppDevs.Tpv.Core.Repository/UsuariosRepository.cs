@@ -3,24 +3,25 @@ using System.Linq;
 using AppDevs.Tpv.Core.Domain.Model;
 using AppDevs.Tpv.Core.Domain.Persistence;
 using AppDevs.Tpv.Core.Domain.Persistence.Interfaces;
+using AppDevs.Tpv.Core.Repository.Extensions;
 
 namespace AppDevs.Tpv.Core.Repository
 {
-    public class UsuariosRepository : IUsuariosRepository
+    public class UsuariosRepository : IRepository<Usuarios>
     {
         private readonly IDataContext _dataContext;
 
         public UsuariosRepository(IDataContext dataContext)
         {
-            _dataContext = dataContext;
+            _dataContext = dataContext ?? throw new System.ArgumentNullException(nameof(dataContext));
         }
 
-        public IEnumerable<Usuarios> GetUsuarios(Usuarios usuario)
+        public IEnumerable<Usuarios> Get(Usuarios entity)
         {
             return _dataContext
-                .CallGetProcedure<Usuarios, Usuarios>(
+                .CallGetProcedure<Usuarios, object>(
                     "[SPC_GET_USUARIO]",
-                    usuario)
+                    entity.ToDynamic())
                 .ToList();
         }
 
@@ -34,7 +35,7 @@ namespace AppDevs.Tpv.Core.Repository
         //    return Upsert(usuario);
         //}
 
-        public Usuarios GetUsuarioById(int id)
+        public Usuarios Get(int id)
         {
             return _dataContext
                 .CallGetProcedure<Usuarios, object>(
@@ -43,7 +44,7 @@ namespace AppDevs.Tpv.Core.Repository
                 .FirstOrDefault();
         }
 
-        public Usuarios GetUsuarioByUserNameAndPassword(string nombre, string clave)
+        public Usuarios Get(string nombre, string clave)
         {
             return _dataContext
                 .CallGetProcedure<Usuarios, object>(
@@ -59,19 +60,19 @@ namespace AppDevs.Tpv.Core.Repository
         //    return GetUsuarioById(id);
         //}
 
-        public Usuarios SetUsuario(Usuarios usuario)
+        public Usuarios Set(Usuarios entity)
         {
             var id = _dataContext
-                .CallSetProcedure<Usuarios>(
+                .CallSetProcedure(
                     "[SPC_SET_USUARIO]",
-                    usuario);
+                    entity);
 
             if (id == 0)
             {
                 return null;
             }
 
-            return GetUsuarioById(id);
+            return Get(id);
         }
     }
 }

@@ -31,10 +31,32 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
+    </Reference>
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.Linq" />
+    <Reference Include="System.Memory, Version=4.0.1.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Memory.4.5.4\lib\net461\System.Memory.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.6.0.0\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ValueTuple.4.5.0\lib\net47\System.ValueTuple.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -43,7 +65,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Extensions\DynamicExtensions.cs" />
+    <Compile Include="OrdenesRepository.cs" />
+    <Compile Include="OrdenesDetalleRepository.cs" />
+    <Compile Include="MesasRepository.cs" />
+    <Compile Include="InformacionEmpresaRepository.cs" />
+    <Compile Include="CategoriasProductosRepository.cs" />
+    <Compile Include="AreasRepository.cs" />
     <Compile Include="Context\DataContext.cs" />
+    <Compile Include="PermisosPerfilesRepository.cs" />
+    <Compile Include="UnidadesMedidasRepository.cs" />
+    <Compile Include="TiposProductosRepository.cs" />
+    <Compile Include="ProductosUnidadesMedidasRepository.cs" />
+    <Compile Include="ProductosRepository.cs" />
+    <Compile Include="PermisosRepository.cs" />
     <Compile Include="PerfilesRepository.cs" />
     <Compile Include="UsuariosRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -56,6 +91,10 @@
     <ProjectReference Include="..\AppDevs.Tpv.Core.Domain\AppDevs.Tpv.Core.Domain.csproj">
       <Project>{f2298e25-843b-46e9-995d-bcb139ba268b}</Project>
       <Name>AppDevs.Tpv.Core.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AppDevs.Tpv.Core.Dto\AppDevs.Tpv.Core.Dto.csproj">
+      <Project>{4E108FB5-74D0-4729-979B-773F9B14E467}</Project>
+      <Name>AppDevs.Tpv.Core.Dto</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

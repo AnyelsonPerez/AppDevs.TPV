@@ -7,12 +7,12 @@ using AppDevs.Tpv.Core.Dto.Interfaces;
 
 namespace AppDevs.Tpv.Core.Controllers
 {
-    [RoutePrefix("api/Perfiles")]
+    [RoutePrefix("api/perfiles")]
     public class PerfilesController : ApiController
     {
-        private readonly IPerfilesService _perfilesService;
+        private readonly IService<PerfilesDto> _perfilesService;
 
-        public PerfilesController(IPerfilesService perfilesService)
+        public PerfilesController(IService<PerfilesDto> perfilesService)
         {
             _perfilesService = perfilesService ?? throw new ArgumentNullException(nameof(perfilesService));
         }
@@ -21,7 +21,7 @@ namespace AppDevs.Tpv.Core.Controllers
         [Route("")]
         public IEnumerable<PerfilesDto> GetPerfiles([FromUri] PerfilesDto perfilDto)
         {
-            return _perfilesService.GetPerfiles(perfilDto);
+            return _perfilesService.Get(perfilDto);
         }
 
         [HttpPost]
@@ -33,7 +33,7 @@ namespace AppDevs.Tpv.Core.Controllers
                 throw new HttpResponseException(HttpStatusCode.BadRequest);
             }
 
-            return _perfilesService.SetPerfil(perfilesDto);
+            return _perfilesService.Set(perfilesDto);
         }
 
         [HttpPut]
@@ -45,28 +45,21 @@ namespace AppDevs.Tpv.Core.Controllers
                 throw new HttpResponseException(HttpStatusCode.BadRequest);
             }
 
-            return _perfilesService.SetPerfil(perfilesDto);
+            return _perfilesService.Set(perfilesDto);
         }
 
         [HttpDelete]
         [Route("")]
         public bool DeletePerfil(int id)
         {
-            return _perfilesService.DeletePerfil(id);
+            return _perfilesService.Delete(id);
         }
 
         [HttpGet]
         [Route("")]
         public PerfilesDto GetPerfil(int id)
         {
-            return _perfilesService.GetPerfilById(id);
+            return _perfilesService.Get(id);
         }
-
-        //[HttpGet]
-        //[Route("")]
-        //public UsuariosDto GetUsuario(string user, string password)
-        //{
-        //    return _usuariosService.GetUsuarioByCredenciales(user, password);
-        //}
     }
 }
